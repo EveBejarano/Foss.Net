@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Hoteles.Models.Hotel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by city: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.nombre_hotel)</a>
+            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.direccion_hotel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.email_hotel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.sitioweb_hotel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.detalles_hotel)
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["CiudadSortParm"]">@Html.DisplayNameFor(model => model.ciudad_hotel)</a>
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cadena_Hotel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estrellas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pais)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre_hotel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.direccion_hotel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email_hotel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sitioweb_hotel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.detalles_hotel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ciudad_hotel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cadena_Hotel.IDCadena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estrellas.IDEstrellas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pais.IDPais)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IDHotel">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IDHotel">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IDHotel">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
