@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,30 +14,56 @@ namespace Hoteles.Controllers
     [Route("api/HotelsApi")]
     public class HotelsApiController : Controller
     {
-        private readonly HotelContext _context;
+        private readonly HotelContext db;
 
         public HotelsApiController(HotelContext context)
         {
-            _context = context;
+            db = context;
         }
 
         // GET: api/HotelsApi
         [HttpGet]
-        public IEnumerable<Hotel> GetHotel()
+        public IQueryable<HotelDTO> GetHotel()
         {
-            return _context.Hotel;
+            var hotels = from h in db.Hotel
+
+                         select new HotelDTO()
+                         {
+                             IDHotel = h.IDHotel,
+                             nombre_hotel = h.nombre_hotel,
+                             direccion_hotel = h.direccion_hotel,
+                             nombre_pais = h.Pais.nombre_pais,
+                             Imagen_estrella = h.Estrellas.Imagen_estrella,
+                             ciudad_hotel = h.ciudad_hotel
+                         };
+
+            return hotels;
+
         }
 
         // GET: api/HotelsApi/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetHotel([FromRoute] int id)
+        public async Task<IActionResult> GetHotel(int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var hotel = await _context.Hotel.SingleOrDefaultAsync(m => m.IDHotel == id);
+            var hotel = await db.Hotel.Select(h => new HotelDetailsDTO()
+            {
+                IDHotel = h.IDHotel,
+                nombre_hotel = h.nombre_hotel,
+                direccion_hotel = h.direccion_hotel,
+                email_hotel = h.email_hotel,
+                sitioweb_hotel = h.sitioweb_hotel,
+                ciudad_hotel = h.ciudad_hotel,
+                detalles_hotel = h.detalles_hotel,
+                nombre_cadena = h.Cadena_Hotel.nombre_cadena,
+                nombre_pais = h.Pais.nombre_pais,
+                Imagen_estrella = h.Estrellas.Imagen_estrella
+
+            }).SingleOrDefaultAsync(h => h.IDHotel == id);
 
             if (hotel == null)
             {
@@ -62,12 +88,13 @@ namespace Hoteles.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(hotel).State = EntityState.Modified;
+            db.Entry(hotel).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await db.SaveChangesAsync();
             }
+
             catch (DbUpdateConcurrencyException)
             {
                 if (!HotelExists(id))
@@ -92,11 +119,12 @@ namespace Hoteles.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Hotel.Add(hotel);
-            await _context.SaveChangesAsync();
+            db.Hotel.Add(hotel);
+            await db.SaveChangesAsync();
 
             return CreatedAtAction("GetHotel", new { id = hotel.IDHotel }, hotel);
         }
+
 
         // DELETE: api/HotelsApi/5
         [HttpDelete("{id}")]
@@ -107,21 +135,21 @@ namespace Hoteles.Controllers
                 return BadRequest(ModelState);
             }
 
-            var hotel = await _context.Hotel.SingleOrDefaultAsync(m => m.IDHotel == id);
+            var hotel = await db.Hotel.SingleOrDefaultAsync(m => m.IDHotel == id);
             if (hotel == null)
             {
                 return NotFound();
             }
 
-            _context.Hotel.Remove(hotel);
-            await _context.SaveChangesAsync();
+            db.Hotel.Remove(hotel);
+            await db.SaveChangesAsync();
 
             return Ok(hotel);
         }
 
         private bool HotelExists(int id)
         {
-            return _context.Hotel.Any(e => e.IDHotel == id);
+            return db.Hotel.Any(e => e.IDHotel == id);
         }
     }
 }
