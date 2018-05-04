@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Hoteles.Models;
+﻿using Hoteles.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hoteles.Data
 {
     public class HotelContext : DbContext
     {
+        public HotelContext()
+        {
+        }
+
         public HotelContext(DbContextOptions<HotelContext> options) : base(options)
         {
         }
