@@ -81,6 +81,28 @@
         <dd>
             @Html.DisplayFor(model => model.HotelCity)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RoomTypes)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Room Description</th>
+                    <th>Standard Rate</th>
+                </tr>
+                @foreach (var item in Model.RoomTypes)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoomDescription)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StandardRate)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
 
     </dl>
 </div>

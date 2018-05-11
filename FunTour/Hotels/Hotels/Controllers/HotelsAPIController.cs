@@ -19,21 +19,23 @@ namespace Hotels.Controllers
         private HotelsContext db = new HotelsContext();
 
 
-            // GET: api/HotelsAPI
-            public IQueryable GetHotel()
+        // GET: api/HotelsAPI
+        public IQueryable GetHotel()
         {
-                var query =
-                        from data in db.Hotel
-                        select new { data.HotelID, data.HotelName, data.HotelAddress, data.StarRating.RatingImage };
-                return query;
+            var query =
+                    from data in db.Hotel
+                    select new { data.HotelID, data.HotelName, data.HotelAddress, data.StarRating.RatingImage };
+            return query;
         }
 
         // GET: api/HotelsAPI/5
         [ResponseType(typeof(Hotel))]
-        public async Task<IHttpActionResult> GetHotel(int id)
+        public IHttpActionResult GetHotel(int id)
         {
-            Hotel hotel = db.Hotel.Include("RoomTypes").FirstOrDefault(p => p.HotelID == id);
-            
+            var hotel = db.Hotel
+                .Include(h => h.RoomTypes)
+                .SingleOrDefault(h => h.HotelID == id);
+
             if (hotel == null)
             {
                 return NotFound();

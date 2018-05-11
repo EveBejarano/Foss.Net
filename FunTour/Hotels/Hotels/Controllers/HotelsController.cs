@@ -30,11 +30,16 @@ namespace Hotels.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Hotel hotel = await db.Hotel.FindAsync(id);
+            var hotel = await db.Hotel
+            .Include(h => h.RoomTypes)
+            .AsNoTracking()
+            .SingleOrDefaultAsync(m => m.HotelID == id);
+
             if (hotel == null)
             {
                 return HttpNotFound();
             }
+
             return View(hotel);
         }
 
