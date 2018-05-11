@@ -11,8 +11,7 @@ namespace FlightMVC.Models
         public string Flight { get; set; }
         public string Employ { get; set; }
 
-        public virtual CommercialFlight CommercialFlight { get; set; }
+        public virtual mvcCommercialFlightModel CommercialFlight { get; set; }
         public virtual mvcEmployeeModel Employee { get; set; }
     }
-}
 }

@@ -1,0 +1,64 @@
+﻿@model BusAPI.Models.Trip
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Trip</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Bus.Company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bus.Company)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationCity.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DestinationCity.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OriginCity.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OriginCity.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTimeTrip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTimeTrip)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

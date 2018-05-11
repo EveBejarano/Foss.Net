@@ -108,3 +108,4 @@ C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\WebApplication2\obj\Debug\Ev
 C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\WebApplication2\obj\Debug\Events.csproj.CopyComplete
 C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\WebApplication2\obj\Debug\WebApplication2.dll
 C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\WebApplication2\obj\Debug\WebApplication2.pdb
+C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\WebApplication2\obj\Debug\Events.csprojResolveAssemblyReference.cache

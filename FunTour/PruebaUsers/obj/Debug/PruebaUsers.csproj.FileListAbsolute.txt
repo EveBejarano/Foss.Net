@@ -145,3 +145,4 @@ C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\PruebaUsers\obj\Debug\Prueba
 C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\PruebaUsers\obj\Debug\PruebaUsers.csproj.CopyComplete
 C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\PruebaUsers\obj\Debug\PruebaUsers.dll
 C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\PruebaUsers\obj\Debug\PruebaUsers.pdb
+C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\PruebaUsers\obj\Debug\PruebaUsers.csprojResolveAssemblyReference.cache
