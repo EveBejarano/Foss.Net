@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Estilos informatorio</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-grid.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-reboot.css">
+</head>
+
+<!-- GUÍA DE ESTILOS PERSONALIZADOS PARA TOOL DEL INFORMATORIO 
+
+
+.bg-inf-blue {Aplica fondo con el azul de la identidad a un elemento}
+
+.bg-inf-gray {Aplica fondo con el gris claro de la identidad a un elemento}
+
+.bg-inf-darkgray {Aplica fondo con el gris oscuro de la identidad a un elemento}
+
+.shad-inf {Aplica una sombra proyectada para la barra lateral de las páginas que la tengan}
+
+.btn-inf {se usa en conjunto con la clase btn y text-white y estiliza un botón con el azul del informatorio}
+
+.card-inf {Se aplica al contenedor general de las tarjetas, dentro de ella van las siguientes dos clases}
+
+.card-inf-gray { exactamente igual al anterior, pero con fondo gris }
+
+.card-header-inf {se aplica al div que contiene el título de las tarjetas dentro se puede utilizar con .h3 para los títulos de las tarjetas principales o con .lead
+para los títulos de las tarjetas pequeñas}
+
+.card-body-inf {se aplica al cuerpo de las tarjetas, cualquiera sea el tipo de tarjeta}
+
+.table-body-inf {se aplica a las tablas}
+
+.active-inf {se utiliza con la clase .nav-link en las solapas de contenedores solapados para identificar la solapa activa}
+
+.inactive-inf {se utiliza con la clase .nav-link en las solapas de contenedores solapados para identificar las solapas inactiva}
+
+.bg-inf-1 al 12 {Aplica fondos de colores para diferenciar publicaciones de módulos}
+
+
+ESTILOS PARA TÍTULOS Y TEXTO
+
+.h3 para título de página
+
+.h6 para subtítulo de página
+
+.lead para título de tarjeta y bajada de título de página
+
+<strong></strong> para textos en negrita
+
+
+Recomendaciones:
+
+controlar el margen y el padding de todos los elementos desde los divs de cada elemento, no desde las columnas que contienen esos elementos
+resetear el padding de las columnas contenedoras de elementos con la clase .p-0
+
+Controlar espaciado vertical de los divs de los elementos con margen inferior usando la clase .mb-3
+Controlar espaciado horizontal de los divs de los elementos con margen izquierdo utilizando la clase .ml-3
+
+
+
+
+-->
+
+<body class="bg-inf-gray">
+
+
+	<!-- BARRA DE NAVEGACIÓN -->
+
+	<div class="bg-inf-blue"> <!-- Esto es necesario para poner la navbar dentro de un contaner sin notar el padding -->
+		<div class="container">
+			<nav class="navbar bg-inf-blue navbar-expand-lg">
+				<a class="navbar-brand" href="index.html">
+				<img src="Images/Logotipo-Informatorio.svg" class="align-top" alt="Cinque Terre" height="25">
+				</a>
+				<div class="collapse navbar-collapse justify-content-end" id="responsivo">  
+					<div class="row">
+						<div class="col-12">
+							<ul class="nav navbar-nav ml-auto  mt-2 mt-md-0 enlace">
+								<li><a class="nav-item nav-link text-white" href="#">¿Qué es el informatorio?</a></li>
+								<li><a class="nav-item nav-link text-white" href="#">Cursos</a></li>
+								<li><a class="nav-item nav-link text-white" href="#">Proyectos</a></li>
+								<li><a class="nav-item nav-link text-white" href="#">Galería</a></li>
+								<li><a class="nav-item nav-link text-white" href="#">Blog</a></li>
+								<li><a class="nav-item nav-link text-white" href="#">INICIAR SESIÓN</a></li>		
+							</ul>	
+						</div>
+					</div>	
+		    	</div>  
+		    </nav>
+	    </div>
+    </div>
+
+	<!-- CONTAINER -->
+
+	<div class="container">
+		<div class="row">
+
+			<!-- BARRA LATERAL -->
+
+			<div class="col-2 bg-white shad-inf p-0">
+				<div class="row p-0 m-3">
+					<div class="col-12 btn btn-sm btn-inf mb-3">BOTONASO</div>
+					<p class="h6">Los títulos van en h6</p>
+					<p><small>Los demás elementos como tel texto van en un "p" común como el que estás viendo, pero con la etiqueta small</small></p>
+					<ul class="list-unstyled col-12 p-0">
+						<li class="h6">Título</li>
+						<li><small>-Apartado 1</small></li>
+						<li><small>-Apartado 2</small></li>
+						<li><small>-Apartado 3</small></li>
+						<li><small>-Apartado 4</small></li>
+					</ul>
+					<ul class="list-unstyled col-12 p-0">
+						<li class="h6">Título</li>
+						<li><small>-Apartado 1</small></li>
+						<li><small>-Apartado 2</small></li>
+						<li><small>-Apartado 3</small></li>
+						<li><small>-Apartado 4</small></li>
+					</ul>
+				</div>
+			</div>
+			
+				
+			<!-- CONTENIDO PRINCIPAL -->
+
+			<div class="col-10 ">
+				<div class="card-inf mt-3 mb-3"> <!-- Aqcá comienza la tarjeta del contenido principal de la página -->
+					<div class="card-header-inf bg-inf-blue h3 text-white">Título de la página</div>
+					<div class="card-body-inf">
+						<p class="col-12 lead p-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						</p>
+						<div class="row pr-3">
+
+							<!-- TARJETAS SIN FOTO -->
+
+							<div class="col-6 p-0">
+								<div class="card-inf-white text-white ml-3 mb-3">
+			  						<div class="card-header-inf bg-inf-blue"><p class="lead m-0">Curso avanzado de desarrollo de apps</p></div>
+			  						<div class="card-body-inf  text-dark">
+			    						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			    						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+			    						<a href="#" class="btn btn-inf btn-sm">VER MÁS</a>
+			    						<a href="#" class="btn btn-inf btn-sm">INSCRIBIRME</a>
+			  						</div>
+								</div>
+							</div>
+							<div class="col-6 p-0">
+								<div class="card-inf-white text-white ml-3 mb-3 material-inf">
+			  						<div class="card-header-inf bg-inf-blue"><p class="lead m-0">Proyecto 111.000</p></div>
+			  						<div class="card-body-inf text-dark">
+			    						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			    						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+			    						<a href="#" class="btn btn-inf btn-sm">VER MÁS</a>
+			    						<a href="#" class="btn btn-inf btn-sm">INSCRIBIRME</a>
+			  						</div>
+								</div>
+							</div>
+
+							<!-- TARJETAS CON FOTO -->
+
+							<div class="col-6 p-0">
+								<div class="card-inf-white text-white ml-3 mb-3 material-inf">
+			  						<div class="card-header-inf bg-inf-blue"><p class="lead m-0">Proyecto lamer hojitas</p></div>
+			  						<div class="card-body-inf text-dark">
+			    						<div class="row">
+			  								<div class="col-4 p-0 pl-3">
+			  									<img class="img-fluid rounded" src="Images/maxresdefault.jpg">
+			  								</div>
+			  								<div class="col-8">
+			  									<p class="card-text">Aprendé a lamer hojitas como un profesional en este curso avanzado con el koala rosadito</p>
+					    						<a href="#" class="btn btn-inf btn-sm">VER MÁS</a>
+					    						<a href="#" class="btn btn-inf btn-sm">INSCRIBIRME</a>
+			  								</div>	
+    									</div>
+			  						</div>
+								</div>
+							</div>
+
+							<div class="col-6 p-0">
+								<div class="card-inf-white text-white ml-3 mb-3 material-inf">
+			  						<div class="card-header-inf bg-inf-blue"><p class="lead m-0">Proyecto lamer hojitas</p></div>
+			  						<div class="card-body-inf text-dark">
+			    						<div class="row">
+			  								<div class="col-4 p-0 pl-3">
+			  									<img class="img-fluid rounded" src="Images/maxresdefault.jpg">
+			  								</div>
+			  								<div class="col-8">
+			  									<p class="card-text">Aprendé a lamer hojitas como un profesional en este curso avanzado con el koala rosadito</p>
+					    						<a href="#" class="btn btn-inf btn-sm">VER MÁS</a>
+					    						<a href="#" class="btn btn-inf btn-sm">INSCRIBIRME</a>
+			  								</div>	
+    									</div>
+			  						</div>
+								</div>
+							</div>
+
+							<!-- CONTENEDOR SOLAPADO -->
+
+							<div class="col-12 p-0">
+								<div class="card-inf-white ml-3 mb-3">
+									<div class="card-header bg-inf-blue">
+									    <ul class="nav nav-tabs card-header-tabs">
+									    	<li class="nav-item"><a class="nav-link active-inf " href="#">Solapa 1</a></li>
+									      	<li class="nav-item"><a class="nav-link inactive-inf text-white" href="#">Solapa 2</a></li>
+									    	<li class="nav-item"><a class="nav-link inactive-inf text-white" href="#">Solapa 3</a></li>
+									    </ul>
+									</div>
+									<div class="card-body-inf pre">
+									    <h4>Título del contenedor solapado</h4>
+									    <p>With supporting text below as a natural lead-in to additional content.</p>
+									    <a href="#" class="btn btn-inf btn-sm mb-3">LE BOTONASO</a>
+									    <h6>Tabla</h6>
+									    <div class="table-body-inf bg-inf-blue">
+						  					<table class="table text-white my-0">
+												<tbody>
+												    <tr>
+												    	<td>Mark</td>
+												    	<td>Otto</td>
+												    	<td>@mdo</td>
+													</tr>
+													<tr>
+												    	<td>Jacob</td>
+														<td>Thornton</td>
+												    	<td>@fat</td>
+													</tr>
+												    <tr>
+													    <td>Larry</td>
+													    <td>the Bird</td>
+														<td>@twitter</td>
+													</tr>
+												</tbody>
+											</table>
+						  				</div>
+
+
+										<h6>Tabla con título</h6>
+						  				
+
+						  				<div class="table-body-inf bg-inf-blue mb-3">
+						  					<table class="table text-white my-0">
+												<thead>
+													<tr>
+														<th>Título de la tabla</th>
+														<th></th>
+														<th></th>
+													</tr>
+												</thead>	
+												<tbody>
+													<tr>
+												    	<td>Mark</td>
+												    	<td>Otto</td>
+												    	<td>@mdo</td>
+													</tr>
+													<tr>
+												    	<td>Jacob</td>
+												    	<td>Thornton</td>
+												    	<td>@fat</td>
+													</tr>
+													<tr>
+												    	<td>Larry</td>
+														<td>the Bird</td>
+														<td>@twitter</td>
+												    </tr>
+												</tbody>
+											</table>
+						  				</div>
+						  				<button class=" col-12 btn btn-inf btn-sm btn-block text-left mb-3">+ Agregar elemento</button>
+						  					
+						  					<h6>Tabla de colores para módulos</h6>
+						  					
+						  					<div class="row px-3 mb-3">
+						  						<div class="rounded col-12 bg-inf-1 mb-1 text-white">Modulo 1</div>
+						  						<div class="rounded col-12 bg-inf-2 mb-1">Módulo 2</div>
+						  						<div class="rounded col-12 bg-inf-3 mb-1">Módulo 3</div>
+						  						<div class="rounded col-12 bg-inf-4 mb-1">Módulo 4</div>
+						  						<div class="rounded col-12 bg-inf-5 mb-1">Módulo 5</div>
+						  						<div class="rounded col-12 bg-inf-6 mb-1">Módulo 6</div>
+						  						<div class="rounded col-12 bg-inf-7 mb-1">Módulo 7</div>
+						  						<div class="rounded col-12 bg-inf-8 mb-1">Módulo 8</div>
+						  						<div class="rounded col-12 bg-inf-9 mb-1">Módulo 9</div>
+						  						<div class="rounded col-12 bg-inf-10 mb-1">Módulo 10</div>
+						  						<div class="rounded col-12 bg-inf-11 text-white mb-1">Módulo 11</div>
+						  						<div class="rounded col-12 bg-inf-12 text-white mb-1">Módulo 12</div>
+						  					</div>
+
+											<!-- TARJETA DENTRO DE CONTENEDOR SOLAPADO -->
+
+						  					<div class="row">
+							  					<div class="col-12">
+							  						<div class="card-inf">
+							  							<div class="card-header-inf bg-inf-blue lead text-white">Tarjeta dentro de contenedor solapado</div>
+							  							<div class="card-body-inf">Acá va lo que tenga que escribirse dentro de la tarjeta Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							  							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							  							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							  							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							  							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+							  							proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+							  						</div>
+							  					</div>
+						  					
+
+
+												<!-- CAMPO DE IMPUT -->
+												
+											
+													<div class="row form-control mx-3 my-3">
+														<div class="col-10 p-0 pr-3">
+															<input type="text" class="form-control-transparent" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Post...">
+														</div>
+														<button class="col-2 btn btn-sm btn-inf">PUBLICAR</button>
+														<button class=" col-12 btn btn-inf btn-sm btn-block text-left my-1">+ Agregar archivos</button>
+													</div>
+
+													<div class="row mx-3">
+														<div class="col-12 card-inf bg-inf-blue text-white p-0">
+															<div class="card-header-inf"><h6 class="my-0">Título Post</h6></div>
+															<div class=" card-body-inf py-0 mb-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus praesentium veritatis, voluptatum esse illum nisi, consectetur minus debitis ex, corporis porro laborum ipsa voluptatem assumenda voluptate. Ipsa ducimus mollitia nesciunt.</div>
+														</div>
+													</div>
+												
+
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> 
+			</div>
+		</div>
+	</div>
+
+	<!-- FOOTER -->
+
+
+	<footer class="bg-inf-blue">
+		<div class="container">
+			<div class="row text-white py-3">
+				<div class="col-6 h6">Contacto</div>
+				<div class="col-6 h6">Redes</div>
+				<div class="col-2">
+					<ul class="list-unstyled">
+						<li class="h6">Informtorio Chaco</li>
+						<li>Arturo Illia 1055</li>
+						<li>XXX XXX-XXXX</li>
+					</ul>
+				</div>
+				<div class="col-2">
+					<ul class="list-unstyled">
+						<li class="h6">Informtorio Chaco</li>
+						<li>Arturo Illia 1055</li>
+						<li>XXX XXX-XXXX</li>
+					</ul>
+				</div>
+				<div class="col-2">
+					<ul class="list-unstyled">
+						<li class="h6">Informtorio Chaco</li>
+						<li>Arturo Illia 1055</li>
+						<li>XXX XXX-XXXX</li>
+					</ul>
+				</div>
+				<div class="col-6 align-items-center">
+					<a href="#"><img src="Images/facebook-logo-button.png" height="40px"></a>
+					<a href="#"><img src="Images/twitter-logo-button.png" height="40px"></a>
+				</div>
+				<div class="col-12">
+					<small>Información institucional y todo lo necesario de esta pequeña línea de texto</small>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/bootstrap.bundle.js"></script>
+</body>

@@ -1,0 +1,2 @@
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\WebApplication2\obj\Debug\Events.csprojResolveAssemblyReference.cache
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\WebApplication2\obj\Debug\Events.csproj.CoreCompileInputs.cache

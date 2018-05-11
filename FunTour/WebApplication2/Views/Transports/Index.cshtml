@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Events.Models.Transport>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TransportType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Capacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bathroom)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransportType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Capacity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bathroom)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TransportID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TransportID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TransportID })
+        </td>
+    </tr>
+}
+
+</table>

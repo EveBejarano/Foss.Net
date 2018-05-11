@@ -1,0 +1,117 @@
+.card-inf {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0px;
+  border-radius: 0.25rem; }
+
+.card-inf-gray {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #dee2e6;
+  background-clip: border-box;
+  border: 0px;
+  border-radius: 0.25rem; }
+
+.card-header-inf {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 0px; }
+  .card-header-inf:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0; }
+  .card-header-inf + .list-group .list-group-item:first-child {
+    border-top: 0; }
+
+.card-body-inf {
+  flex: 1 1 auto;
+  padding: 1.25rem; }
+
+.btn-inf {
+  color: #fff;
+  background-color: #39568D; }
+  .btn-inf:hover {
+    background-color: #5d84cc; }
+
+#blog-post-inf a {
+  color: #fff; }
+  #blog-post-inf a:hover {
+    color: #5d84cc; }
+
+.shad-inf {
+  box-shadow: 10px 0 20px rgba(47, 49, 52, 0.1);
+  z-index: 2; }
+
+.bg-inf-1 {
+  background-color: #943535; }
+
+.bg-inf-2 {
+  background-color: #B47130; }
+
+.bg-inf-3 {
+  background-color: #E4CD2E; }
+
+.bg-inf-4 {
+  background-color: #88B137; }
+
+.bg-inf-5 {
+  background-color: #B9CE7F; }
+
+.bg-inf-6 {
+  background-color: #7BB6B3; }
+
+.bg-inf-7 {
+  background-color: #4F9ACC; }
+
+.bg-inf-8 {
+  background-color: #795799; }
+
+.bg-inf-9 {
+  background-color: #B57DAE; }
+
+.bg-inf-10 {
+  background-color: #B2B2B9; }
+
+.bg-inf-11 {
+  background-color: #2F3134; }
+
+.bg-inf-12 {
+  background-color: #2F3134; }
+
+.bg-inf-blue {
+  background-color: #39568D; }
+
+.bg-inf-light {
+  background-color: #5d84cc; }
+
+.bg-inf-gray {
+  background-color: #dee2e6; }
+
+.form-control-transparent {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 0px solid #ced4da;
+  border-bottom: 1px solid #9292A0;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
+
+.form-control-transparent:focus {
+  color: #495057;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+
+/*# sourceMappingURL=main.css.map */

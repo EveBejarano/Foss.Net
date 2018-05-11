@@ -1,0 +1,11 @@
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\bin\Debug\netcoreapp2.0\Hoteles.deps.json
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\bin\Debug\netcoreapp2.0\Hoteles.runtimeconfig.json
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\bin\Debug\netcoreapp2.0\Hoteles.runtimeconfig.dev.json
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\bin\Debug\netcoreapp2.0\Hoteles.dll
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\bin\Debug\netcoreapp2.0\Hoteles.pdb
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\obj\Debug\netcoreapp2.0\Hoteles.csprojResolveAssemblyReference.cache
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\obj\Debug\netcoreapp2.0\Hoteles.csproj.CoreCompileInputs.cache
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\obj\Debug\netcoreapp2.0\Hoteles.AssemblyInfoInputs.cache
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\obj\Debug\netcoreapp2.0\Hoteles.AssemblyInfo.cs
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\obj\Debug\netcoreapp2.0\Hoteles.dll
+C:\Users\Eve Bejarano\Desktop\PruebaUsers\Hoteles\obj\Debug\netcoreapp2.0\Hoteles.pdb
