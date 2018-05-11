@@ -1,0 +1,90 @@
+﻿@model Hotels.Models.Hotel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Hotel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Country.CountryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country.CountryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelChain.ChainName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelChain.ChainName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StarRating.RatingID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StarRating.RatingID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelWebsite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelWebsite)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelDetails)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelDetails)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelCity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HotelID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

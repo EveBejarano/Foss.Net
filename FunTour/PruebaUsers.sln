@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightsAPI", "FlightsAPI\Fl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusAPI", "BusAPI\BusAPI.csproj", "{CAD32177-1B77-46D3-AEB6-B45EC58BC39C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotels", "..\..\..\..\source\repos\Hotels\Hotels\Hotels.csproj", "{C1C79556-E634-4E6B-814E-9121A9A64BC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{CAD32177-1B77-46D3-AEB6-B45EC58BC39C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAD32177-1B77-46D3-AEB6-B45EC58BC39C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAD32177-1B77-46D3-AEB6-B45EC58BC39C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1C79556-E634-4E6B-814E-9121A9A64BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C79556-E634-4E6B-814E-9121A9A64BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C79556-E634-4E6B-814E-9121A9A64BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C79556-E634-4E6B-814E-9121A9A64BC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
