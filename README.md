@@ -1,5 +1,35 @@
 # Foss.Net
 
+#PruebaUsers
+Es el sistema de Fantour que (hasta ahora) permite registrarse e iniciar sesión como usuario. Al registrarse, un usuario que es administrador puede crear/editar/listar/eliminar usuarios y roles. Posee las entidades necesarias para la administración de permisos de cada rol y de paquetes pero esto todavía no se encuentra implementado. 
+
+La base de datos esta compuesta por:
+- TravelPackage: Representa cada paquete que la empresa ofrece a los clientes y un cliente puede reservar.
+- Reservation: Representa una reservacion/compra de un paquete que haya realizado un cliente.
+ 
+- Bus: Representa los colectivos de la empresa que pueden ser asignados a un paquete.
+- BusCompany: Representa las compañias de colectivos que brindan servicio de transporte a la empresa Fantour.
+- BusReservedSeat: Representa el asiento de colectivo reservado por un cliente.
+
+- Event:Representa los eventos de la empresa que pueden ser asignados a un paquete.
+- ReservedTicket: Representa el ticker de un evento reservado por un cliente.
+
+- Flight:Representa los vuelos de la empresa que pueden ser asignados a un paquete.
+- FlightCompany: Representa las compañias de vuelos que brindan servicio de transporte a la empresa Fantour.
+- ReservedSeat: Representa el asiento de avion reservado por un cliente.
+
+- Hotel: Representa a los hoteles que brindan servicio de alojamiento a la empresa Fantour.
+- Reservation Room: Representa la habitación reservada por un cliente.
+
+- IdentityUsers: Representa los datos necesarios para el registro y el logueo de un usuario.
+- UserDetails:Representa los datos necesarios de un usuario.
+
+- AspNetUserRoles:Representa la tabla intermedia entre los roles y los usuarios ya que un usuario puede tener muchos roles y un rol puede estar asignado a multiples usuarios.
+ 
+- AspNetRoles: Representa el nombre y el id de un rol.
+- RoleDetails: Posee información adicional de cada Rol.
+- Permission: Representa los permisos que puede llegar a poseer un rol.
+
 # API Hoteles
 
 Simula una API que devuelve listas de datos de hoteles, según el nombre de la ciudad que se pase como parámetro.
@@ -37,7 +67,7 @@ La base de datos está compuesta por:
 
 ------
 
-# API de Vuelos
+# API Vuelos
 
 Este código emula una api de un sistema de aerolineas en la que se puede obtener todo tipo de informacón concerniente a los vuelos.
 
