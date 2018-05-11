@@ -1,6 +1,6 @@
 # Foss.Net
 
-# Hoteles
+# API Hoteles
 
 Simula una API que devuelve listas de datos de hoteles, según el nombre de la ciudad que se pase como parámetro.
 Permite ver los detalles completos de un hotel pasando su ID, incluyendo los tipos de habitaciones que tiene.
