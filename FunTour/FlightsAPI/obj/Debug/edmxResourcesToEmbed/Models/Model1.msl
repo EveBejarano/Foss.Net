@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FlightsDBModelStoreContainer" CdmEntityContainer="FlightsDBEntities">
+    <EntitySetMapping Name="CommercialFlights">
+      <EntityTypeMapping TypeName="FlightsDBModel.CommercialFlight">
+        <MappingFragment StoreEntitySet="CommercialFlights">
+          <ScalarProperty Name="idFlight" ColumnName="idFlight" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="Deport" ColumnName="Deport" />
+          <ScalarProperty Name="Arrive" ColumnName="Arrive" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Disponible_Places" ColumnName="Disponible_Places" />
+          <ScalarProperty Name="Flight_To" ColumnName="Flight_To" />
+          <ScalarProperty Name="Flight_From" ColumnName="Flight_From" />
+          <ScalarProperty Name="Flight_Plane" ColumnName="Flight_Plane" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Destinations">
+      <EntityTypeMapping TypeName="FlightsDBModel.Destination">
+        <MappingFragment StoreEntitySet="Destinations">
+          <ScalarProperty Name="idAirport" ColumnName="idAirport" />
+          <ScalarProperty Name="nameAirport" ColumnName="nameAirport" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="FlightsDBModel.Employee">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="idEmploy" ColumnName="idEmploy" />
+          <ScalarProperty Name="Employ_Name" ColumnName="Employ_Name" />
+          <ScalarProperty Name="DNI" ColumnName="DNI" />
+          <ScalarProperty Name="Emp_Occupation" ColumnName="Emp_Occupation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilghtPlaces">
+      <EntityTypeMapping TypeName="FlightsDBModel.FilghtPlace">
+        <MappingFragment StoreEntitySet="FilghtPlaces">
+          <ScalarProperty Name="numPlace" ColumnName="numPlace" />
+          <ScalarProperty Name="Place_Owner_Name" ColumnName="Place_Owner_Name" />
+          <ScalarProperty Name="Place_Owner_DNI" ColumnName="Place_Owner_DNI" />
+          <ScalarProperty Name="FP_Date" ColumnName="FP_Date" />
+          <ScalarProperty Name="idFlight" ColumnName="idFlight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FlightPersonals">
+      <EntityTypeMapping TypeName="FlightsDBModel.FlightPersonal">
+        <MappingFragment StoreEntitySet="FlightPersonal">
+          <ScalarProperty Name="Personal_Rol" ColumnName="Personal_Rol" />
+          <ScalarProperty Name="Flight" ColumnName="Flight" />
+          <ScalarProperty Name="Employ" ColumnName="Employ" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Planes">
+      <EntityTypeMapping TypeName="FlightsDBModel.Plane">
+        <MappingFragment StoreEntitySet="Planes">
+          <ScalarProperty Name="idPlane" ColumnName="idPlane" />
+          <ScalarProperty Name="namePlane" ColumnName="namePlane" />
+          <ScalarProperty Name="CrossingRange" ColumnName="CrossingRange" />
+          <ScalarProperty Name="PlanePlaces" ColumnName="PlanePlaces" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ScalesOnFlights">
+      <EntityTypeMapping TypeName="FlightsDBModel.ScalesOnFlight">
+        <MappingFragment StoreEntitySet="ScalesOnFlight">
+          <ScalarProperty Name="idScale" ColumnName="idScale" />
+          <ScalarProperty Name="Deport" ColumnName="Deport" />
+          <ScalarProperty Name="Arrive" ColumnName="Arrive" />
+          <ScalarProperty Name="idAirport" ColumnName="idAirport" />
+          <ScalarProperty Name="idFligth" ColumnName="idFligth" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

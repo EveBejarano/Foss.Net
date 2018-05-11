@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FlightsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CommercialFlights">
+    <Key>
+      <PropertyRef Name="idFlight" />
+    </Key>
+    <Property Name="idFlight" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Distance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Deport" Type="datetime" Nullable="false" />
+    <Property Name="Arrive" Type="datetime" Nullable="false" />
+    <Property Name="Price" Type="real" Nullable="false" />
+    <Property Name="Disponible_Places" Type="int" />
+    <Property Name="Flight_To" Type="varchar" MaxLength="30" />
+    <Property Name="Flight_From" Type="varchar" MaxLength="30" />
+    <Property Name="Flight_Plane" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="Destinations">
+    <Key>
+      <PropertyRef Name="idAirport" />
+    </Key>
+    <Property Name="idAirport" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="nameAirport" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Country" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="idEmploy" />
+    </Key>
+    <Property Name="idEmploy" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Employ_Name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="DNI" Type="int" Nullable="false" />
+    <Property Name="Emp_Occupation" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FilghtPlaces">
+    <Key>
+      <PropertyRef Name="numPlace" />
+    </Key>
+    <Property Name="numPlace" Type="int" Nullable="false" />
+    <Property Name="Place_Owner_Name" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Place_Owner_DNI" Type="int" Nullable="false" />
+    <Property Name="FP_Date" Type="datetime" Nullable="false" />
+    <Property Name="idFlight" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="FlightPersonal">
+    <Key>
+      <PropertyRef Name="Personal_Rol" />
+    </Key>
+    <Property Name="Personal_Rol" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Flight" Type="varchar" MaxLength="30" />
+    <Property Name="Employ" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Planes">
+    <Key>
+      <PropertyRef Name="idPlane" />
+    </Key>
+    <Property Name="idPlane" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="namePlane" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="CrossingRange" Type="real" Nullable="false" />
+    <Property Name="PlanePlaces" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ScalesOnFlight">
+    <Key>
+      <PropertyRef Name="idScale" />
+    </Key>
+    <Property Name="idScale" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Deport" Type="datetime" Nullable="false" />
+    <Property Name="Arrive" Type="datetime" Nullable="false" />
+    <Property Name="idAirport" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="idFligth" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="FK_CommercialFlights_Destinations">
+    <End Role="Destinations" Type="Self.Destinations" Multiplicity="0..1" />
+    <End Role="CommercialFlights" Type="Self.CommercialFlights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Destinations">
+        <PropertyRef Name="idAirport" />
+      </Principal>
+      <Dependent Role="CommercialFlights">
+        <PropertyRef Name="Flight_From" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommercialFlights_Destinations1">
+    <End Role="Destinations" Type="Self.Destinations" Multiplicity="0..1" />
+    <End Role="CommercialFlights" Type="Self.CommercialFlights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Destinations">
+        <PropertyRef Name="idAirport" />
+      </Principal>
+      <Dependent Role="CommercialFlights">
+        <PropertyRef Name="Flight_To" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommercialFlights_Plane">
+    <End Role="Planes" Type="Self.Planes" Multiplicity="0..1" />
+    <End Role="CommercialFlights" Type="Self.CommercialFlights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Planes">
+        <PropertyRef Name="idPlane" />
+      </Principal>
+      <Dependent Role="CommercialFlights">
+        <PropertyRef Name="Flight_Plane" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FlightPersonal_CommercialFlights">
+    <End Role="CommercialFlights" Type="Self.CommercialFlights" Multiplicity="0..1" />
+    <End Role="FlightPersonal" Type="Self.FlightPersonal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CommercialFlights">
+        <PropertyRef Name="idFlight" />
+      </Principal>
+      <Dependent Role="FlightPersonal">
+        <PropertyRef Name="Flight" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FlightPersonal_Employees">
+    <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+    <End Role="FlightPersonal" Type="Self.FlightPersonal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="idEmploy" />
+      </Principal>
+      <Dependent Role="FlightPersonal">
+        <PropertyRef Name="Employ" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FligthPlaces_CommercialFlights">
+    <End Role="CommercialFlights" Type="Self.CommercialFlights" Multiplicity="0..1" />
+    <End Role="FilghtPlaces" Type="Self.FilghtPlaces" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CommercialFlights">
+        <PropertyRef Name="idFlight" />
+      </Principal>
+      <Dependent Role="FilghtPlaces">
+        <PropertyRef Name="idFlight" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScalesOnFlight_CommercialFlights">
+    <End Role="CommercialFlights" Type="Self.CommercialFlights" Multiplicity="0..1" />
+    <End Role="ScalesOnFlight" Type="Self.ScalesOnFlight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CommercialFlights">
+        <PropertyRef Name="idFlight" />
+      </Principal>
+      <Dependent Role="ScalesOnFlight">
+        <PropertyRef Name="idFligth" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ScalesOnFlight_Destinations">
+    <End Role="Destinations" Type="Self.Destinations" Multiplicity="1" />
+    <End Role="ScalesOnFlight" Type="Self.ScalesOnFlight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Destinations">
+        <PropertyRef Name="idAirport" />
+      </Principal>
+      <Dependent Role="ScalesOnFlight">
+        <PropertyRef Name="idAirport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FlightsDBModelStoreContainer">
+    <EntitySet Name="CommercialFlights" EntityType="Self.CommercialFlights" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Destinations" EntityType="Self.Destinations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FilghtPlaces" EntityType="Self.FilghtPlaces" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FlightPersonal" EntityType="Self.FlightPersonal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Planes" EntityType="Self.Planes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ScalesOnFlight" EntityType="Self.ScalesOnFlight" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CommercialFlights_Destinations" Association="Self.FK_CommercialFlights_Destinations">
+      <End Role="Destinations" EntitySet="Destinations" />
+      <End Role="CommercialFlights" EntitySet="CommercialFlights" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommercialFlights_Destinations1" Association="Self.FK_CommercialFlights_Destinations1">
+      <End Role="Destinations" EntitySet="Destinations" />
+      <End Role="CommercialFlights" EntitySet="CommercialFlights" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommercialFlights_Plane" Association="Self.FK_CommercialFlights_Plane">
+      <End Role="Planes" EntitySet="Planes" />
+      <End Role="CommercialFlights" EntitySet="CommercialFlights" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FlightPersonal_CommercialFlights" Association="Self.FK_FlightPersonal_CommercialFlights">
+      <End Role="CommercialFlights" EntitySet="CommercialFlights" />
+      <End Role="FlightPersonal" EntitySet="FlightPersonal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FlightPersonal_Employees" Association="Self.FK_FlightPersonal_Employees">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="FlightPersonal" EntitySet="FlightPersonal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FligthPlaces_CommercialFlights" Association="Self.FK_FligthPlaces_CommercialFlights">
+      <End Role="CommercialFlights" EntitySet="CommercialFlights" />
+      <End Role="FilghtPlaces" EntitySet="FilghtPlaces" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScalesOnFlight_CommercialFlights" Association="Self.FK_ScalesOnFlight_CommercialFlights">
+      <End Role="CommercialFlights" EntitySet="CommercialFlights" />
+      <End Role="ScalesOnFlight" EntitySet="ScalesOnFlight" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ScalesOnFlight_Destinations" Association="Self.FK_ScalesOnFlight_Destinations">
+      <End Role="Destinations" EntitySet="Destinations" />
+      <End Role="ScalesOnFlight" EntitySet="ScalesOnFlight" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

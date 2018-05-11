@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b142a40c21164bcfaeb4f66aeae06554" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="FlightsDBModel.CommercialFlight" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightsDBModel.Destination" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightsDBModel.Employee" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightsDBModel.FilghtPlace" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightsDBModel.FlightPersonal" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightsDBModel.Plane" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlightsDBModel.ScalesOnFlight" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="FlightsDBModel.FK_CommercialFlights_Destinations" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightsDBModel.FK_CommercialFlights_Destinations1" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightsDBModel.FK_CommercialFlights_Plane" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightsDBModel.FK_FlightPersonal_CommercialFlights" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightsDBModel.FK_FligthPlaces_CommercialFlights" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightsDBModel.FK_ScalesOnFlight_CommercialFlights" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightsDBModel.FK_ScalesOnFlight_Destinations" ManuallyRouted="false" />
+        <AssociationConnector Association="FlightsDBModel.FK_FlightPersonal_Employees" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

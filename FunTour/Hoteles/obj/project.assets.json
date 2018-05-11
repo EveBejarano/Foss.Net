@@ -13131,11 +13131,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Eve Bejarano\\source\\repos\\FunTour\\Hoteles\\Hoteles.csproj",
+      "projectUniqueName": "C:\\Users\\Eve Bejarano\\source\\repos\\Foss.Net\\FunTour\\Hoteles\\Hoteles.csproj",
       "projectName": "Hoteles",
-      "projectPath": "C:\\Users\\Eve Bejarano\\source\\repos\\FunTour\\Hoteles\\Hoteles.csproj",
+      "projectPath": "C:\\Users\\Eve Bejarano\\source\\repos\\Foss.Net\\FunTour\\Hoteles\\Hoteles.csproj",
       "packagesPath": "C:\\Users\\Eve Bejarano\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Eve Bejarano\\source\\repos\\FunTour\\Hoteles\\obj\\",
+      "outputPath": "C:\\Users\\Eve Bejarano\\source\\repos\\Foss.Net\\FunTour\\Hoteles\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\",

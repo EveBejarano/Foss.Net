@@ -1,0 +1,2 @@
+C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\FlightMVC\obj\Debug\FlightMVC.csprojResolveAssemblyReference.cache
+C:\Users\Eve Bejarano\source\repos\Foss.Net\FunTour\FlightMVC\obj\Debug\FlightMVC.csproj.CoreCompileInputs.cache
