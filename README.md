@@ -10,19 +10,30 @@ Permite dar de alta reservas, pasando los datos necesarios para su creación.
 ------
 
 La base de datos está compuesta por:
--Agent: información de los agentes de turismo externos que pueden crear reservas en el sistema.
--Booking: información de las reservas de habitaciones de hotel, identifica agente que realizó la reserva,
-huésped que se alojará, habitación que se reserva, estado de la reserva y fechas entre las cuales se reserva.
--BookingStatus: datos de los estados en los que puede estar una reserva.
--Country: información de los países en los cuales se tienen hoteles, incluyendo nombre del paí y la moneda que utiliza.
--Guest: información de los huéspedes que tuvieron reservas asociadas por lo menos una vez.
--Hotel: información de los hoteles incluyendo nombre, cadena a la que pertenece, dirección, país, 
-ciudad, email, website, clasificación por estrellas y otros detalles del hotel. Tiene tipos de habitación asociados. 
--HotelChain: datos de las cadenas de hoteles con las que se trabaja, incluyendo su nombre y su logo.
--Room: información de cada habitación que se puede reservar, cada una tiene un tipo de habitación, número y otros posibles
-detalles. Se asocia con su hotel a través del tipo de habitación.
--RoomType: información sobre los tipos de habitación que posee un hotel, con su descripción y tarifa estándar.
--StarRating: datos de las categorías de hotel por estrellas, con su representación gráfica.
+
+- Agent:
+  - Información de los agentes de turismo externos que pueden crear reservas en el sistema.
+- Booking:
+  - Información de las reservas de habitaciones de hotel, identifica agente que realizó la reserva,
+    huésped que se alojará, habitación que se reserva, estado de la reserva y fechas entre las cuales se reserva.
+- Booking Status:
+  - Datos de los estados en los que puede estar una reserva.
+- Country: 
+  - Información de los países en los cuales se tienen hoteles, incluyendo nombre del paí y la moneda que utiliza.
+- Guest: 
+  - Información de los huéspedes que tuvieron reservas asociadas por lo menos una vez.
+- Hotel: 
+  - información de los hoteles incluyendo nombre, cadena a la que pertenece, dirección, país, 
+    ciudad, email, website, clasificación por estrellas y otros detalles del hotel. Tiene tipos de habitación asociados. 
+- HotelChain:
+  - Datos de las cadenas de hoteles con las que se trabaja, incluyendo su nombre y su logo.
+- Room:
+  - Información de cada habitación que se puede reservar, cada una tiene un tipo de habitación, número y otros posibles
+    detalles. Se asocia con su hotel a través del tipo de habitación.
+- RoomType:
+  - Información sobre los tipos de habitación que posee un hotel, con su descripción y tarifa estándar.
+- StarRating:
+  - Datos de las categorías de hotel por estrellas, con su representación gráfica.
 
 ------
 
