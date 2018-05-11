@@ -125,3 +125,36 @@ Route/api/Events/{maxPrice} => Devuelve el listado de eventos con un costo menor
 ```
 
 Route/api/Tickets
+
+---
+
+# BusAPI
+
+API que permite simular la gestión de clientes, reservas y viajes de colectivos.
+
+## Entidades
+
+- Booking
+	- Contiene información sobre las reservas de pasajes.
+	- Conoce el cliente que realiza la reserva, el asiento asignado, y el viaje al cual se asigna.
+
+- Client
+	- Contiene información básica de los clientes.
+	
+- City
+	- Contiene información básica de las ciudades en las que opera FunTour.
+
+- Bus
+	- Contiene información sobre las unidades de colectivos con las que trabaja FunTour.
+
+- Seat
+	- Contiene información sobre los asientos en cada colectivo.
+
+- Trip
+	- Contiene información sobre cada viaje programado.
+	- Conoce el colectivo asignado, y las ciudades de origen y destino.
+
+---
+
+Contiene CRUD para todas las entidades, y vistas que aportan información pertinente sobre reservas y viajes.
+Falta: Filtrar viajes por rango de fechas. Filtrar viajes por companía.
