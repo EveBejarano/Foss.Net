@@ -63,7 +63,7 @@ En la aplicación actualmente se pueden utilizar los métodos CRUD para cada una
 
 ---
 
-# Api Eventos
+# API Eventos
 
 Representacion de la API correspondiente a un servicio de organizacion de eventos de terceros, el cual cuenta con:
 
