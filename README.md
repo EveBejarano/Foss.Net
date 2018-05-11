@@ -24,7 +24,9 @@ detalles. Se asocia con su hotel a través del tipo de habitación.
 -RoomType: información sobre los tipos de habitación que posee un hotel, con su descripción y tarifa estándar.
 -StarRating: datos de las categorías de hotel por estrellas, con su representación gráfica.
 
-API_de_Vuelos
+------
+
+# API de Vuelos
 
 Este código emula una api de un sistema de aerolineas en la que se puede obtener todo tipo de informacón concerniente a los vuelos.
 
