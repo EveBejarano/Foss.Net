@@ -1,0 +1,42 @@
+﻿@model Hotels.Models.Guest
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Guest</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GuestName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuestName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GuestAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuestAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GuestEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuestEmail)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.GuestID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
