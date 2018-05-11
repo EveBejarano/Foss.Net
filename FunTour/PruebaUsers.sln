@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightsAPI", "FlightsAPI\Fl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusAPI", "BusAPI\BusAPI.csproj", "{CAD32177-1B77-46D3-AEB6-B45EC58BC39C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotels", "..\..\..\..\source\repos\Hotels\Hotels\Hotels.csproj", "{C1C79556-E634-4E6B-814E-9121A9A64BC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotels", "Hotels\Hotels\Hotels.csproj", "{C1C79556-E634-4E6B-814E-9121A9A64BC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
