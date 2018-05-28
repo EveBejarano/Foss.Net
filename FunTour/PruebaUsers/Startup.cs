@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(PruebaUsers.Startup))]
-namespace PruebaUsers
+[assembly: OwinStartupAttribute(typeof(FunTour.Startup))]
+namespace FunTour
 {
     public partial class Startup
     {

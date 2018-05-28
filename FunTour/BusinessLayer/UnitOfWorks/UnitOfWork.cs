@@ -14,8 +14,9 @@ namespace BusinessLayer.UnitOfWorks
         private ApplicationDbContext context = new ApplicationDbContext();
         private RolesRepository<IdentityRole, RoleDetails> rolesRepository;
         private UserRepository<IdentityUser, UserDetails> userRepository;
+        private GenericRepository<Permission> permissionRepository;
 
-        public RolesRepository<RoleDetails,IdentityRole> RolesRepository
+        public RolesRepository<IdentityRole,RoleDetails> RolesRepository
         {
             get
             {
@@ -28,7 +29,7 @@ namespace BusinessLayer.UnitOfWorks
             }
         }
 
-        public UserRepository<UserDetails,IdentityUser> UserRepository
+        public UserRepository<IdentityUser,UserDetails> UserRepository
         {
             get
             {
@@ -38,6 +39,19 @@ namespace BusinessLayer.UnitOfWorks
                     this.userRepository = new UserRepository<IdentityUser,UserDetails>(context);
                 }
                 return userRepository;
+            }
+        }
+
+        public GenericRepository<Permission> PermissionRepository
+        {
+            get
+            {
+
+                if (this.permissionRepository == null)
+                {
+                    this.permissionRepository = new GenericRepository<Permission>(context);
+                }
+                return permissionRepository;
             }
         }
 

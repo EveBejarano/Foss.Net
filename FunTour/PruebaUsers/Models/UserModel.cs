@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using FunTourDataLayer.Models;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using PruebaUsers.Models;
+using FunTour.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PruebaUsers.ActualModels
+namespace FunTour.ActualModels
 {
     public class UserModel
     {

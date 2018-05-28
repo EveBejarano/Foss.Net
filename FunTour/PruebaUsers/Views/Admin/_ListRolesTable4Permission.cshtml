@@ -1,4 +1,4 @@
-﻿@model PruebaUsers.Models.Permission
+﻿@model FunTour.Models.Permission
 <script type="text/javascript">
     $(document).ready(function () {
         //Unbind the original image 'href' set by the controller...
@@ -8,7 +8,7 @@
         });
 
         var $dialog = $('<div/>')
-        .html("Warning: This will remove the selected Role from this Permission.  Removing this Role may prevent PruebaUsers from accessing areas in the application.  Only remove this Role if you intend to restrict application access.<br/><br/>Do you wish to continue?")
+        .html("Warning: This will remove the selected Role from this Permission.  Removing this Role may prevent FunTour from accessing areas in the application.  Only remove this Role if you intend to restrict application access.<br/><br/>Do you wish to continue?")
 		.dialog({
 		    autoOpen: false,
 		    resizable: false,
@@ -64,7 +64,7 @@ else
             Action
         </th>
         </thead>
-        @foreach (PruebaUsers.Models.RoleDetails Role in Model.Roles.OrderBy(u => u.RoleDescription))
+        @foreach (FunTour.Models.RoleDetails Role in Model.Roles.OrderBy(u => u.RoleDescription))
         {
             <tr>
                 <td>

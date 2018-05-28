@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PruebaUsers.Controllers
+namespace FunTour.Controllers
 {
     public class NotAuthorizedUserController : Controller
     {

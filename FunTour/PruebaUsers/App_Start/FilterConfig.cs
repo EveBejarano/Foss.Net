@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace PruebaUsers
+namespace FunTour
 {
     public class FilterConfig
     {

@@ -61,7 +61,6 @@
     <Compile Include="AccountManagement\UserDetails.cs" />
     <Compile Include="BusCompany\Bus.cs" />
     <Compile Include="BusCompany\BusCompany.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="EventCompany\Event.cs" />
     <Compile Include="FlightCompany\Flight.cs" />
     <Compile Include="FlightCompany\FlightCompany.cs" />

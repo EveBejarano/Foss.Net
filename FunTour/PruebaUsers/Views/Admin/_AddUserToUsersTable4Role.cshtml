@@ -1,4 +1,4 @@
-﻿@model PruebaUsers.Models.Role
+﻿@model FunTour.Models.Role
 <script type="text/javascript">
     $(document).ready(function () {
         //$('#AddUser').attr("disabled", true);
@@ -16,7 +16,7 @@
                 type: "GET",
                 data: _parameters,
                 success: function (data, textStatus, jqXHR) {
-                    $('#PruebaUsersTable').html(data);
+                    $('#FunTourTable').html(data);
                     $('#UserId').val("");
                 }
             });

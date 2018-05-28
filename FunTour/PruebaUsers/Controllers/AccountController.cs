@@ -9,9 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using PruebaUsers.Models;
+using FunTour.Models;
 
-namespace PruebaUsers.Controllers
+namespace FunTour.Controllers
 {
     [Authorize]
     public class AccountController : Controller

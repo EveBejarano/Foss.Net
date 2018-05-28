@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using PruebaUsers.Models;
+using FunTour.Models;
 
-namespace PruebaUsers.ActualModels
+namespace FunTour.ActualModels
 {
     public class ActualUser
     {

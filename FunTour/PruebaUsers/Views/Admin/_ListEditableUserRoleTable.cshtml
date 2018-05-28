@@ -31,7 +31,7 @@
     </label>
     @{
 
-        Html.DropDownList("RoleId", PruebaUsers.Controllers.AdminController.RoleList(ViewBag.UserId), string.Empty, new { style = "width:250px" });
+        Html.DropDownList("RoleId", FunTour.Controllers.AdminController.RoleList(ViewBag.UserId), string.Empty, new { style = "width:250px" });
     }
     
     <input type="button" id="AddRole" value="Add Role" />

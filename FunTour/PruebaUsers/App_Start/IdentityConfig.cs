@@ -5,14 +5,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using FunTourDataLayer.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using PruebaUsers.Models;
+using FunTour.Models;
 
-namespace PruebaUsers
+namespace FunTour
 {
     public class EmailService : IIdentityMessageService
     {

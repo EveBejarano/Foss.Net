@@ -6,10 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using FunTourDataLayer.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
-using PruebaUsers.Models;
+using FunTour.Models;
 
-namespace PruebaUsers.Controllers
+namespace FunTour.Controllers
 {
     public class RoleDetailsController : Controller
     {

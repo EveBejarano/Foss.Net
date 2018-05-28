@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace PruebaUsers.Models
+namespace FunTour.Models
 {
     public class IndexViewModel
     {

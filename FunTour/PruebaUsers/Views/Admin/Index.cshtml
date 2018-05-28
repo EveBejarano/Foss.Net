@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PruebaUsers.ActualModels.UserModel>
+﻿@model IEnumerable<FunTour.ActualModels.UserModel>
 @{
     ViewBag.Title = "RBAC Administration";
 }
@@ -6,8 +6,8 @@
 <script>
     $(function () {
         $("#pbFilter").click(function () {
-            $.get("/Admin/filter4PruebaUsers", { _surname: $("#SurnameId").val() }, function (data) {
-                $("#divPruebaUsers").html(data);
+            $.get("/Admin/filter4FunTour", { _surname: $("#SurnameId").val() }, function (data) {
+                $("#divFunTour").html(data);
             })
         })
     });
@@ -16,7 +16,7 @@
         $("#pbReset").click(function () {
             $("#SurnameId").val('');
             $.get("/Admin/filterReset", {}, function (data) {
-                $("#divPruebaUsers").html(data);
+                $("#divFunTour").html(data);
             })
         })
     });
@@ -30,7 +30,7 @@
 <fieldset>
     <legend>
         <h3>
-            System PruebaUsers
+            System FunTour
         </h3>
     </legend>
     <fieldset style="font: 100%; border: Black; border-style: solid; border-width: thin; width: 30%">

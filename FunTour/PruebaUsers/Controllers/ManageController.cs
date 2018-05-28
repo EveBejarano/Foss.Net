@@ -6,9 +6,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using PruebaUsers.Models;
+using FunTour.Models;
 
-namespace PruebaUsers.Controllers
+namespace FunTour.Controllers
 {
     [Authorize]
     public class ManageController : Controller

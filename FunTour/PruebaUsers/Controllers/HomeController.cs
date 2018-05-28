@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PruebaUsers.ActualModels;
+using FunTour.ActualModels;
 
-namespace PruebaUsers.Controllers
+namespace FunTour.Controllers
 {
     public class HomeController : Controller
     {

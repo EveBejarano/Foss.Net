@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using PruebaUsers.Models;
+using BusinessLayer.UnitOfWorks;
+using FunTour.Models;
 
-namespace PruebaUsers.ActualModels
+namespace FunTour.ActualModels
 {
     public class UserRole
     {
@@ -19,22 +20,20 @@ namespace PruebaUsers.ActualModels
             this.UserPermissions = new HashSet<UserPermission>();
         }
 
-        public Boolean IsSysAdmin()
+        public Boolean IsSysAdmin(UnitOfWork unitOfWork)
         {
-
             try
             {
                 string UserRole = this.Id_UserRole.ToString();
 
                 Boolean IsSysAdmin = false;
 
-                using (var _context = new ApplicationDbContext())
-                {
-                    var rol = _context.Roles.FirstOrDefault(p => p.Id == UserRole);
-                    IsSysAdmin = _context.RoleDetails.FirstOrDefault(p => p.Id_Role.ToString() == rol.Id).IsSysAdmin;
-                }
+                var rol = unitOfWork.RolesRepository.GetRoleByID(UserRole);
+                IsSysAdmin = unitOfWork.RolesRepository.GetRoleDetailsByID(rol.Id).IsSysAdmin;
+
                 return (IsSysAdmin);
             }
+
             catch (Exception)
             {
                 return false;
@@ -42,31 +41,27 @@ namespace PruebaUsers.ActualModels
 
         }
 
-        public void SetUserRolePermissions()
+        public void SetUserRolePermissions(UnitOfWork unitOfWork)
         {
+            var UserRole = this.Id_UserRole;
 
-            using( var _context = new ApplicationDbContext())
+
+            var rol = unitOfWork.RolesRepository.GetRoleByID(UserRole.ToString());
+            var Permissions = unitOfWork.RolesRepository.GetRoleDetails(filter: p => p.Id_Role.ToString() == rol.Id, includeProperties: "Permissions").FirstOrDefault().Permissions;
+
+            foreach (var permission in Permissions)
             {
-
-                var UserRole = this.Id_UserRole;
-
-
-                var rol = _context.Roles.FirstOrDefault(p => p.Id == UserRole.ToString());
-                var Permissions = _context.RoleDetails.FirstOrDefault(p => p.Id_Role.ToString() == rol.Id).Permissions;
-
-                foreach (var permission in Permissions)
+                UserPermission TempPermission = new UserPermission
                 {
-                    UserPermission TempPermission = new UserPermission
-                    {
-                        Id_UserPermission = permission.Id_Permission,
-                        PermissionDescription = permission.PermissionDescription
-                    };
+                    Id_UserPermission = permission.Id_Permission,
+                    PermissionDescription = permission.PermissionDescription
+                };
 
-                    this.UserPermissions.Add(TempPermission);
-                }
-
+                this.UserPermissions.Add(TempPermission);
             }
+
         }
+
 
         public Boolean HasPermissionTo(string permission)
         {

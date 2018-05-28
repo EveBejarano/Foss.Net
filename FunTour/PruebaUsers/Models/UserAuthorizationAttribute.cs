@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace PruebaUsers.ActualModels
+namespace FunTour.ActualModels
 {
     public class UserAuthorizationAttribute: AuthorizeAttribute
     {
@@ -43,7 +43,7 @@ namespace PruebaUsers.ActualModels
         //    //
         //    // Devuelve:
         //    //     Los usuarios autorizados para obtener acceso al método de acción o controlador.
-        //    public string PruebaUsers { get; set; }
+        //    public string FunTour { get; set; }
 
         //    //
         //    // Resumen:

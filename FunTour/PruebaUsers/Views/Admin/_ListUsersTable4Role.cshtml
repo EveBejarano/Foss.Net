@@ -1,4 +1,4 @@
-﻿@model PruebaUsers.Models.Role
+﻿@model FunTour.Models.Role
 <script type="text/javascript">
     $(document).ready(function () {
         //Unbind the original image 'href' set by the controller...
@@ -29,7 +29,7 @@
                                     type: "GET",
                                     data: _parameters,
                                     success: function (data, textStatus, jqXHR) {
-                                        $('#PruebaUsersTable').html(data);
+                                        $('#FunTourTable').html(data);
                                     }
                                 });
                                 $(this).dialog('close');
@@ -46,9 +46,9 @@
     });
 </script>
 
-@{if (Model.PruebaUsers.Count == 0)
+@{if (Model.FunTour.Count == 0)
 {
-    <h2><font color="red">No Associated PruebaUsers...</font></h2>
+    <h2><font color="red">No Associated FunTour...</font></h2>
     <br />
 }
 else
@@ -62,7 +62,7 @@ else
             Action
         </th>
         </thead>
-        @foreach (PruebaUsers.Models.USER user in Model.PruebaUsers.OrderBy(u => u.UserName))
+        @foreach (FunTour.Models.USER user in Model.FunTour.OrderBy(u => u.UserName))
         {
             <tr>
                 <td>

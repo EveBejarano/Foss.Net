@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using BusinessLayer.Repositories;
 using BusinessLayer.UnitOfWorks;
 using FunTourDataLayer.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using PruebaUsers.ActualModels;
-using PruebaUsers.Models;
+using FunTour.ActualModels;
 
-namespace PruebaUsers.Controllers
+namespace FunTour.Controllers
 {
     [UserAuthorization]
     public class AdminController : Controller
@@ -57,7 +54,7 @@ namespace PruebaUsers.Controllers
 
         private readonly UnitOfWork UnitOfWork = new UnitOfWork();
 
-        #region PruebaUsers
+        #region FunTour
 
         // Muestra en el index el listado de todos los usuarios activos
         // GET: Admin
@@ -74,7 +71,7 @@ namespace PruebaUsers.Controllers
             //                              where d.Inactive != true
             //                              select d).ToList();
 
-            IEnumerable<UserDetails> UserList = UnitOfWork.UserRepository.Get(filter : p=> p.Inactive == false);
+            IEnumerable<UserDetails> UserList = UnitOfWork.UserRepository.GetUserDetails(filter : p=> p.Inactive == false);
 
             List < UserModel > UserModelList = new List<UserModel>();
 
@@ -338,7 +335,7 @@ namespace PruebaUsers.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult filter4PruebaUsers(string _surname)
+        public PartialViewResult filter4FunTour(string _surname)
         {
             return PartialView("_ListUserTable", GetFilteredUserList(_surname));
         }
@@ -550,12 +547,12 @@ namespace PruebaUsers.Controllers
                 UserList.Add(auxuser);
             }
 
-            // PruebaUsers combo
+            // FunTour combo
             ViewBag.UserId = new SelectList(UserList, "Id_User", "UserName");
 
 
             // Rights combo
-            ViewBag.PermissionId = new SelectList(_context.Permissions.OrderBy(a => a.PermissionDescription), "Id_Permission", "PermissionDescription");
+            ViewBag.PermissionId = new SelectList(UnitOfWork.PermissionRepository.Get(orderBy: p=> p.OrderBy(a => a.PermissionDescription)), "Id_Permission", "PermissionDescription");
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
 
             return View(roleDetails);
@@ -619,12 +616,12 @@ namespace PruebaUsers.Controllers
                 UserList.Add(auxuser);
             }
 
-            // PruebaUsers combo
+            // FunTour combo
             ViewBag.UserId = new SelectList(UserList, "Id_User", "UserName");
 
 
             // Rights combo
-            ViewBag.PermissionId = new SelectList(_context.Permissions.OrderBy(a => a.Id_Permission), "Id_Permission", "PermissionDescription");
+            ViewBag.PermissionId = new SelectList(UnitOfWork.PermissionRepository.Get(orderBy: p=> p.OrderBy(a => a.Id_Permission)), "Id_Permission", "PermissionDescription");
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
 
             return View(role);
@@ -659,11 +656,11 @@ namespace PruebaUsers.Controllers
                 UserList.Add(auxuser);
             }
 
-            // PruebaUsers combo
+            // FunTour combo
             ViewBag.UserId = new SelectList( UserList, "Id_User", "UserName");
 
             // Rights combo
-            ViewBag.PermissionId = new SelectList(_context.Permissions.OrderBy(a => a.Id_Permission), "Id_Permission", "PermissionDescription");
+            ViewBag.PermissionId = new SelectList(UnitOfWork.PermissionRepository.Get(orderBy: p=>p.OrderBy(a => a.Id_Permission)), "Id_Permission", "PermissionDescription");
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
             return View(_role);
         }
@@ -695,7 +692,7 @@ namespace PruebaUsers.Controllers
             {
                 UnitOfWork.Save();
             }
-            return PartialView("_ListPruebaUsersTable4Role", role);
+            return PartialView("_ListFunTourTable4Role", role);
         }
 
         //[HttpGet]
@@ -716,7 +713,7 @@ namespace PruebaUsers.Controllers
         //        role.Users.Add(auxuserRole);
         //        _context.SaveChanges();
         //    }
-        //    return PartialView("_ListPruebaUsersTable4Role", role);
+        //    return PartialView("_ListFunTourTable4Role", role);
         //}
 
         #endregion
@@ -725,16 +722,13 @@ namespace PruebaUsers.Controllers
 
         public ViewResult PermissionIndex()
         {
-            List<Permission> _permissions = _context.Permissions
-                               .OrderBy(wn => wn.PermissionDescription)
-                               .Include(a => a.Roles)
-                               .ToList();
+            IEnumerable<Permission> _permissions = UnitOfWork.PermissionRepository.Get(orderBy : p=>p.OrderBy(wn => wn.PermissionDescription), includeProperties :"Roles");
             return View(_permissions);
         }
 
         public ViewResult PermissionDetails(int id)
         {
-            Permission _permission = _context.Permissions.Find(id);
+            Permission _permission = UnitOfWork.PermissionRepository.GetByID(id);
             return View(_permission);
         }
 
@@ -753,8 +747,8 @@ namespace PruebaUsers.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Permissions.Add(_permission);
-                _context.SaveChanges();
+                UnitOfWork.PermissionRepository.Insert(_permission);
+                UnitOfWork.Save();
                 return RedirectToAction("PermissionIndex");
             }
             return View(_permission);
@@ -762,8 +756,8 @@ namespace PruebaUsers.Controllers
 
         public ActionResult PermissionEdit(int id)
         {
-            Permission _permission = _context.Permissions.Find(id);
-            ViewBag.RoleId = new SelectList(_context.RoleDetails.OrderBy(p => p.RoleDescription), "Id_Role", "RoleDescription");
+            Permission _permission = UnitOfWork.PermissionRepository.GetByID(id);
+            ViewBag.RoleId = new SelectList(UnitOfWork.RolesRepository.GetRoleDetails(orderBy: q=> q.OrderBy(p => p.RoleDescription)), "Id_Role", "RoleDescription");
             return View(_permission);
         }
 
@@ -772,8 +766,8 @@ namespace PruebaUsers.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Entry(_permission).State = EntityState.Modified;
-                _context.SaveChanges();
+                UnitOfWork.PermissionRepository.Update(_permission);
+                UnitOfWork.Save();
                 return RedirectToAction("PermissionDetails", new RouteValueDictionary(new { id = _permission.Id_Permission }));
             }
             return View(_permission);
@@ -783,12 +777,12 @@ namespace PruebaUsers.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult PermissionDelete(int id)
         {
-            Permission permission = _context.Permissions.Find(id);
+            Permission permission = UnitOfWork.PermissionRepository.GetByID(id);
             if (permission.Roles.Count > 0)
                 permission.Roles.Clear();
 
-            _context.Entry(permission).State = EntityState.Deleted;
-            _context.SaveChanges();
+            UnitOfWork.PermissionRepository.Delete(permission);
+            UnitOfWork.Save();
             return RedirectToAction("PermissionIndex");
         }
 
@@ -796,14 +790,11 @@ namespace PruebaUsers.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult AddPermission2RoleReturnPartialView(int id, int permissionId)
         {
-            RoleDetails role = _context.RoleDetails.Find(id);
-            Permission _permission = _context.Permissions.Find(permissionId);
-
-            if (!role.Permissions.Contains(_permission))
+            if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
             {
-                role.Permissions.Add(_permission);
-                _context.SaveChanges();
+                UnitOfWork.Save();
             }
+            RoleDetails role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
             return PartialView("_ListPermissions", role);
         }
 
@@ -811,17 +802,13 @@ namespace PruebaUsers.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult AddAllPermissions2RoleReturnPartialView(string id)
         {
-            RoleDetails _role = _context.RoleDetails.Where(p => p.Id_Role.ToString() == id).FirstOrDefault();
-            List<Permission> _permissions = _context.Permissions.ToList();
-            foreach (Permission _permission in _permissions)
-            {
-                if (!_role.Permissions.Contains(_permission))
-                {
-                    _role.Permissions.Add(_permission);
 
-                }
+            if (UnitOfWork.RolesRepository.AddAllPermissions2Role(id))
+            {
+                UnitOfWork.Save();
             }
-            _context.SaveChanges();
+
+            RoleDetails _role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
             return PartialView("_ListPermissions", _role);
         }
 
@@ -829,13 +816,10 @@ namespace PruebaUsers.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult DeletePermissionFromRoleReturnPartialView(int id, int permissionId)
         {
-            RoleDetails _role = _context.RoleDetails.Find(id);
-            Permission _permission = _context.Permissions.Find(permissionId);
-
-            if (_role.Permissions.Contains(_permission))
+            RoleDetails _role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            if (UnitOfWork.RolesRepository.DeletePermissionFromRole(id, permissionId))
             {
-                _role.Permissions.Remove(_permission);
-                _context.SaveChanges();
+                UnitOfWork.Save();
             }
             return PartialView("_ListPermissions", _role);
         }
@@ -844,13 +828,10 @@ namespace PruebaUsers.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult DeleteRoleFromPermissionReturnPartialView(int id, int permissionId)
         {
-            RoleDetails role = _context.RoleDetails.Find(id);
-            Permission permission = _context.Permissions.Find(permissionId);
-
-            if (role.Permissions.Contains(permission))
+            Permission permission= UnitOfWork.PermissionRepository.GetByID(permissionId);
+            if (UnitOfWork.RolesRepository.DeleteRoleFromPermission(id, permissionId))
             {
-                role.Permissions.Remove(permission);
-                _context.SaveChanges();
+                UnitOfWork.Save();
             }
             return PartialView("_ListRolesTable4Permission", permission);
         }
@@ -859,13 +840,11 @@ namespace PruebaUsers.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult AddRole2PermissionReturnPartialView(int permissionId, int roleId)
         {
-            RoleDetails role = _context.RoleDetails.Find(roleId);
-            Permission _permission = _context.Permissions.Find(permissionId);
+            Permission _permission = UnitOfWork.PermissionRepository.GetByID(permissionId);
 
-            if (!role.Permissions.Contains(_permission))
+            if (UnitOfWork.RolesRepository.AddRole2Permission(permissionId, roleId))
             {
-                role.Permissions.Add(_permission);
-                _context.SaveChanges();
+                UnitOfWork.Save();
             }
             return PartialView("_ListRolesTable4Permission", _permission);
         }
@@ -896,7 +875,7 @@ namespace PruebaUsers.Controllers
                     }
 
                     string _permissionDescription = string.Format("{0}-{1}", _controllerName, _controllerActionName);
-                    Permission _permission = _context.Permissions.Where(p => p.PermissionDescription == _permissionDescription).FirstOrDefault();
+                    Permission _permission = UnitOfWork.PermissionRepository.Get(filter : p => p.PermissionDescription == _permissionDescription).FirstOrDefault();
                     if (_permission == null)
                     {
                         if (ModelState.IsValid)
@@ -904,8 +883,8 @@ namespace PruebaUsers.Controllers
                             Permission _perm = new Permission();
                             _perm.PermissionDescription = _permissionDescription;
 
-                            _context.Permissions.Add(_perm);
-                            _context.SaveChanges();
+                            UnitOfWork.PermissionRepository.Insert(_perm);
+                            UnitOfWork.Save();
                         }
                     }
                 }

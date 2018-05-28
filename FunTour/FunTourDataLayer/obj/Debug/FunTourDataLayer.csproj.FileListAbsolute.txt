@@ -16,3 +16,4 @@ C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\e
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.csproj.CopyComplete
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.dll
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.pdb
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.csprojAssemblyReference.cache

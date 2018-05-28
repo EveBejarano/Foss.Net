@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace PruebaUsers
+namespace FunTour
 {
     public class BundleConfig
     {
