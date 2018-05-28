@@ -1,0 +1,2 @@
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\PruebaUsers\obj\Debug\FunTour.csprojAssemblyReference.cache
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\PruebaUsers\obj\Debug\FunTour.csproj.CoreCompileInputs.cache

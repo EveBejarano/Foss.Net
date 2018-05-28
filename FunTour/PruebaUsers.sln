@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebaUsers", "PruebaUsers\PruebaUsers.csproj", "{DC939869-2438-47C9-9CAA-6CC2D3A9D59A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunTour", "PruebaUsers\FunTour.csproj", "{DC939869-2438-47C9-9CAA-6CC2D3A9D59A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Events", "WebApplication2\Events.csproj", "{05571A51-DC14-40DA-80D1-90BC3362A558}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusAPI", "BusAPI\BusAPI.csproj", "{CAD32177-1B77-46D3-AEB6-B45EC58BC39C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotels", "Hotels\Hotels\Hotels.csproj", "{C1C79556-E634-4E6B-814E-9121A9A64BC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunTourBusinessLayer", "BusinessLayer\FunTourBusinessLayer.csproj", "{F586E335-DEFD-4088-B671-175DCC463EF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunTourDataLayer", "FunTourDataLayer\FunTourDataLayer.csproj", "{966D98FD-5121-49F2-8819-358E5EB04840}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{C1C79556-E634-4E6B-814E-9121A9A64BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1C79556-E634-4E6B-814E-9121A9A64BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1C79556-E634-4E6B-814E-9121A9A64BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F586E335-DEFD-4088-B671-175DCC463EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F586E335-DEFD-4088-B671-175DCC463EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F586E335-DEFD-4088-B671-175DCC463EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F586E335-DEFD-4088-B671-175DCC463EF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{966D98FD-5121-49F2-8819-358E5EB04840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{966D98FD-5121-49F2-8819-358E5EB04840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{966D98FD-5121-49F2-8819-358E5EB04840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{966D98FD-5121-49F2-8819-358E5EB04840}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

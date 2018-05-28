@@ -6,6 +6,9 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using BusinessLayer.Repositories;
+using BusinessLayer.UnitOfWorks;
+using FunTourDataLayer.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using PruebaUsers.ActualModels;
@@ -15,7 +18,7 @@ namespace PruebaUsers.Controllers
 {
     [UserAuthorization]
     public class AdminController : Controller
-    {
+    { 
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         public ApplicationSignInManager SignInManager
@@ -52,7 +55,7 @@ namespace PruebaUsers.Controllers
             SignInManager = signInManager;
         }
 
-        private ApplicationDbContext _context = new ApplicationDbContext();
+        private readonly UnitOfWork UnitOfWork = new UnitOfWork();
 
         #region PruebaUsers
 
@@ -64,18 +67,21 @@ namespace PruebaUsers.Controllers
             // verifica si el usuario esta activo o no. los ordena primero por apellido y despues por nombre
             // List<UserDetails> UserList = _context.Database.SqlQuery<UserDetails>(string.Format("SELECT * FROM IdentityUsers p, UserDetails d WHERE p.UserName = d.UserName And(d.Inactive != 'true')", new UserDetails().LastName)).ToList();
 
-            List<UserDetails> UserList = (from d in _context.UserDetails
-                                          join u in _context.Users
-                                          on d.UserName equals u.UserName
-                                          where d.Inactive != true
-                                          select d).ToList();
 
+            //List<UserDetails> UserList = (from d in _context.UserDetails
+            //                              join u in _context.Users
+            //                              on d.UserName equals u.UserName
+            //                              where d.Inactive != true
+            //                              select d).ToList();
+
+            IEnumerable<UserDetails> UserList = UnitOfWork.UserRepository.Get(filter : p=> p.Inactive == false);
 
             List < UserModel > UserModelList = new List<UserModel>();
 
             foreach (var item in UserList)
             {
-                var auxUser = _context.Users.FirstOrDefault(p => p.UserName == item.UserName);
+                var auxUser = UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
+                    //_context.Users.FirstOrDefault(p => p.UserName == item.UserName);
 
                 var UserModel = new UserModel
                 {
@@ -99,8 +105,10 @@ namespace PruebaUsers.Controllers
         //Busca un usuario y muestra los datos
         public ViewResult UserDetails(string  IdUser)
         {
-            var user = _context.Users.FirstOrDefault(p => p.Id == IdUser);
-            var User = UserModel.GetDataUserModel(user.UserName);
+            var user = UnitOfWork.UserRepository.GetUserByID(IdUser);
+                //_context.Users.FirstOrDefault(p => p.Id == IdUser);
+
+            var User = UserModel.GetDataUserModel(user.UserName); //Ver
             SetViewBagData(IdUser);
             return View(User);
         }
@@ -122,7 +130,7 @@ namespace PruebaUsers.Controllers
         {
             ViewBag.UserId = _UserId;
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
-            ViewBag.RoleId = new SelectList(_context.Roles.OrderBy(p => p.Name), "Id_Role", "RoleName");
+            ViewBag.RoleId = new SelectList(UnitOfWork.RolesRepository.GetRoles(orderBy: q => q.OrderBy(p => p.Name) ), "Id_Role", "RoleName");
         }
 
         // Toma un Model de Usuario
@@ -161,12 +169,14 @@ namespace PruebaUsers.Controllers
                 {
 
                     // busca una lista de nombres de usuario que coincidan con el ingresado
-                    List<string> results = (from d in _context.UserDetails
-                                            join u in _context.Users
-                                            on d.UserName equals u.UserName
-                                            where d.UserName == NewUser.UserModelName
-                                            || (d.UserName == u.UserName && u.Email == NewUser.Email)
-                                            select d.UserName).ToList();
+                    //List<string> results = (from d in _context.UserDetails
+                    //                        join u in _context.Users
+                    //                        on d.UserName equals u.UserName
+                    //                        where d.UserName == NewUser.UserModelName
+                    //                        || (d.UserName == u.UserName && u.Email == NewUser.Email)
+                    //                        select d.UserName).ToList();
+
+                    List<string> results = UnitOfWork.UserRepository.GetStringUserNames(NewUser.UserModelName, NewUser.Email);
 
                     bool _UserExistsInTable = (results.Count > 0);
 
@@ -176,15 +186,9 @@ namespace PruebaUsers.Controllers
                     // Si el usuario no esta activo, lo activa
                     if (_UserExistsInTable)
                     {
-                        //_User = _context.UserDetails.Where(p => p.UserName == NewUser.UserModelName).FirstOrDefault();
+                        
+                        var Users = UnitOfWork.UserRepository.GetUserDetailsByNameEmail(NewUser.UserModelName, NewUser.Email);
 
-                         var Users =
-                            from d in _context.UserDetails
-                            join u in _context.Users
-                            on d.UserName equals u.UserName
-                            where d.UserName == NewUser.UserModelName
-                            || (d.UserName == u.UserName && u.Email == NewUser.Email)
-                            select d;
 
                             var band = false;
                             foreach (var item in Users)
@@ -200,10 +204,8 @@ namespace PruebaUsers.Controllers
                             if (!band)
                             {
                                 _User = Users.First(p => p.Inactive == true);
-                                _context.Entry(_User).Entity.Inactive = false;
-                                _context.Entry(_User).Entity.LastModified = System.DateTime.Now;
-                                _context.Entry(_User).State = EntityState.Modified;
-                                _context.SaveChanges();
+                                UnitOfWork.UserRepository.ActivateUserDetails(_User);
+                                UnitOfWork.Save();
                                 return RedirectToAction("Index");
                             }
 
@@ -224,35 +226,56 @@ namespace PruebaUsers.Controllers
                         var result = await UserManager.CreateAsync(user, NewUser.Password);
                         if (result.Succeeded)
                         {
-                            using (var _context = new ApplicationDbContext())
+
+                            var userDetails = new UserDetails
+                            {
+                                FirstName = NewUser.FirstName,
+                                LastName = NewUser.LastName,
+                            };
+
+                            UnitOfWork.UserRepository.CreateUserDetails(userDetails);
+                            try
                             {
 
-                                var userDetails = new UserDetails
-                                {
-                                    UserName = _context.Users.FirstOrDefault(p => p.UserName == NewUser.UserModelName).UserName,
+                                UnitOfWork.Save();
+                            }
+                            catch (Exception ex)
+                            {
 
-                                    FirstName = NewUser.FirstName,
-                                    LastName = NewUser.LastName,
-                                    LastModified = System.DateTime.Now,
-                                    Inactive = false,
-                                    isSysAdmin = true
-                                };
-
-                                try
-                                {
-
-                                    _context.UserDetails.Add(userDetails);
-                                    _context.SaveChanges();
-                                }
-                                catch (Exception ex)
-                                {
-
-                                    throw;
-                                }
-
+                                throw;
                             }
 
-                            return RedirectToAction("Index");
+                        
+                        //{
+                        //    using (var _context = new ApplicationDbContext())
+                        //    {
+
+                        //        var userDetails = new UserDetails
+                        //        {
+                        //            UserName = _context.Users.FirstOrDefault(p => p.UserName == NewUser.UserModelName).UserName,
+
+                        //            FirstName = NewUser.FirstName,
+                        //            LastName = NewUser.LastName,
+                        //            LastModified = System.DateTime.Now,
+                        //            Inactive = false,
+                        //            isSysAdmin = true
+                        //        };
+
+                        //        try
+                        //        {
+
+                        //            _context.UserDetails.Add(userDetails);
+                        //            _context.SaveChanges();
+                        //        }
+                        //        catch (Exception ex)
+                        //        {
+
+                        //            throw;
+                        //        }
+
+                        //    }
+
+                        return RedirectToAction("Index");
                         }
                         
                     }
@@ -280,7 +303,8 @@ namespace PruebaUsers.Controllers
         [HttpPost]
         public ActionResult UserEdit(UserModel User)
         {
-            var _User = _context.Users.Where(p => p.Id == User.Id_UserModel).FirstOrDefault();
+            var _User = UnitOfWork.UserRepository.GetUserByID(User.Id_UserModel);
+                /*_context.Users.Where(p => p.Id == User.Id_UserModel).FirstOrDefault()*/;
             if (_User != null)
             {
                 try
@@ -295,29 +319,21 @@ namespace PruebaUsers.Controllers
             return RedirectToAction("UserDetails", new RouteValueDictionary(new { IdUser = _User.Id }));
         }
 
-
-
-
-
-
         [HttpGet]
         public ActionResult DeleteUserRole(string id, string UserId)
         {
-            var role = _context.Roles.Find(id);
-            var user = _context.Users.Find(UserId);
+            //var role = _context.Roles.Find(id);
+            //var user = _context.Users.Find(UserId);
 
-            IdentityUserRole userrole = new IdentityUserRole {
-                UserId = user.Id,
-                RoleId = role.Id
-            }; 
+            var role = UnitOfWork.RolesRepository.GetRoleByID(id);
+            var user = UnitOfWork.UserRepository.GetUserByID(UserId);
 
-
-            if (role.Users.Contains(userrole))
+            if (UnitOfWork.UserRepository.DeleteRoleFromUser(user, role))
             {
-                role.Users.Remove(userrole);
-                user.Roles.Remove(userrole);
-                _context.SaveChanges();
-            }
+                UnitOfWork.Save();
+            };
+               
+            
             return RedirectToAction("Details", "User", new { id = UserId });
         }
 
@@ -330,7 +346,7 @@ namespace PruebaUsers.Controllers
         [HttpGet]
         public PartialViewResult filterReset()
         {
-            List<UserDetails> usersdetails = _context.UserDetails.Where(r => r.Inactive == false || r.Inactive == null).ToList();
+            IEnumerable<UserDetails> usersdetails = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<UserModel> users = new List<UserModel>();
             foreach (var user in usersdetails)
@@ -339,7 +355,7 @@ namespace PruebaUsers.Controllers
                 {
                     LastName = user.LastName,
                     FirstName = user.FirstName,
-                    Id_UserModel = _context.Users.FirstOrDefault(p=> p.UserName == user.UserName).Id,
+                    Id_UserModel = UnitOfWork.UserRepository.GetUserByUserName(user.UserName).Id,
                     UserModelName = user.UserName
 
                 };
@@ -355,17 +371,21 @@ namespace PruebaUsers.Controllers
         {
             try
             {
-                var User = _context.UserDetails.Find(UserId);
-                if (User != null)
+                if (UnitOfWork.UserRepository.DeleteUserDetail(UserId))
                 {
-                    User.Inactive = true;
-                    User.LastModified = System.DateTime.Now;
+                    UnitOfWork.Save();
+                };
+                //var User = _context.UserDetails.Find(UserId);
+                //if (User != null)
+                //{
+                //    User.Inactive = true;
+                //    User.LastModified = System.DateTime.Now;
 
-                    var User1 = _context.UserDetails.Find(UserId);
-                    _context.Entry(User1).CurrentValues.SetValues(User);
-                    _context.SaveChanges();
+                //    var User1 = _context.UserDetails.Find(UserId);
+                //    _context.Entry(User1).CurrentValues.SetValues(User);
+                //    _context.SaveChanges();
                     
-                }
+                //}
             }
             catch
             {
@@ -380,14 +400,14 @@ namespace PruebaUsers.Controllers
             {
                 if (string.IsNullOrEmpty(_surname))
                 {
-                    var userDetails = _context.UserDetails.Where(r => r.Inactive == false || r.Inactive == null).ToList();
+                    var userDetails = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
                     foreach (var user in userDetails)
                     {
                         var userModel = new UserModel
                         {
 
-                            Id_UserModel = _context.Users.FirstOrDefault(p => p.UserName == user.UserName).Id,
+                            Id_UserModel = UnitOfWork.UserRepository.GetUserByUserName(user.UserName).Id,
                             UserModelName = user.UserName,
                             Inactive = user.Inactive,
                             FirstName = user.FirstName,
@@ -396,7 +416,7 @@ namespace PruebaUsers.Controllers
 
                         };
 
-                        var users = _context.Users.FirstOrDefault(p => p.UserName == _surname);
+                        var users = UnitOfWork.UserRepository.GetUserByUserName(_surname);
 
                         userModel.UserModelName = users.UserName;
                         userModel.Email = users.Email;
@@ -408,7 +428,7 @@ namespace PruebaUsers.Controllers
                 }
                 else
                 {
-                    ICollection<ApplicationUser> users = _context.Users.Where(p => p.UserName == _surname).ToList();
+                    IEnumerable<IdentityUser> users = UnitOfWork.UserRepository.GetUsers(filter: p => p.UserName == _surname);
 
                     foreach (var user in users)
                     {
@@ -420,7 +440,7 @@ namespace PruebaUsers.Controllers
                             PhoneNumber = user.PhoneNumber
                         };
 
-                        var userDetail = _context.UserDetails.FirstOrDefault(p => p.UserName == user.UserName);
+                        var userDetail = UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
 
                         userModel.Inactive = userDetail.Inactive;
                         userModel.FirstName = userDetail.FirstName;
@@ -437,33 +457,35 @@ namespace PruebaUsers.Controllers
             }
             return _ret;
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            _context.Dispose();
-            base.Dispose(disposing);
-        }
+        
 
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult DeleteUserRoleReturnPartialView(int id, string UserId)
         {
-            IdentityRole role = _context.Roles.Find(id);
-            IdentityUser User = _context.Users.Find(UserId);
-            IdentityUserRole user_role = new IdentityUserRole
-            {
-                RoleId = role.Id,
-                UserId = User.Id
-            };
+            var role = UnitOfWork.RolesRepository.GetRoleByID(id);
+            var user = UnitOfWork.UserRepository.GetUserByID(UserId);
 
-            if (role.Users.Contains(user_role))
+            if (UnitOfWork.UserRepository.DeleteRoleFromUser(user, role))
             {
-                role.Users.Remove(user_role);
-                _context.SaveChanges();
-            }
+                UnitOfWork.Save();
+            };
+            //IdentityRole role = _context.Roles.Find(id);
+            //IdentityUser User = _context.Users.Find(UserId);
+            //IdentityUserRole user_role = new IdentityUserRole
+            //{
+            //    RoleId = role.Id,
+            //    UserId = User.Id
+            //};
+
+            //if (role.Users.Contains(user_role))
+            //{
+            //    role.Users.Remove(user_role);
+            //    _context.SaveChanges();
+            //}
             SetViewBagData(UserId.ToString());
 
-            return PartialView("_ListUserRoleTable", User.UserName);
+            return PartialView("_ListUserRoleTable", user.UserName);
         }
 
         //[HttpGet]
@@ -494,22 +516,22 @@ namespace PruebaUsers.Controllers
         #region Roles
         public ActionResult RoleIndex()
         {
-            return View(_context.RoleDetails.OrderBy(r => r.RoleDescription).ToList());
+            //Get rolesrepository 
+            return View(UnitOfWork.RolesRepository.GetRoleDetails(orderBy: q=> q.OrderBy(r => r.RoleDescription)));
         }
 
         public ViewResult RoleDetails(int id)
         {
 
-            IdentityUser User = _context.Users.Where(r => r.UserName == this.User.Identity.Name).FirstOrDefault();
-            var roleDetails = _context.RoleDetails.Where(r => r.Id_Role == id)
-                   .Include(a => a.Permissions)
+            IdentityUser User = UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
+            var roleDetails = UnitOfWork.RolesRepository.GetRoleDetails(filter:r => r.Id_Role == id, includeProperties : "Permissions")
                    .FirstOrDefault();
 
-            var role = _context.Roles.Where(p => p.Id == roleDetails.Id_Role.ToString()).Include("Users").FirstOrDefault();
+            var role = UnitOfWork.RolesRepository.GetRoles(filter: p => p.Id == roleDetails.Id_Role.ToString(), includeProperties: "Users").FirstOrDefault();
             foreach (var item in role.Users)
             {
-                var user = _context.Users.FirstOrDefault(p => p.Id == item.UserId);
-                var auxuser = _context.UserDetails.FirstOrDefault(r => r.UserName == user.UserName);
+                var user = UnitOfWork.UserRepository.GetUserByID(item.UserId);
+                var auxuser = UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
 
                 if (user!= null && (auxuser.Inactive == false || auxuser.Inactive == null))
                 {
@@ -518,13 +540,13 @@ namespace PruebaUsers.Controllers
             }
 
 
-            var auxuserlist = _context.UserDetails.Where(r => r.Inactive == false || r.Inactive == null);
+            var auxuserlist = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<IdentityUser> UserList = new List<IdentityUser>();
 
             foreach (var item in auxuserlist)
             {
-                var auxuser = _context.Users.FirstOrDefault(p => p.UserName == item.UserName);
+                var auxuser = UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
                 UserList.Add(auxuser);
             }
 
@@ -541,7 +563,7 @@ namespace PruebaUsers.Controllers
 
         public ActionResult RoleCreate()
         {
-           IdentityUser User = _context.Users.Where(r => r.UserName == this.User.Identity.Name).FirstOrDefault();
+           IdentityUser User = UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
             return View();
         }
@@ -554,18 +576,13 @@ namespace PruebaUsers.Controllers
                 ModelState.AddModelError("Role Description", "Role Description must be entered");
             }
 
-            IdentityUser User = _context.Users.Where(r => r.UserName == this.User.Identity.Name).FirstOrDefault();
+            IdentityUser User = UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
             if (ModelState.IsValid)
             {
-                IdentityRole role = new IdentityRole
+                if (UnitOfWork.RolesRepository.CreateRol(_role))
                 {
-                    Id = _role.Id_Role.ToString(),
-                    Name = _role.RoleName
+                    UnitOfWork.Save();
                 };
-
-                _context.Roles.Add(role);
-                _context.RoleDetails.Add(_role);
-                _context.SaveChanges();
                 return RedirectToAction("RoleIndex");
             }
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
@@ -576,15 +593,13 @@ namespace PruebaUsers.Controllers
         public ActionResult RoleEdit(int id)
         {
         //    IdentityUser User = _context.Users.Where(r => r.UserName == this.User.Identity.Name).FirstOrDefault();
-            var roleDetails = _context.RoleDetails.Where(r => r.Id_Role == id)
-                   .Include(a => a.Permissions)
-                   .FirstOrDefault();
+            var roleDetails = UnitOfWork.RolesRepository.GetRoleDetails(filter: r => r.Id_Role == id, includeProperties : "Permissions").FirstOrDefault();
 
-            var role = _context.Roles.Where(p => p.Name == roleDetails.RoleName).Include("Users").FirstOrDefault();
+            var role = UnitOfWork.RolesRepository.GetRoles(filter: p => p.Name == roleDetails.RoleName, includeProperties: "Users").FirstOrDefault();
             foreach (var item in role.Users)
             {
-                var user = _context.Users.FirstOrDefault(p => p.Id == item.UserId);
-                var auxuser = _context.UserDetails.FirstOrDefault(r => r.UserName == user.UserName);
+                var user = UnitOfWork.UserRepository.GetUserByID(item.UserId);
+                var auxuser = UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
 
                 if (user != null && (auxuser.Inactive == false || auxuser.Inactive == null))
                 {
@@ -594,13 +609,13 @@ namespace PruebaUsers.Controllers
 
 
 
-            var auxuserlist = _context.UserDetails.Where(r => r.Inactive == false || r.Inactive == null);
+            var auxuserlist = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<IdentityUser> UserList = new List<IdentityUser>();
 
             foreach (var item in auxuserlist)
             {
-                var auxuser = _context.Users.FirstOrDefault(p => p.UserName == item.UserName);
+                var auxuser = UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
                 UserList.Add(auxuser);
             }
 
@@ -622,29 +637,25 @@ namespace PruebaUsers.Controllers
             {
                 ModelState.AddModelError("Role Description", "Role Description must be entered");
             }
-
-            //EntityState state = _context.Entry(_role).State;
-            IdentityUser User = _context.Users.Where(r => r.UserName == this.User.Identity.Name).FirstOrDefault();
+            
+            IdentityUser User = UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
             if (ModelState.IsValid)
             {
-                IdentityRole role = _context.Roles.FirstOrDefault(p => p.Id == _role.Id_Role.ToString());
-
-                role.Name = _role.RoleName;
-
-                _context.Entry(role).CurrentValues.SetValues(role);
-
-                _context.Entry(_role).State = EntityState.Modified;
-                _context.SaveChanges();
+                
+                if (UnitOfWork.RolesRepository.Update(_role))
+                {
+                    UnitOfWork.Save();
+                }
                 return RedirectToAction("RoleDetails", new RouteValueDictionary(new { id = _role.Id_Role }));
             }
 
-            var auxuserlist = _context.UserDetails.Where(r => r.Inactive == false || r.Inactive == null);
+            var auxuserlist = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<IdentityUser> UserList = new List<IdentityUser>();
 
             foreach (var item in auxuserlist)
             {
-                var auxuser = _context.Users.FirstOrDefault(p => p.UserName== item.UserName);
+                var auxuser = UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
                 UserList.Add(auxuser);
             }
 
@@ -660,20 +671,14 @@ namespace PruebaUsers.Controllers
 
         public ActionResult RoleDelete(int id)
         {
-            RoleDetails roleDetails = _context.RoleDetails.Find(id);
+            RoleDetails roleDetails = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
 
-            IdentityRole _role = _context.Roles.FirstOrDefault( p => p.Name == roleDetails.RoleName);
+            IdentityRole _role = UnitOfWork.RolesRepository.GetRoles(filter: p => p.Name == roleDetails.RoleName).FirstOrDefault();
 
 
-            if (_role != null)
+            if (UnitOfWork.RolesRepository.DeleteRole(_role))
             {
-                _role.Users.Clear();
-                roleDetails.Permissions.Clear();
-
-                _context.Entry(_role).State = EntityState.Deleted;
-
-                _context.Entry(roleDetails).State = EntityState.Deleted;
-                _context.SaveChanges();
+                UnitOfWork.Save();
             }
             return RedirectToAction("RoleIndex");
         }
@@ -682,20 +687,13 @@ namespace PruebaUsers.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult DeleteUserFromRoleReturnPartialView(int id, int UserId)
         {
-            IdentityRole role = _context.Roles.Find(id);
-            IdentityUser User = _context.Users.Find(UserId);
-
-            IdentityUserRole auxuserRole = new IdentityUserRole
-            {
-                RoleId = role.Id,
-                UserId = User.Id
-            };
+            IdentityRole role = UnitOfWork.RolesRepository.GetRoleByID(id);
+            IdentityUser user = UnitOfWork.UserRepository.GetUserByID(UserId);
             
 
-            if (role.Users.Contains(auxuserRole))
+            if (UnitOfWork.RolesRepository.DeleteUserFromRole(user,role))
             {
-                role.Users.Remove(auxuserRole);
-                _context.SaveChanges();
+                UnitOfWork.Save();
             }
             return PartialView("_ListPruebaUsersTable4Role", role);
         }

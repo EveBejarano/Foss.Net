@@ -1,0 +1,9 @@
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\bin\Debug\netstandard2.0\DataLayer.deps.json
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\bin\Debug\netstandard2.0\DataLayer.dll
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\obj\Debug\netstandard2.0\DataLayer.csprojAssemblyReference.cache
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\obj\Debug\netstandard2.0\DataLayer.csproj.CoreCompileInputs.cache
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\obj\Debug\netstandard2.0\DataLayer.AssemblyInfoInputs.cache
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\obj\Debug\netstandard2.0\DataLayer.AssemblyInfo.cs
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\bin\Debug\netstandard2.0\DataLayer.pdb
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\obj\Debug\netstandard2.0\DataLayer.dll
+C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\DataLayer\obj\Debug\netstandard2.0\DataLayer.pdb
