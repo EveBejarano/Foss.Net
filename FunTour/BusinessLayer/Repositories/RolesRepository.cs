@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BusinessLayer.Repositories
 {
-    public class RolesRepository<TEntity,TEntity2> : GenericRepository<TEntity, TEntity2>
+    public class RolesRepository<TEntity,TEntity2>
         where TEntity : IdentityRole where TEntity2 : RoleDetails
     {
 
@@ -18,7 +18,7 @@ namespace BusinessLayer.Repositories
         internal DbSet<RoleDetails> RoleDetails { get; set; }
         internal DbSet<IdentityRole> Roles { get; set; }
 
-        public RolesRepository(ApplicationDbContext context) : base(context)
+        public RolesRepository(ApplicationDbContext context)
         {
 
             _context = context;
@@ -31,7 +31,7 @@ namespace BusinessLayer.Repositories
                                         Func<IQueryable<IdentityRole>, IOrderedQueryable<IdentityRole>> orderBy = null,
                                         string includeProperties = "")
         {
-            IQueryable<IdentityRole> query = dbSet;
+            IQueryable<IdentityRole> query = Roles;
 
             if (filter != null)
             {
@@ -122,7 +122,7 @@ namespace BusinessLayer.Repositories
             try
             {
                 RoleDetails.Attach(_role);
-                context.Entry(_role).State = EntityState.Modified;
+                _context.Entry(_role).State = EntityState.Modified;
                 return true;
             }
             catch (Exception)

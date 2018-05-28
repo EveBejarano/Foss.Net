@@ -8,7 +8,7 @@ using FunTourDataLayer.Models;
 
 namespace BusinessLayer.Repositories
 {
-    public class GenericRepository<TEntity,TEntity2> where TEntity : class  where TEntity2 : class
+    public class GenericRepository<TEntity> where TEntity : class
     {
             internal ApplicationDbContext context;
             internal DbSet<TEntity> dbSet;

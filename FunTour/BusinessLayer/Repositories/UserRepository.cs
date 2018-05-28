@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.Repositories
 {
-    public class UserRepository<TEntity, TEntity2> : GenericRepository<TEntity, TEntity2>
+    public class UserRepository<TEntity, TEntity2> 
         where TEntity : IdentityUser where TEntity2 : UserDetails    {
 
         internal ApplicationDbContext _context = new ApplicationDbContext();
@@ -21,7 +21,7 @@ namespace BusinessLayer.Repositories
         internal DbSet<IdentityUserRole> UserRoles { get; set; }
 
 
-        public UserRepository(ApplicationDbContext context) : base(context)
+        public UserRepository(ApplicationDbContext context)
         {
             _context = context;
             this.Users = context.Set<IdentityUser>();
