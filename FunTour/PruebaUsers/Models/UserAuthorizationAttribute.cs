@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLayer.UnitOfWorks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +9,8 @@ namespace FunTour.ActualModels
 {
     public class UserAuthorizationAttribute: AuthorizeAttribute
     {
-        
+        private readonly UnitOfWork UnitOfWork = new UnitOfWork();
+
         ////
         //// Resumen:
         ////     Especifica que el acceso a un método de acción o controlador está restringido
@@ -109,7 +111,7 @@ namespace FunTour.ActualModels
             String RequiredPermission = String.Format("{0}-{1}", filterContext.ActionDescriptor.ControllerDescriptor.ControllerName, filterContext.ActionDescriptor.ActionName);
 
             //Crea una instancia del usuario que necesita autorizacion requiriendo el nombre de usuario para pasarlo al constructor de ActualUser(string UserName)
-            ActualUser RequestedUser = new ActualUser(filterContext.RequestContext.HttpContext.User.Identity.Name);
+            ActualUser RequestedUser = new ActualUser(filterContext.RequestContext.HttpContext.User.Identity.Name, UnitOfWork);
 
             if (!RequestedUser.HasPermission(RequiredPermission) & !RequestedUser.IsSysAdmin)
             {

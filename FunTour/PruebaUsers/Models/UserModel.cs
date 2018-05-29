@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLayer.UnitOfWorks;
 
 namespace FunTour.ActualModels
 {
@@ -69,16 +70,14 @@ namespace FunTour.ActualModels
             SelectedRoles = new List<UserModelRolElement>();
         }
 
-        public static UserModel GetDataUserModel(string UserName)
+        public static UserModel GetDataUserModel(string UserName, UnitOfWork unitOfWork)
         {
-            using (var _context = new ApplicationDbContext())
-            {
                 
                 try
                 {
                     UserModel userModel = new UserModel();
 
-                    var user = _context.Users.FirstOrDefault(p => p.UserName == UserName);
+                    var user = unitOfWork.UserRepository.GetUserByUserName(UserName);
                     userModel.Id_UserModel = user.Id;
                     userModel.Email = user.Email;
                     userModel.PhoneNumber = user.PhoneNumber;
@@ -87,7 +86,7 @@ namespace FunTour.ActualModels
 
                     foreach (var item in user.Roles)
                     {
-                        var auxdescriptionrole = _context.RoleDetails.FirstOrDefault(p => p.Id_Role.ToString() == item.RoleId);
+                        var auxdescriptionrole = unitOfWork.RolesRepository.GetRoleDetailsByID(item.RoleId);
 
                         var auxrole = new UserRole
                         {
@@ -100,13 +99,13 @@ namespace FunTour.ActualModels
                         userModel.UserModelRoles.Add(auxrole);
                     }
 
-                    var userDetails = _context.UserDetails.FirstOrDefault(p => p.UserName == user.UserName);
+                    var userDetails = unitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
                     userModel.FirstName = userDetails.FirstName;
                     userModel.LastName = userDetails.LastName;
                     userModel.Inactive = false ;
                     userModel.IsSysAdmin = userDetails.isSysAdmin;
 
-                    userModel.GetAvailablesRoles();
+                    userModel.GetAvailablesRoles(unitOfWork);
 
                     
 
@@ -120,55 +119,51 @@ namespace FunTour.ActualModels
                 }
 
             }
-        }
+        
 
-        public static void SetDataUserModel(UserModel user)
+        public static void SetDataUserModel(UserModel user, UnitOfWork unitOfWork)
         {
             //user.GetRolesToUserFromList();
-
-            using (var _context = new ApplicationDbContext() )
+            try
             {
-                //using (var _userManager = new ApplicationUserManager(_context))
-                //{
-                    try
-                    {
 
-                        var userModel = _context.Users.FirstOrDefault(p => p.Id == user.Id_UserModel);
-                        userModel.Id = user.Id_UserModel;
-                        userModel.Email = user.Email;
-                        userModel.PhoneNumber = user.PhoneNumber;
-                        userModel.UserName = user.UserModelName;
+                var userModel = unitOfWork.UserRepository.GetUserByID(user.Id_UserModel);
+                userModel.Id = user.Id_UserModel;
+                userModel.Email = user.Email;
+                userModel.PhoneNumber = user.PhoneNumber;
+                userModel.UserName = user.UserModelName;
 
-                        var userDetails = _context.UserDetails.FirstOrDefault(p => p.UserName == user.UserModelName);
-                        userDetails.FirstName = user.FirstName;
-                        userDetails.LastName = user.LastName;
-                        userDetails.Inactive = user.Inactive;
+                var userDetails = unitOfWork.UserRepository.GetUserDetailByUserName(user.UserModelName);
+                userDetails.FirstName = user.FirstName;
+                userDetails.LastName = user.LastName;
+                userDetails.Inactive = user.Inactive;
 
-                        var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
-                        var manager = new ApplicationUserManager(store);
-                    
-
-                        var userModel1 = _context.Users.FirstOrDefault(p => p.Id == user.Id_UserModel);
-                        _context.Entry(userModel1).CurrentValues.SetValues(userModel);
+                var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
+                var manager = new ApplicationUserManager(store);
 
 
-                        var userDetails1 = _context.UserDetails.FirstOrDefault(p => p.UserName== user.UserModelName);
-                        _context.Entry(userDetails1).CurrentValues.SetValues(userDetails);
-                        _context.SaveChanges();
+                var userModel1 = unitOfWork.UserRepository.GetUserByID(user.Id_UserModel);
+                unitOfWork.UserRepository.UpdateUser(userModel);
+                unitOfWork.Save();
 
-                        user.AddRolesToUser(_context);
 
-                    }
-                    catch (Exception ex)
-                    {
-                        //manejar error
-                        throw;
-                    }
-                //}
+                var userDetails1 = unitOfWork.UserRepository.GetUserDetailByUserName(user.UserModelName);
+                unitOfWork.UserRepository.UpdateUserDetails(userDetails);
+                unitOfWork.Save();
 
+                user.AddRolesToUser(unitOfWork);
 
             }
+            catch (Exception ex)
+            {
+                //manejar error
+                throw;
+            }
+            //}
+
+
         }
+        
         //public void GetRolesToUserFromList()
         //{
         //    using (var _context = new ApplicationDbContext())
@@ -182,11 +177,9 @@ namespace FunTour.ActualModels
 
         //}
 
-        private void GetAvailablesRoles()
+        private void GetAvailablesRoles(UnitOfWork unitOfWork)
         {
-            using (var _context = new ApplicationDbContext())
-            {
-                var auxRoles = _context.RoleDetails.Where(p => p.IsDeleted == false).ToList();
+                var auxRoles = unitOfWork.RolesRepository.GetRoleDetails(filter: p => p.IsDeleted == false).ToList();
                 foreach (var item in auxRoles)
                 {
                     var newRole = new UserModelRolElement
@@ -197,8 +190,7 @@ namespace FunTour.ActualModels
 
                     this.SelectedRoles.Add(newRole);
                 }
-                
-                
+    
                 //List<SelectListItem> selectedRolesList = new List<SelectListItem>();
 
                 //        foreach (var item in auxRoles)
@@ -206,11 +198,10 @@ namespace FunTour.ActualModels
                 //            this.AvailableRoles.Add(new SelectListItem { Text = item.RoleDescription, Value = item.RoleName });
                 //        }
 
-            }
 
         }
 
-            private void AddRolesToUser( ApplicationDbContext _context)
+        private void AddRolesToUser(UnitOfWork unitOfWork)
         {
             //this.GetRolesToUserFromList();
 
@@ -218,20 +209,14 @@ namespace FunTour.ActualModels
             {
                 if (item.isSelected == true)
                 {
-                    IdentityRole role = _context.Roles.FirstOrDefault(p => p.Name == item.RoleDetails.RoleName);
-                    IdentityUser User = _context.Users.Find(this.Id_UserModel);
+                    IdentityRole role = unitOfWork.RolesRepository.GetRoleByName(item.RoleDetails.RoleName);
+                    IdentityUser User = unitOfWork.UserRepository.GetUserByID(this.Id_UserModel);
 
-                    IdentityUserRole auxuserRole = new IdentityUserRole
+                    if (unitOfWork.UserRepository.AddRolesToUser(User, role))
                     {
-                        RoleId = role.Id,
-                        UserId = User.Id
-                    };
-
-                    if (!role.Users.Contains(auxuserRole))
-                    {
-                        role.Users.Add(auxuserRole);
-                        _context.SaveChanges();
+                        unitOfWork.Save();
                     }
+
                 }
             }
 

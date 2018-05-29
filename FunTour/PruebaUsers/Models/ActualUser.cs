@@ -5,6 +5,8 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using FunTour.Models;
+using FunTourDataLayer.Models;
+using BusinessLayer.UnitOfWorks;
 
 namespace FunTour.ActualModels
 {
@@ -16,17 +18,15 @@ namespace FunTour.ActualModels
         public ICollection<UserRole> ActualUserRoles { get; set; }
 
 
-        public ActualUser(string UserName)
+        public ActualUser(string UserName, UnitOfWork unitOfWork)
         {
-            using (var _context = new ApplicationDbContext())
-            {
                 try
                 {
-                    this.Id_ActualUser = _context.Users.FirstOrDefault(p => p.UserName == UserName).Id;
+                    this.Id_ActualUser = unitOfWork.UserRepository.GetUserByUserName(UserName).Id;
 
                     this.ActualUserName = UserName;
-                    this.IsSysAdmin = _context.UserDetails.FirstOrDefault(p => p.UserName == this.ActualUserName).isSysAdmin;
-
+                    UserDetails user = unitOfWork.UserRepository.GetUserDetailByUserName(this.ActualUserName).isSysAdmin;
+                this.IsSysAdmin = user.isSysAdmin;
                 }
                 catch (Exception ex)
                 {
@@ -34,9 +34,7 @@ namespace FunTour.ActualModels
                     throw;
                 }
 
-            }
-
-            this.SetUserRoles();
+            this.SetUserRoles(unitOfWork);
 
         }
 
@@ -44,19 +42,16 @@ namespace FunTour.ActualModels
         // 1. Extrae de la base de datos los Roles de un usuario
         // 2. verifica si es Sysadmin o no
         // 3. Almacena en cada rol los permisos que este posee
-        public void SetUserRoles()
+        public void SetUserRoles(UnitOfWork unitOfWork)
         {
-
-            using (var _context = new ApplicationDbContext())
-            {
                 
-                List<IdentityUserRole> Roles = _context.Users.FirstOrDefault(p => p.UserName == this.ActualUserName).Roles.ToList();
+                List<IdentityUserRole> Roles = unitOfWork.UserRepository.GetUsers(filter: p => p.UserName == this.ActualUserName, includeProperties: "Roles").FirstOrDefault().Roles.ToList();
                 foreach (var rol in Roles)
                 {
                     UserRole userRole = new UserRole
                     {
                         
-                        RoleName = _context.Roles.FirstOrDefault(P => P.Id == rol.RoleId).Name
+                        RoleName = unitOfWork.RolesRepository.GetRoleByID(rol.RoleId).Name
                     };
 
                     int a;
@@ -64,17 +59,17 @@ namespace FunTour.ActualModels
 
                     userRole.Id_UserRole = a;
 
-                    userRole.SetUserRolePermissions();
+                    userRole.SetUserRolePermissions(unitOfWork);
 
                     if (IsSysAdmin == false)
                     {
-                        this.IsSysAdmin = userRole.IsSysAdmin();
+                        this.IsSysAdmin = userRole.IsSysAdmin(unitOfWork);
                     }
 
                     ActualUserRoles.Add(userRole);
                 }
             }
-        }
+        
 
 
         // Verifica que un Usuario tenga un rol especifico

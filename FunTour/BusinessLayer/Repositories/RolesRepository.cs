@@ -254,8 +254,9 @@ namespace BusinessLayer.Repositories
             return false;
         }
 
-
-
-
+        public IdentityRole GetRoleByName(string roleName)
+        {
+            return Roles.FirstOrDefault(p => p.Name == roleName);
+        }
     }
 }

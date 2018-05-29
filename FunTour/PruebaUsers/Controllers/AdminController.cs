@@ -105,7 +105,7 @@ namespace FunTour.Controllers
             var user = UnitOfWork.UserRepository.GetUserByID(IdUser);
                 //_context.Users.FirstOrDefault(p => p.Id == IdUser);
 
-            var User = UserModel.GetDataUserModel(user.UserName); //Ver
+            var User = UserModel.GetDataUserModel(user.UserName, UnitOfWork); //Ver
             SetViewBagData(IdUser);
             return View(User);
         }
@@ -141,7 +141,7 @@ namespace FunTour.Controllers
 
             if (ModelState.IsValid)
             {
-                UserModel.SetDataUserModel(User);
+                UserModel.SetDataUserModel(User, UnitOfWork);
             }
             return View(User);
         }
@@ -291,7 +291,7 @@ namespace FunTour.Controllers
         public ActionResult UserEdit(string UserName)
         {
             
-            var User = UserModel.GetDataUserModel(UserName);
+            var User = UserModel.GetDataUserModel(UserName, UnitOfWork);
             SetViewBagData(UserName);
 
             return View(User);
@@ -306,7 +306,7 @@ namespace FunTour.Controllers
             {
                 try
                 {
-                    UserModel.SetDataUserModel( User);
+                    UserModel.SetDataUserModel( User, UnitOfWork);
                 }
                 catch (Exception)
                 {

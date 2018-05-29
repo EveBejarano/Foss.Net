@@ -190,6 +190,36 @@ namespace BusinessLayer.Repositories
 
             return false;
         }
-        
+
+        public void UpdateUser(IdentityUser user)
+        {
+            Users.Attach(user);
+            _context.Entry(user).State = EntityState.Modified;
+        }
+
+        public void UpdateUserDetails(UserDetails userDetails)
+        {
+            UserDetails.Attach(userDetails);
+            _context.Entry(userDetails).State = EntityState.Modified;
+        }
+
+        public bool AddRolesToUser(IdentityUser User, IdentityRole role)
+        {
+            //this.GetRolesToUserFromList();
+
+            IdentityUserRole auxuserRole = new IdentityUserRole
+            {
+                RoleId = role.Id,
+                UserId = User.Id
+            };
+
+            if (!role.Users.Contains(auxuserRole))
+            {
+                role.Users.Add(auxuserRole);
+                return true;
+            }
+            return false;
+        }
+
     }
 }
