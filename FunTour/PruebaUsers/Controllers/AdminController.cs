@@ -624,7 +624,7 @@ namespace FunTour.Controllers
             ViewBag.PermissionId = new SelectList(UnitOfWork.PermissionRepository.Get(orderBy: p=> p.OrderBy(a => a.Id_Permission)), "Id_Permission", "PermissionDescription");
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
 
-            return View(role);
+            return View(roleDetails);
         }
 
         [HttpPost]
@@ -656,8 +656,8 @@ namespace FunTour.Controllers
                 UserList.Add(auxuser);
             }
 
-            // FunTour combo
-            ViewBag.UserId = new SelectList( UserList, "Id_User", "UserName");
+            // Users combo
+            ViewBag.UserList = new SelectList( UserList, "Id", "UserName");
 
             // Rights combo
             ViewBag.PermissionId = new SelectList(UnitOfWork.PermissionRepository.Get(orderBy: p=>p.OrderBy(a => a.Id_Permission)), "Id_Permission", "PermissionDescription");
@@ -692,29 +692,22 @@ namespace FunTour.Controllers
             {
                 UnitOfWork.Save();
             }
-            return PartialView("_ListFunTourTable4Role", role);
+            return PartialView("_ListUsersTable4Role", role);
         }
 
-        //[HttpGet]
-        //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        //public PartialViewResult AddUser2RoleReturnPartialView(int id, int UserId)
-        //{
-        //    IdentityRole role = _context.Roles.Find(id);
-        //    IdentityUser User = _context.Users.Find(UserId);
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult AddUser2RoleReturnPartialView(int id, int UserId)
+        {
+            IdentityRole role = UnitOfWork.RolesRepository.GetRoleByID(id);
+            IdentityUser User = UnitOfWork.UserRepository.GetUserByID(UserId);
 
-        //    IdentityUserRole auxuserRole = new IdentityUserRole
-        //    {
-        //        RoleId = role.Id,
-        //        UserId = User.Id
-        //    };
-
-        //    if (!role.Users.Contains(auxuserRole))
-        //    {
-        //        role.Users.Add(auxuserRole);
-        //        _context.SaveChanges();
-        //    }
-        //    return PartialView("_ListFunTourTable4Role", role);
-        //}
+            if (UnitOfWork.UserRepository.AddRolesToUser(User, role))
+            {
+                UnitOfWork.Save();
+            }
+            return PartialView("_ListUsersTable4Role", role);
+        }
 
         #endregion
 

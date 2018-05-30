@@ -54,7 +54,7 @@ namespace FunTour.Models
     public class LoginViewModel
     {
         [Required]
-        [EmailAddress]
+        //[EmailAddress]
         [Display(Name = "Nombre de Usuario")]
         public string UserName { get; set; }
         

@@ -1,4 +1,4 @@
-﻿@model FunTour.Models.Permission
+﻿@model FunTourDataLayer.Models.Permission
 <script type="text/javascript">
     $(document).ready(function () {
         //Unbind the original image 'href' set by the controller...
@@ -64,7 +64,7 @@ else
             Action
         </th>
         </thead>
-        @foreach (FunTour.Models.RoleDetails Role in Model.Roles.OrderBy(u => u.RoleDescription))
+        @foreach (FunTourDataLayer.Models.RoleDetails Role in Model.Roles.OrderBy(u => u.RoleDescription))
         {
             <tr>
                 <td>

@@ -1,4 +1,4 @@
-﻿@model FunTour.Models.RoleDetails
+﻿@model FunTourDataLayer.Models.RoleDetails
 @{
     ViewBag.Title = "Edit " + Model.RoleDescription + " Role";
 }
@@ -44,7 +44,7 @@
                             @Html.LabelFor(model => model.IsSysAdmin, "System Role")
                         </td>
                         <td>
-                            @Html.EditorFor(model => model.IsSysAdmin)
+                            @Html.CheckBoxFor(model => model.IsSysAdmin)
                             @Html.ValidationMessageFor(model => model.IsSysAdmin)
                         </td>
                     </tr>
@@ -53,25 +53,25 @@
                 <input type="submit" value="Save" />
         </fieldset>
     }
-    <!--<fieldset>
+    @*<fieldset>
         <legend>
             <h3>
-                FunTour Associated with this Role
+                Users Associated with this Role
             </h3>
         </legend>
-        <div id="FunTourTable">
-            @Html.Partial("_ListFunTourTable4Role", Model)
+        <div id="UsersTable">
+            @Html.Partial("_ListUsersTable4Role", Model)
             <br />
         </div>
         <div>
-            @Html.Partial("_AddUserToFunTourTable4Role", Model)
+            @Html.Partial("_AddUserToUsersTable4Role", Model)
         </div>
         <br />
         <div>
-            @Html.ActionLink("Go to FunTour", "Index", "Admin")
+            @Html.ActionLink("Go to Users", "Index", "Admin")
         </div>
     </fieldset>
-    <br />-->
+    <br />-->*@
     <fieldset>
         <legend>
             <h3>

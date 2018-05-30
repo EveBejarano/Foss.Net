@@ -1,4 +1,4 @@
-﻿@model FunTour.Models.Role
+﻿@model FunTourDataLayer.Models.RoleDetails
 <script type="text/javascript">
     $(document).ready(function () {
         //Unbind the original image 'href' set by the controller...
@@ -46,9 +46,9 @@
     });
 </script>
 
-@{if (Model.FunTour.Count == 0)
+@{if (Model.Users.Count == 0)
 {
-    <h2><font color="red">No Associated FunTour...</font></h2>
+    <h2><font color="red">No Associated Users...</font></h2>
     <br />
 }
 else
@@ -62,15 +62,15 @@ else
             Action
         </th>
         </thead>
-        @foreach (FunTour.Models.USER user in Model.FunTour.OrderBy(u => u.UserName))
+        @foreach (Microsoft.AspNet.Identity.EntityFramework.IdentityUser user in Model.Users.OrderBy(u => u.UserName))
         {
             <tr>
                 <td>
-                    @Html.ActionLink(user.UserName, "UserDetails", new { id = user.Id_User })
+                    @Html.ActionLink(user.UserName, "UserDetails", new { id = user.Id })
                 </td>
                 <td>
                     <center>
-                        <a href="@Url.Action("DeleteUser", "Admin", new { id = Model.Id_Role, userId = user.Id_User })" class="deleteUser" id=@Model.Id_Role userid=@user.Id_User>
+                        <a href="@Url.Action("DeleteUser", "Admin", new { id = Model.Id_Role, userId = user.Id })" class="deleteUser" id=@Model.Id_Role userid=@user.Id>
                             <img src="@Url.Content("~/Content/images/bin.png")" />
                         </a>
                     </center>

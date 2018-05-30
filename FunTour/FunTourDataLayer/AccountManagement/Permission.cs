@@ -18,7 +18,7 @@ namespace FunTourDataLayer.Models
         public int Id_Permission { get; set; }
 
         [Required]
-        [StringLength(30)]
+        [StringLength(100)]
         public string PermissionDescription { get; set; }
 
         public ICollection<RoleDetails> Roles { get; set; }

@@ -25,7 +25,7 @@ namespace FunTour.ActualModels
                     this.Id_ActualUser = unitOfWork.UserRepository.GetUserByUserName(UserName).Id;
 
                     this.ActualUserName = UserName;
-                    UserDetails user = unitOfWork.UserRepository.GetUserDetailByUserName(this.ActualUserName).isSysAdmin;
+                    UserDetails user = unitOfWork.UserRepository.GetUserDetailByUserName(this.ActualUserName);
                 this.IsSysAdmin = user.isSysAdmin;
                 }
                 catch (Exception ex)
