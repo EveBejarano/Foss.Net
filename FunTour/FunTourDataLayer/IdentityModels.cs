@@ -57,8 +57,8 @@ namespace FunTourDataLayer.Models
                 // If you want to specify the join table name and the names of the columns in the table you need to do additional configuration by using the Map method.
                 .Map(m =>
                    m.ToTable("Roles_Permissions")
-                   .MapLeftKey("Id_Role")
-                   .MapRightKey("Id_Permission")
+                   .MapLeftKey("Id_Permission")
+                   .MapRightKey("Id_Role")
                 );
             modelBuilder.Entity<Reservation>()
                 .HasOptional(s => s.BusReservedSeat)

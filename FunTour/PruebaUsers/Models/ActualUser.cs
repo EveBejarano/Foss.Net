@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using FunTour.Models;
 using FunTourDataLayer.Models;
 using BusinessLayer.UnitOfWorks;
+using System.Web.Http.Results;
 
 namespace FunTour.ActualModels
 {
@@ -25,16 +26,14 @@ namespace FunTour.ActualModels
                     this.Id_ActualUser = unitOfWork.UserRepository.GetUserByUserName(UserName).Id;
 
                     this.ActualUserName = UserName;
-                    UserDetails user = unitOfWork.UserRepository.GetUserDetailByUserName(this.ActualUserName);
-                this.IsSysAdmin = user.isSysAdmin;
-                }
+                    this.IsSysAdmin = unitOfWork.UserRepository.GetUserDetailByUserName(this.ActualUserName).isSysAdmin;
+                    this.SetUserRoles(unitOfWork);
+            }
                 catch (Exception ex)
                 {
-                    //manejar error
-                    throw;
+                
                 }
 
-            this.SetUserRoles(unitOfWork);
 
         }
 

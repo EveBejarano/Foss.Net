@@ -1,11 +1,11 @@
-﻿@model FunTourDataLayer.Models.RoleDetails
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityUser
 <script type="text/javascript">
     $(document).ready(function () {
         //$('#AddUser').attr("disabled", true);
         $('#AddUser').click(function () {
-            var _userId = $('#UserId').val();
+            var _userId = $('#UserList').val();
             var _id = $('#Id_Role').val();
-
+            debugger;
             if (_userId == '') {
                 return false;
             }
@@ -17,7 +17,8 @@
                 data: _parameters,
                 success: function (data, textStatus, jqXHR) {
                     $('#UsersTable').html(data);
-                    $('#Id').val("");
+                    $('#UserList').val("");
+                    debugger;
                 }
             });
         });      

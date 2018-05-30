@@ -45,7 +45,7 @@
 		});
     });
 </script>
-@{if (Model.Permissions.Count == 0)
+@{if (Model.Permissions.Count == 0 || Model.Permissions == null)
 {
     <h2><font color="red">No Associated Permissions...</font></h2>
     <br />

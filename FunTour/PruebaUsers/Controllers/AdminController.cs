@@ -604,8 +604,6 @@ namespace FunTour.Controllers
                 }
             }
 
-
-
             var auxuserlist = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<IdentityUser> UserList = new List<IdentityUser>();
@@ -617,7 +615,7 @@ namespace FunTour.Controllers
             }
 
             // FunTour combo
-            ViewBag.UserId = new SelectList(UserList, "Id_User", "UserName");
+            ViewBag.UserList = new SelectList(UserList, "Id", "UserName");
 
 
             // Rights combo
@@ -656,7 +654,7 @@ namespace FunTour.Controllers
                 UserList.Add(auxuser);
             }
 
-            // Users combo
+            // Users combo-
             ViewBag.UserList = new SelectList( UserList, "Id", "UserName");
 
             // Rights combo

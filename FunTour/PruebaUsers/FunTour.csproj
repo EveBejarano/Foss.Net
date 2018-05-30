@@ -409,10 +409,10 @@
     <Content Include="Views\RoleDetails\Details.cshtml" />
     <Content Include="Views\RoleDetails\Edit.cshtml" />
     <Content Include="Views\RoleDetails\Index.cshtml" />
+    <Content Include="Views\NotAuthorizedUser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\NotAuthorizedUser\" />
     <Folder Include="Views\NotAuthorized\" />
   </ItemGroup>
   <ItemGroup>
