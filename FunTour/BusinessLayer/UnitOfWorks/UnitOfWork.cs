@@ -15,6 +15,11 @@ namespace BusinessLayer.UnitOfWorks
         private RolesRepository<IdentityRole, RoleDetails> rolesRepository;
         private UserRepository<IdentityUser, UserDetails> userRepository;
         private GenericRepository<Permission> permissionRepository;
+        private GenericRepository<TravelPackage> travelPackageRepository;
+        private GenericRepository<Hotel> hotelRepository;
+        private GenericRepository<FlightCompany> flightCompanyRepository;
+        private GenericRepository<BusCompany> busCompanyRepository;
+        private GenericRepository<Event> eventCompanyRepository;
 
         public RolesRepository<IdentityRole,RoleDetails> RolesRepository
         {
@@ -52,6 +57,73 @@ namespace BusinessLayer.UnitOfWorks
                     this.permissionRepository = new GenericRepository<Permission>(context);
                 }
                 return permissionRepository;
+            }
+        }
+
+        public GenericRepository<TravelPackage> TravelPackageRepository
+        {
+            get
+            {
+                if (this.travelPackageRepository == null)
+                {
+                    this.travelPackageRepository = new GenericRepository<TravelPackage>(context);
+                }
+                return travelPackageRepository;
+            }
+        }
+
+
+
+
+        public GenericRepository<Hotel> HotelRepository
+        {
+            get
+            {
+
+                if (this.hotelRepository == null)
+                {
+                    this.hotelRepository = new GenericRepository<Hotel>(context);
+                }
+                return hotelRepository;
+            }
+        }
+
+        public GenericRepository<FlightCompany> FlightCompanyRepository
+        {
+            get
+            {
+
+                if (this.flightCompanyRepository == null)
+                {
+                    this.flightCompanyRepository = new GenericRepository<FlightCompany>(context);
+                }
+                return flightCompanyRepository;
+            }
+        }
+
+        public GenericRepository<BusCompany> BusCompanyRepository
+        {
+            get
+            {
+
+                if (this.busCompanyRepository == null)
+                {
+                    this.busCompanyRepository = new GenericRepository<BusCompany>(context);
+                }
+                return busCompanyRepository;
+            }
+        }
+
+        public GenericRepository<Event> EventCompanyRepository
+        {
+            get
+            {
+
+                if (this.eventCompanyRepository == null)
+                {
+                    this.eventCompanyRepository = new GenericRepository<Event>(context);
+                }
+                return eventCompanyRepository;
             }
         }
 

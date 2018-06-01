@@ -17,6 +17,14 @@ namespace FunTourDataLayer.Models
         [Key]
         public int Id_BusCompany { get; set; }
 
+        public string Name { get; set; }
+
+        public string Information { get; set; }
+
+        public string APIURLToGetSeats { get; set; }
+        public string APIURLToReserveSeat { get; set; }
+        public string APIURLToCancelReservation { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bus> Bus { get; set; }
     }

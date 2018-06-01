@@ -195,6 +195,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\TravelPackagesController.cs" />
     <Compile Include="Models\ActualUser.cs" />
     <Compile Include="Models\RolesModel.cs" />
     <Compile Include="Models\UserAuthorizationAttribute.cs" />
@@ -410,6 +411,13 @@
     <Content Include="Views\RoleDetails\Edit.cshtml" />
     <Content Include="Views\RoleDetails\Index.cshtml" />
     <Content Include="Views\NotAuthorizedUser\Index.cshtml" />
+    <Content Include="Views\TravelPackages\Create.cshtml" />
+    <Content Include="Views\TravelPackages\Delete.cshtml" />
+    <Content Include="Views\TravelPackages\Details.cshtml" />
+    <Content Include="Views\TravelPackages\Edit.cshtml" />
+    <Content Include="Views\TravelPackages\Index.cshtml" />
+    <Content Include="Views\TravelPackages\_AddHotelToPackage.cshtml" />
+    <Content Include="Views\TravelPackages\AddServices.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

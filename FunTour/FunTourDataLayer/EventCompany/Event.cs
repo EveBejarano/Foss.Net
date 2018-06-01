@@ -18,6 +18,14 @@ namespace FunTourDataLayer.Models
         [Key]
         public int Id_Event { get; set; }
 
+        public string Name { get; set; }
+
+        public string Information { get; set; }
+
+        public string APIURLToTickets { get; set; }
+        public string APIURLToReserveTicket { get; set; }
+        public string APIURLToCancelReservation { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TravelPackage> TravelPackage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

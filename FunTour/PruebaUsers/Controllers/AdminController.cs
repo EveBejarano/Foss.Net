@@ -695,7 +695,7 @@ namespace FunTour.Controllers
 
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public PartialViewResult AddUser2RoleReturnPartialView(int id, int UserId)
+        public PartialViewResult AddUser2RoleReturnPartialView(int id, string UserId)
         {
             IdentityRole role = UnitOfWork.RolesRepository.GetRoleByID(id);
             IdentityUser User = UnitOfWork.UserRepository.GetUserByID(UserId);
