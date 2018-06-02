@@ -40,9 +40,9 @@ namespace PruebaUsers.Controllers
         public ActionResult Create()
         {
             ViewBag.Hotels = new SelectList(UnitOfWork.HotelRepository.Get(), "Id_Hotel", "Name");
-            ViewBag.Flights = new SelectList(UnitOfWork.FlightCompanyRepository.Get(), "Id_FlightCompany", "Name");
-            ViewBag.Event = new SelectList(UnitOfWork.EventCompanyRepository.Get(), "Id_Event", "Name");
-            ViewBag.BusCompany = new SelectList(UnitOfWork.BusCompanyRepository.Get(), "Id_BusCompany", "Name");
+            ViewBag.Flights = new SelectList(UnitOfWork.FlightRepository.Get(), "Id_FlightCompany", "Name");
+            ViewBag.Event = new SelectList(UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
+            ViewBag.BusCompany = new SelectList(UnitOfWork.BusRepository.Get(), "Id_BusCompany", "Name");
 
             return View();
         }
@@ -68,9 +68,9 @@ namespace PruebaUsers.Controllers
         {
 
             ViewBag.Hotels = new SelectList(UnitOfWork.HotelRepository.Get(), "Id_Hotel", "Name");
-            ViewBag.Flights = new SelectList(UnitOfWork.FlightCompanyRepository.Get(), "Id_FlightCompany", "Name");
-            ViewBag.Event = new SelectList(UnitOfWork.EventCompanyRepository.Get(), "Id_Event", "Name");
-            ViewBag.BusCompany = new SelectList(UnitOfWork.BusCompanyRepository.Get(), "Id_BusCompany", "Name");
+            ViewBag.Flights = new SelectList(UnitOfWork.FlightRepository.Get(), "Id_FlightCompany", "Name");
+            ViewBag.Event = new SelectList(UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
+            ViewBag.BusCompany = new SelectList(UnitOfWork.BusRepository.Get(), "Id_BusCompany", "Name");
 
 
             return View(travelPackage);
@@ -90,9 +90,9 @@ namespace PruebaUsers.Controllers
                 return HttpNotFound();
             }
             ViewBag.Hotels = new SelectList(UnitOfWork.HotelRepository.Get(), "Id_Hotel", "Name");
-            ViewBag.Flights = new SelectList(UnitOfWork.FlightCompanyRepository.Get(), "Id_FlightCompany", "Name");
-            ViewBag.Event = new SelectList(UnitOfWork.EventCompanyRepository.Get(), "Id_Event", "Name");
-            ViewBag.BusCompany = new SelectList(UnitOfWork.BusCompanyRepository.Get(), "Id_BusCompany", "Name");
+            ViewBag.Flights = new SelectList(UnitOfWork.FlightRepository.Get(), "Id_FlightCompany", "Name");
+            ViewBag.Event = new SelectList(UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
+            ViewBag.BusCompany = new SelectList(UnitOfWork.BusRepository.Get(), "Id_BusCompany", "Name");
 
 
             return View(travelPackage);
@@ -140,5 +140,65 @@ namespace PruebaUsers.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult AddPermission2RoleReturnPartialView(int id, int permissionId)
+        {
+            if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
+            {
+                UnitOfWork.Save();
+            }
+            RoleDetails role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            return PartialView("_ListPermissions", role);
+        }
+
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult AddFlightToTravelPackagePartialView(int id, int flightId)
+        {
+            //if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
+            //{
+            //    UnitOfWork.Save();
+            //}
+            //RoleDetails role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            return PartialView();
+        }
+
+
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult AddHotelToTravelPackagePartialView(int id, int HotelId)
+        {
+        //    if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
+        //    {
+        //        UnitOfWork.Save();
+        //    }
+        //    RoleDetails role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            return PartialView();
+        }
+
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult AddEventToTravelPackagePartialView(int id, int TravelPackageId)
+        {
+            //if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
+            //{
+            //    UnitOfWork.Save();
+            //}
+            //RoleDetails role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            return PartialView();
+        }
+
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public PartialViewResult AddBusToTravelPackagePartialView(int id, int BusId)
+        {
+            //if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
+            //{
+            //    UnitOfWork.Save();
+            //}
+            //RoleDetails role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            return PartialView();
+        }
     }
 }

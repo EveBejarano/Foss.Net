@@ -17,9 +17,9 @@ namespace BusinessLayer.UnitOfWorks
         private GenericRepository<Permission> permissionRepository;
         private GenericRepository<TravelPackage> travelPackageRepository;
         private GenericRepository<Hotel> hotelRepository;
-        private GenericRepository<FlightCompany> flightCompanyRepository;
-        private GenericRepository<BusCompany> busCompanyRepository;
-        private GenericRepository<Event> eventCompanyRepository;
+        private GenericRepository<Flight> flightRepository;
+        private GenericRepository<Bus> busRepository;
+        private GenericRepository<Event> eventRepository;
 
         public RolesRepository<IdentityRole,RoleDetails> RolesRepository
         {
@@ -88,42 +88,42 @@ namespace BusinessLayer.UnitOfWorks
             }
         }
 
-        public GenericRepository<FlightCompany> FlightCompanyRepository
+        public GenericRepository<Flight> FlightRepository
         {
             get
             {
 
-                if (this.flightCompanyRepository == null)
+                if (this.flightRepository == null)
                 {
-                    this.flightCompanyRepository = new GenericRepository<FlightCompany>(context);
+                    this.flightRepository = new GenericRepository<Flight>(context);
                 }
-                return flightCompanyRepository;
+                return flightRepository;
             }
         }
 
-        public GenericRepository<BusCompany> BusCompanyRepository
+        public GenericRepository<Bus> BusRepository
         {
             get
             {
 
-                if (this.busCompanyRepository == null)
+                if (this.busRepository == null)
                 {
-                    this.busCompanyRepository = new GenericRepository<BusCompany>(context);
+                    this.busRepository = new GenericRepository<Bus>(context);
                 }
-                return busCompanyRepository;
+                return busRepository;
             }
         }
 
-        public GenericRepository<Event> EventCompanyRepository
+        public GenericRepository<Event> EventRepository
         {
             get
             {
 
-                if (this.eventCompanyRepository == null)
+                if (this.eventRepository == null)
                 {
-                    this.eventCompanyRepository = new GenericRepository<Event>(context);
+                    this.eventRepository = new GenericRepository<Event>(context);
                 }
-                return eventCompanyRepository;
+                return eventRepository;
             }
         }
 

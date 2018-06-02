@@ -418,6 +418,9 @@
     <Content Include="Views\TravelPackages\Index.cshtml" />
     <Content Include="Views\TravelPackages\_AddHotelToPackage.cshtml" />
     <Content Include="Views\TravelPackages\AddServices.cshtml" />
+    <Content Include="Views\TravelPackages\AddFlightToTravelPackagePartialView.cshtml" />
+    <Content Include="Views\TravelPackages\AddHotelToTravelPackagePartialView.cshtml" />
+    <Content Include="Views\TravelPackages\AddBusToTravelPackagePartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

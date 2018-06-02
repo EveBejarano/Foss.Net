@@ -9,7 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>TravelPackage</h4>
         <hr />
@@ -55,6 +55,53 @@
         </div>
     </div>
 }
+
+
+    <fieldset>
+        <legend>
+            <h3>
+                Hotel:
+            </h3>
+        </legend>
+        <div id="FlightCompany">
+            <a>@Model.Flight.FlightCompany.Name</a>
+            <br />
+        </div>
+
+        <div>
+            @Html.Partial("_AddFlightToTravelPackagePartialView", Model)
+
+        </div>
+
+        <div id="Hotel">
+            @Model.Bus.BusCompany.Name
+            <br />
+        </div>
+        <div>
+            @Html.Partial("_AddBusToTravelPackagePartialView", Model)
+        </div>
+
+
+        <div id="Hotel">
+            @Model.Hotel.Name
+            <br />
+        </div>
+        <div>
+            @Html.Partial("_AddHotelToTravelPackage", Model)
+        </div>
+        <br />
+
+        <div id="Event">
+            @Model.Event.Name
+            <br />
+        </div>
+        <div>
+            @Html.Partial("_AddEventToTravelPackage", Model)
+        </div>
+
+    </fieldset>
+
+<br />
 
 <div>
     @Html.ActionLink("Back to List", "Index")
