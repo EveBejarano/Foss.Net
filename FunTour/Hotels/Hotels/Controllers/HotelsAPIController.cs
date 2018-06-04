@@ -135,5 +135,22 @@ namespace Hotels.Controllers
             return query;
 
         }
+
+        [Route("api/Availability/{city}/{date_start}/{date_end}")]
+        public IQueryable Availability(string city, DateTime date_start, DateTime date_end)
+        {
+            var query =
+                from data in db.Room
+                let v = ((from book in db.Booking
+                         where (book.RoomID == data.RoomID) &&
+                         (book.StartDate >= date_start) &&
+                         (book.EndDate <= date_end) select book.BookingID) == null)
+                where (data.RoomType.Hotel.HotelCity == city) && v
+                select new { data.RoomID, data.RoomType.RoomDescription, data.RoomType.StandardRate,
+                             data.RoomType.HotelID, data.RoomType.Hotel.HotelName, data.RoomType.Hotel.HotelCity,
+                             data.RoomType.Hotel.Country.CountryName};
+            return query;
+
+        }
     }
 }

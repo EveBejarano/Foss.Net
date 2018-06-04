@@ -171,7 +171,11 @@
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\RoomTypesController.cs" />
     <Compile Include="Controllers\StarRatingsController.cs" />
+    <Compile Include="Data\GenericRepository.cs" />
     <Compile Include="Data\HotelsContext.cs" />
+    <Compile Include="Data\HotelRepository.cs" />
+    <Compile Include="Data\IHotelRepository.cs" />
+    <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
