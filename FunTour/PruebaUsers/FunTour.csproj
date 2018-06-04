@@ -417,11 +417,12 @@
     <Content Include="Views\TravelPackages\Details.cshtml" />
     <Content Include="Views\TravelPackages\Edit.cshtml" />
     <Content Include="Views\TravelPackages\Index.cshtml" />
-    <Content Include="Views\TravelPackages\AddServices.cshtml" />
+    <Content Include="Views\TravelPackages\AddServicesToTravel.cshtml" />
     <Content Include="Views\TravelPackages\AddFlightToTravelPackagePartialView.cshtml" />
     <Content Include="Views\TravelPackages\AddHotelToTravelPackagePartialView.cshtml" />
     <Content Include="Views\TravelPackages\AddBusToTravelPackagePartialView.cshtml" />
     <Content Include="Views\TravelPackages\AddEventToTravelPackagePartialView.cshtml" />
+    <Content Include="Views\TravelPackages\AddServicesInPlace.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
