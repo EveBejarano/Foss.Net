@@ -1,4 +1,4 @@
-﻿@model FunTourDataLayer.Models.TravelPackage
+﻿@model FunTour.Models.TravelPackageViewModel
 
 @{
     ViewBag.Title = "Crear Paquete Turístico";
@@ -37,6 +37,13 @@
         @Html.LabelFor(model => model.ToDay, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(model => model.ToDay, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FlightOrBus, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(model => model.FlightOrBus, new { @class = "form-control" })
         </div>
     </div>
 

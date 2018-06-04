@@ -14,7 +14,7 @@
         <h4>TravelPackage</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id_Package)
+        @Html.HiddenFor(model => model.Id_TravelPackage)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -25,5 +25,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver al Menú", "Index")
 </div>

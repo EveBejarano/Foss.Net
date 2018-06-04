@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BusinessLayer.UnitOfWorks;
+using FunTour.Models;
 using FunTourDataLayer.Models;
 
 namespace PruebaUsers.Controllers
@@ -52,26 +53,40 @@ namespace PruebaUsers.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id_Package")] TravelPackage travelPackage)
+        public ActionResult Create([Bind(Include = "Id_TravelPackage")] TravelPackageViewModel travelPackageViewModel)
         {
+            var travelPackage = new TravelPackage
+            {
+                Id_TravelPackage = travelPackageViewModel.Id_TravelPackage,
+                PackageName = travelPackageViewModel.PackageName,
+                Description = travelPackageViewModel.Description,
+                FromDay = travelPackageViewModel.FromDay,
+                ToDay = travelPackageViewModel.ToDay
+            };
+
             if (ModelState.IsValid)
             {
                 UnitOfWork.TravelPackageRepository.Insert(travelPackage);
                 UnitOfWork.Save();
-                return RedirectToAction("AddServices", travelPackage);
+                return RedirectToAction("AddServices", new {travelPackage, travelPackageViewModel.FlightOrBus});
             }
 
             return View(travelPackage);
         }
 
-        public ActionResult AddServices(TravelPackage travelPackage)
+        public ActionResult AddServices(TravelPackage travelPackage, bool FlightOrBus)
         {
-
+            if (FlightOrBus)
+            {
+                ViewBag.Flights = new SelectList(UnitOfWork.FlightRepository.Get(), "Id_FlightCompany", "Name");
+            }
+            else
+            {
+                ViewBag.Buses = new SelectList(UnitOfWork.BusRepository.Get(), "Id_Bus", "Name");
+            }
             ViewBag.Hotels = new SelectList(UnitOfWork.HotelRepository.Get(), "Id_Hotel", "Name");
-            ViewBag.Flights = new SelectList(UnitOfWork.FlightRepository.Get(), "Id_FlightCompany", "Name");
-            ViewBag.Event = new SelectList(UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
-            ViewBag.BusCompany = new SelectList(UnitOfWork.BusRepository.Get(), "Id_BusCompany", "Name");
-
+            ViewBag.Events = new SelectList(UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
+            ViewBag.FlightOrBus = FlightOrBus;
 
             return View(travelPackage);
         }
@@ -91,8 +106,8 @@ namespace PruebaUsers.Controllers
             }
             ViewBag.Hotels = new SelectList(UnitOfWork.HotelRepository.Get(), "Id_Hotel", "Name");
             ViewBag.Flights = new SelectList(UnitOfWork.FlightRepository.Get(), "Id_FlightCompany", "Name");
-            ViewBag.Event = new SelectList(UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
-            ViewBag.BusCompany = new SelectList(UnitOfWork.BusRepository.Get(), "Id_BusCompany", "Name");
+            ViewBag.Events = new SelectList(UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
+            ViewBag.Buses = new SelectList(UnitOfWork.BusRepository.Get(), "Id_Bus", "Name");
 
 
             return View(travelPackage);
@@ -140,21 +155,10 @@ namespace PruebaUsers.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public PartialViewResult AddPermission2RoleReturnPartialView(int id, int permissionId)
-        {
-            if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
-            {
-                UnitOfWork.Save();
-            }
-            RoleDetails role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
-            return PartialView("_ListPermissions", role);
-        }
 
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public PartialViewResult AddFlightToTravelPackagePartialView(int id, int flightId)
+        public PartialViewResult AddFlightToTravelPackagePartialView(int FlightId, int TravelPackageId)
         {
             //if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
             //{
@@ -167,7 +171,7 @@ namespace PruebaUsers.Controllers
 
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public PartialViewResult AddHotelToTravelPackagePartialView(int id, int HotelId)
+        public PartialViewResult AddHotelToTravelPackagePartialView(int HotelId, int TravelPackageId)
         {
         //    if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
         //    {
@@ -179,7 +183,7 @@ namespace PruebaUsers.Controllers
 
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public PartialViewResult AddEventToTravelPackagePartialView(int id, int TravelPackageId)
+        public PartialViewResult AddEventToTravelPackagePartialView(int EventId, int TravelPackageId)
         {
             //if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
             //{
@@ -191,7 +195,7 @@ namespace PruebaUsers.Controllers
 
         [HttpGet]
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public PartialViewResult AddBusToTravelPackagePartialView(int id, int BusId)
+        public PartialViewResult AddBusToTravelPackagePartialView(int BusId, int TravelPackageId)
         {
             //if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
             //{

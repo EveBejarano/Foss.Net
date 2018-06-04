@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FunTourDataLayer.Models
 {
-    public partial class Hotel
+    public partial class Hotel: IEntityToReload
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Hotel()
@@ -28,5 +28,30 @@ namespace FunTourDataLayer.Models
         public virtual ICollection<TravelPackage> TravelPackage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReservedRoom> ReservedRoom { get; set; }
+
+        IEnumerable<object> IEntityToReload.DesearializeJson(string data)
+        {
+            throw new NotImplementedException();
+        }
+
+        string IEntityToReload.GenerateParameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<object> IEntityToReload.MappingJson(object APIResponse)
+        {
+            throw new NotImplementedException();
+        }
+
+        object IEntityToReload.NewEntity(string _parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IEntityToReload.ReLoadTable()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

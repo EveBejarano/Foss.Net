@@ -15,7 +15,7 @@ namespace FunTourDataLayer.Models
         }
 
         [Key]
-        public int Id_Package { get; set; }
+        public int Id_TravelPackage { get; set; }
 
         public string PackageName { get; set; }
 

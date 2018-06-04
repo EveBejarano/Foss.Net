@@ -1,0 +1,48 @@
+﻿@model FunTourDataLayer.Models.TravelPackage
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddEvent').click(function () {
+            var _eventId = $('#Events').val();
+            var _packageId = $('#Id_TravelPackage').val();
+
+            if (_eventId == '') {
+                return false;
+            }
+
+            var _parameters = { EventId: _eventId, TravelPackageId: _packageId};
+            $.ajax({
+                url: "/Admin/AddEventToTravelPackagePartialView",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+
+@Html.HiddenFor(model => model.Id_TravelPackage)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+    @if (Model.Event == null)
+    {
+        <legend><strong>Agregar Evento al Paquete</strong></legend>
+        
+    }
+    else
+    {
+        <a href="#">El evento asociado en este momento al paquete es:
+            @Model.Event.Name
+        </a>
+        <legend><strong>Cambiar Evento Asociado al Paquete:</strong></legend>
+    }
+    
+    @Html.DropDownList("Events", null, string.Empty, new { style = "width:350px" })
+    
+    <input type="button" id="AddEvent" value="Agregar Evento" />
+</fieldset>

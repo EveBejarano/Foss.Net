@@ -1,2 +1,51 @@
 ﻿@model FunTourDataLayer.Models.TravelPackage
 
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddBus').click(function () {
+            var _busId = $('#Buses').val();
+            var _packageId = $('#Id_TravelPackage').val();
+
+            if (_busId == '') {
+                return false;
+            }
+
+            var _parameters = { BusId: _busId, TravelPackageId: _packageId};
+            $.ajax({
+                url: "/Admin/AddBusToTravelPackagePartialView",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+
+@Html.HiddenFor(model => model.Id_TravelPackage)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+    @if (Model.Bus == null)
+    {
+        <legend><strong>Agregar Colectivo al Paquete</strong></legend>
+
+    }
+    else
+    {
+        <a href="#">
+            El colectivo asociado en este momento al paquete es:
+            @Model.Bus.BusCompany.Name
+            @Model.Bus.Id_Bus
+        </a>
+        <legend><strong>Cambiar Colectivo Asociado al Paquete:</strong></legend>
+    }
+
+    @Html.DropDownList("Buses", null, string.Empty, new { style = "width:350px" })
+
+    <input type="button" id="AddBus" value="Agregar Colectivo" />
+</fieldset>

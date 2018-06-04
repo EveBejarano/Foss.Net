@@ -1,2 +1,50 @@
 ﻿@model FunTourDataLayer.Models.TravelPackage
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddHotel').click(function () {
+            var _hotelId = $('#Hotels').val();
+            var _packageId = $('#Id_TravelPackage').val();
+
+            if (_hotelId == '') {
+                return false;
+            }
+
+            var _parameters = { HotelId: _hotelId, TravelPackageId: _packageId};
+            $.ajax({
+                url: "/Admin/AddHotelToTravelPackagePartialView",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+
+@Html.HiddenFor(model => model.Id_TravelPackage)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+    @if (Model.Hotel == null)
+    {
+        <legend><strong>Agregar Hotel al Paquete</strong></legend>
+
+    }
+    else
+    {
+        <a href="#">
+            El hotel asociado en este momento al paquete es:
+            @Model.Hotel.Name
+
+        </a>
+        <legend><strong>Cambiar Hotel Asociado al Paquete:</strong></legend>
+    }
+
+    @Html.DropDownList("Hotels", null, string.Empty, new { style = "width:350px" })
+
+    <input type="button" id="AddHotel" value="Agregar Hotel" />
+</fieldset>

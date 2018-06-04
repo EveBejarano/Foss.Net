@@ -1,2 +1,51 @@
 ﻿@model FunTourDataLayer.Models.TravelPackage
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddFlight').click(function () {
+            var _flightId = $('#Flights').val();
+            var _packageId = $('#Id_TravelPackage').val();
+
+            if (_flightId == '') {
+                return false;
+            }
+
+            var _parameters = { FlightId: _flightId, TravelPackageId: _packageId};
+            $.ajax({
+                url: "/Admin/AddFlightToTravelPackagePartialView",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+
+@Html.HiddenFor(model => model.Id_TravelPackage)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+    @if (Model.Flight == null)
+    {
+        <legend><strong>Agregar Vuelo al Paquete</strong></legend>
+
+    }
+    else
+    {
+        <a href="#">
+            El vuelo asociado en este momento al paquete es:
+            @Model.Flight.FlightCompany.Name
+            @Model.Flight.Id_FlightCompany
+
+        </a>
+        <legend><strong>Cambiar Vuelo Asociado al Paquete:</strong></legend>
+    }
+
+    @Html.DropDownList("Flights", null, string.Empty, new { style = "width:350px" })
+
+    <input type="button" id="AddFlight" value="Agregar Vuelo" />
+</fieldset>

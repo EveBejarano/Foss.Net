@@ -36,6 +36,7 @@ namespace FunTourDataLayer.Models
         public DbSet<Bus> Buses { get; set; }
         public DbSet<BusCompany> BusCompanies { get; set; }
         public DbSet<BusReservedSeat> BusReservedSeats { get; set; }
+        public DbSet<EventCompany> EventCompanies { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<FlightCompany> FlightCompanies { get; set; }
