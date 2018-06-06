@@ -139,17 +139,20 @@ namespace Hotels.Controllers
         [Route("api/Availability/{city}/{date_start}/{date_end}")]
         public IQueryable Availability(string city, DateTime date_start, DateTime date_end)
         {
-            var query =
+           var v =
+                from book in db.Booking
+                 where (book.Room.RoomType.Hotel.HotelCity == city) &&
+                       (book.StartDate >= date_start) &&
+                       (book.EndDate <= date_end)
+                 select book;
+
+           var query =
                 from data in db.Room
-                let v = ((from book in db.Booking
-                         where (book.RoomID == data.RoomID) &&
-                         (book.StartDate >= date_start) &&
-                         (book.EndDate <= date_end) select book.BookingID) == null)
-                where (data.RoomType.Hotel.HotelCity == city) && v
+                where (data.RoomType.Hotel.HotelCity == city) && (!v.Any(book=>(book.RoomID == data.RoomID)))
                 select new { data.RoomID, data.RoomType.RoomDescription, data.RoomType.StandardRate,
                              data.RoomType.HotelID, data.RoomType.Hotel.HotelName, data.RoomType.Hotel.HotelCity,
                              data.RoomType.Hotel.Country.CountryName};
-            return query;
+            return query; 
 
         }
     }
