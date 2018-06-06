@@ -71,6 +71,8 @@
     <Compile Include="Hotel\Hotel.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="IEntityToReload.cs" />
+    <Compile Include="Locality\City.cs" />
+    <Compile Include="Locality\Province.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation\BusReservedSeat.cs" />
     <Compile Include="Reservation\Reservation.cs" />

@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FunTourDataLayer.Locality;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -30,6 +31,9 @@ namespace FunTourDataLayer.Models
             return new ApplicationDbContext();
         }
 
+
+        public DbSet<City> Localities { get; set; }
+        public DbSet<Province> Provinces { get; set; }
         public DbSet<RoleDetails> RoleDetails { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<UserDetails> UserDetails { get; set; }

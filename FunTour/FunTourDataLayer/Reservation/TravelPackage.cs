@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FunTourDataLayer.Locality;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace FunTourDataLayer.Models
 
         public DateTime FromDay { get; set; }
         public DateTime ToDay { get; set; }
+
+        public City City { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reservation> Reservations { get; set; }
