@@ -1,93 +1,55 @@
-﻿@model FunTourDataLayer.Models.TravelPackage
+﻿@model FunTour.Models.TravelPackageViewModel
 
 @{
-    ViewBag.Title = "AddServices";
+    ViewBag.Title = "AddServicesToTravel";
 }
 
-<h2>AddServices</h2>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddServicesToTravelReturn').click(function () {
+            var _packageId = $('#Id_TravelPackage').val();
 
-@using (Html.BeginForm())
+            var _parameters = { TravelPackageId: _packageId };
+            $.ajax({
+                url: "/TravelPackages/AddServicesToTravelReturn",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+
+<h2>Agregar Forma De Transporte:</h2>
+
+
+
+@if (ViewBag.FlightOrBus)
 {
-    @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>TravelPackage</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.Id_TravelPackage)
+    <div>
+        @Html.Partial("AddFlightToTravelPackagePartialView", Model)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PackageName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PackageName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.PackageName, "", new { @class = "text-danger" })
-        </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.FromDay, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FromDay, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FromDay, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ToDay, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ToDay, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ToDay, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    @if (ViewBag.FlightOrBus)
-    {
-        <legend>
-            <h3>
-                Vuelo:
-            </h3>
-        </legend>
-        <div id="FlightCompany">
-            <a>@Model.Flight.FlightCompany.Name</a>
-            <br />
-        </div>
-
-        <div>
-            @Html.Partial("_AddFlightToTravelPackagePartialView", Model)
-
-        </div>
-    }
-    else
-    {
-        <legend>
-            <h3>
-                Colectivo:
-            </h3>
-        </legend>
-        <div id="Hotel">
-            @Model.Bus.BusCompany.Name
-            <br />
-        </div>
-        <div>
-            @Html.Partial("_AddBusToTravelPackagePartialView", Model)
-        </div>
-    }
-    <br />
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Guardar" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
+else
+{
+
+    <div>
+        @Html.Partial("AddBusToTravelPackagePartialView", Model)
+    </div>
+}
+<br />
+@*<input type="button" id="AddServicesToTravelReturn" value="Guardar y Continuar..." />*@
+@Html.ActionLink("Guardar y Continuar", "AddServicesToTravelReturn", new { TravelPackageId = Model.Id_TravelPackage }) |
+@Html.ActionLink("Volver Atrás", "AddPlaces", new { travelPackageViewModel = Model })
+
+
 <div>
     @Html.ActionLink("Volver al Menú", "Index")
 </div>

@@ -1,19 +1,20 @@
-﻿@model FunTourDataLayer.Models.TravelPackage
+﻿@model FunTour.Models.TravelPackageViewModel
 
 
 <script type="text/javascript">
     $(document).ready(function () {
         $('AddBus').click(function () {
-            var _busId = $('#Buses').val();
+            var _toGoBusId = $('#BusesToGo').val();
+            var _toBackBusId = $('#BusesToBack').val();
             var _packageId = $('#Id_TravelPackage').val();
 
-            if (_busId == '') {
+            if (_toGoBusId == '' || _toBackBusId == '') {
                 return false;
             }
 
-            var _parameters = { BusId: _busId, TravelPackageId: _packageId};
+            var _parameters = { ToGoBusId: _toGoBusId, ToBackBusId: _toBackBusId, TravelPackageId: _packageId };
             $.ajax({
-                url: "/Admin/AddBusToTravelPackagePartialView",
+                url: "/TravelPackages/AddBusToTravelPackagePartialView",
                 type: "GET",
                 data: _parameters,
                 success:
@@ -27,25 +28,87 @@
 </script>
 
 
+<h1>Colectivo de Ida</h1>>
 @Html.HiddenFor(model => model.Id_TravelPackage)
 <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
     border-width: thin; border-color: Silver; width: 740px">
-    @if (Model.Bus == null)
+    <table style="width:100%">
+        <tr>
+            <th>ID Colectivo</th>
+            <th>Fecha de Salida</th>
+            <th>Fecha de Llegada</th>
+            <th>Cantidad de Asientos Libres</th>
+            <th>Precio</th>
+        </tr>
+        @foreach (FunTourDataLayer.Models.Bus item in ViewBag.BusesToGoToShow)
+        {
+
+            <tr>
+                <td>@item.Id_Bus</td>
+                <td>@item.DepartureDate</td>
+                <td>@item.ArrivedDate</td>
+                <td>@item.NotReservedSeats</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </table>
+
+    @if (Model.ToGoBus == null)
     {
-        <legend><strong>Agregar Colectivo al Paquete</strong></legend>
+        <legend><strong>Agregar Colectivo al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
 
     }
     else
     {
         <a href="#">
             El colectivo asociado en este momento al paquete es:
-            @Model.Bus.BusCompany.Name
-            @Model.Bus.Id_Bus
+            @Model.ToGoBus.BusCompany.Name
+            @Model.ToGoBus.Id_Bus
         </a>
-        <legend><strong>Cambiar Colectivo Asociado al Paquete:</strong></legend>
+        <legend><strong>Cambiar Colectivo Asociado al Paquetepara ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
     }
 
-    @Html.DropDownList("Buses", null, string.Empty, new { style = "width:350px" })
+    @Html.DropDownList("BusesToGo", null, string.Empty, new { style = "width:350px" })
 
-    <input type="button" id="AddBus" value="Agregar Colectivo" />
+    <h1>Colectivo de Vuelta</h1>>
+    <table style="width:100%">
+        <tr>
+            <th>ID Colectivo</th>
+            <th>Fecha de Salida</th>
+            <th>Fecha de Llegada</th>
+            <th>Cantidad de Asientos Libres</th>
+            <th>Precio</th>
+        </tr>
+        @foreach (FunTourDataLayer.Models.Bus item in ViewBag.BusesToBackToShow)
+        {
+
+            <tr>
+                <td>@item.Id_Bus</td>
+                <td>@item.DepartureDate</td>
+                <td>@item.ArrivedDate</td>
+                <td>@item.NotReservedSeats</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </table>
+
+    @if (Model.ToBackBus == null)
+    {
+        <legend><strong>Agregar Colectivo al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
+
+    }
+    else
+    {
+        <a href="#">
+            El colectivo asociado en este momento al paquete es:
+            @Model.ToBackBus.BusCompany.Name
+            @Model.ToBackBus.Id_Bus
+        </a>
+        <legend><strong>Cambiar Colectivo Asociado al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
+    }
+
+    @Html.DropDownList("BusesToBack", null, string.Empty, new { style = "width:350px" })
+
+
+    <input type="button" id="AddBus" value="Agregar Colectivos" />
 </fieldset>

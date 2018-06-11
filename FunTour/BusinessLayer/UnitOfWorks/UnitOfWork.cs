@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Repositories;
+using FunTourDataLayer.Locality;
 using FunTourDataLayer.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -20,6 +21,10 @@ namespace BusinessLayer.UnitOfWorks
         private GenericRepository<Flight> flightRepository;
         private GenericRepository<Bus> busRepository;
         private GenericRepository<Event> eventRepository;
+
+        private GenericRepository<City> cityRepository;
+
+
 
         public RolesRepository<IdentityRole,RoleDetails> RolesRepository
         {
@@ -127,6 +132,18 @@ namespace BusinessLayer.UnitOfWorks
             }
         }
 
+        public GenericRepository<City> CityRepository
+        {
+            get
+            {
+
+                if (this.cityRepository == null)
+                {
+                    this.cityRepository = new GenericRepository<City>(context);
+                }
+                return cityRepository;
+            }
+        }
         public void Save()
         {
             context.SaveChanges();

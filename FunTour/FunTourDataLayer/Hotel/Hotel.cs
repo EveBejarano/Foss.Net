@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FunTourDataLayer.Models
 {
-    public partial class Hotel: IEntityToReload
+    public class Hotel: IEntityToReload
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Hotel()
@@ -19,7 +19,12 @@ namespace FunTourDataLayer.Models
         public int Id_Hotel { get; set; }
         public string Name { get; set; }
 
-        public string Information { get; set; }
+        public float Price { get; set; }
+
+        public string Description { get; set; }
+
+        public int NotReservedRooms { get; set; }
+        
 
         public string APIURLToGetTickets { get; set; }
         public string APIURLToReserveRoom{ get; set; }

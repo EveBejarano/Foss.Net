@@ -47,13 +47,15 @@
         </div>
     </div>
 
+
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Guardar y Continuar" />
         </div>
     </div>
 }
-
+@Html.ActionLink("Cancelar Creación", "CancelCreation", new { id = Model.Id_TravelPackage })
 <div>
     @Html.ActionLink("Volver al Inicio...", "Index")
 </div>

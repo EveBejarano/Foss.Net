@@ -1,0 +1,56 @@
+﻿
+@model FunTour.Models.TravelPackageViewModel
+
+@{
+    ViewBag.Title = "AddPlaces";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddPlacesReturn').click(function () {
+            var _packageId = $('#Id_TravelPackage').val();
+
+            var _parameters = { TravelPackageId: _packageId };
+            $.ajax({
+                url: "/TravelPackages/AddPlacesReturn",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+
+<h2>Lugares:</h2>
+
+<fieldset>
+    <div id="FromCity">
+    </div>
+    <div>
+        @Html.Partial("AddFromPlaceReturnPartialView", Model)
+    </div>
+    <br />
+
+    <div id="ToCity">
+    </div>
+    <div>
+        @Html.Partial("AddToPlaceReturnPartialView", Model)
+    </div>
+    <br />
+
+
+</fieldset>
+
+@*<input type="button" id="AddPlacesReturn" value="Continuar..." />*@
+
+@Html.ActionLink("Guardar y Continuar", "AddServicesToTravelReturn", new { TravelPackageId = Model.Id_TravelPackage }) |
+@Html.ActionLink("Volver Atrás", "Create", new { id = Model.Id_TravelPackage })
+
+<div>
+    @Html.ActionLink("Volver al Inicio...", "Index")
+</div>

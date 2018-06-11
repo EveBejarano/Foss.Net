@@ -31,8 +31,8 @@ namespace FunTourDataLayer.Models
             return new ApplicationDbContext();
         }
 
-
-        public DbSet<City> Localities { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
         public DbSet<Province> Provinces { get; set; }
         public DbSet<RoleDetails> RoleDetails { get; set; }
         public DbSet<Permission> Permissions { get; set; }

@@ -16,7 +16,13 @@ namespace FunTourDataLayer.Models
         }
 
         [Key]
-        public int Id_FlightCompany { get; set; }
+        public int Id_Flight { get; set; }
+
+        public string Description { get; set; }
+        public DateTime DepartureDate { get; set; }
+        public DateTime ArrivedDate { get; set; }
+        public float Price { get; set; }
+        public int NotReservedSeats { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ReservedSeat> ReservedSeat { get; set; }

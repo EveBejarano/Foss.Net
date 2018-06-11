@@ -20,7 +20,12 @@ namespace FunTourDataLayer.Models
 
         public string Name { get; set; }
 
-        public string Information { get; set; }
+
+        public float Price { get; set; }
+
+        public string Description { get; set; }
+
+        public int AvailableTickets{ get; set; }
 
         public string APIURLToTickets { get; set; }
         public string APIURLToReserveTicket { get; set; }

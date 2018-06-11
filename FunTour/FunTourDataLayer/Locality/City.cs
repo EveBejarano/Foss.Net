@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,13 @@ namespace FunTourDataLayer.Locality
 {
     public class City
     {
-        public int City { get; set; }
+        [Key]
+        public int Id_City { get; set; }
 
         public string Name { get; set; }
 
-        public int CP { get; set; }
+        public string CP { get; set; }
+
+        public Province Province { get; set; }
     }
 }
