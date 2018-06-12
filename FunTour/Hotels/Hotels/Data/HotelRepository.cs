@@ -21,14 +21,15 @@ namespace Hotels.Data
                 return context.Hotel.ToList();
             }
 
-            public IQueryable GetHotelsByCity(string city)
+            public IQueryable GetHotelsByCity(string zipcode)
             {
                 var query =
                     from data in context.Hotel
-                    where data.HotelCity.Equals(city)
-                    select new { data.HotelID, data.HotelName, data.HotelAddress, data.Country.CountryName, data.StarRating.RatingImage };
+                    where data.ZipCode.Equals(zipcode)
+                    select new { data.HotelID, data.HotelName, data.HotelAddress, data.City.CityName,
+                                data.City.Region.RegionName, data.City.Region.Country.CountryName,
+                                data.StarRating.RatingImage };
                 return query;
-
             }
 
             public Hotel GetHotelByID(int? id)
@@ -80,17 +81,17 @@ namespace Hotels.Data
                 GC.SuppressFinalize(this);
             }
 
-            public IQueryable getCountries()
+            public IQueryable getCities()
             {
-                var countriesQuery = context.Country;
-                return countriesQuery;
+                var citiesQuery = context.City;
+                return citiesQuery;
             }
 
             public IQueryable getHotelChains()
-            {
-                var chainsQuery = context.HotelChain;
-                return chainsQuery;
-            }
+                {
+                    var chainsQuery = context.HotelChain;
+                    return chainsQuery;
+                }
 
             public IQueryable getStarRatings()
             {

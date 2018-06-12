@@ -18,5 +18,6 @@ namespace Hotels.Models
         public float ExchangeRate { get; set; }
 
         public ICollection<Hotel> Hotels { get; set; }
+        public ICollection<Region> Regions { get; set; }
     }
 }

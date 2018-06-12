@@ -11,29 +11,6 @@
     <h4>Hotel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Country.CountryName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Country.CountryName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.HotelChain.ChainName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.HotelChain.ChainName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StarRating.RatingID)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StarRating.RatingID)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.HotelName)
@@ -70,17 +47,54 @@
         <dt>
             @Html.DisplayNameFor(model => model.HotelDetails)
         </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.HotelChain.ChainName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HotelChain.ChainName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StarRating.RatingID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StarRating.RatingID)
+        </dd>
 
         <dd>
             @Html.DisplayFor(model => model.HotelDetails)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.HotelCity)
+            @Html.DisplayNameFor(model => model.ZipCode)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.HotelCity)
+            @Html.DisplayFor(model => model.ZipCode)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.City.Region.Country.CountryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.Region.Country.CountryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City.Region.RegionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.Region.RegionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.CityName)
         </dd>
 
     </dl>

@@ -12,9 +12,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Country.CountryName)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.HotelChain.ChainName)
         </th>
         <th>
@@ -27,38 +24,53 @@
             @Html.DisplayNameFor(model => model.HotelAddress)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HotelCity)
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City.CityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City.Region.RegionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City.Region.Country.CountryName)
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Country.CountryName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HotelChain.ChainName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StarRating.RatingID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HotelName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HotelAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HotelCity)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.HotelID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.HotelID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.HotelID })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HotelChain.ChainName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StarRating.RatingID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HotelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HotelAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ZipCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City.CityName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City.Region.RegionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City.Region.Country.CountryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.HotelID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.HotelID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.HotelID })
+        </td>
+    </tr>
     }
 
 </table>

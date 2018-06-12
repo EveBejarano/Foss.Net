@@ -16,7 +16,6 @@ namespace Hotels.Models
         [Required]
         public string StatusID { get; set; }
 
-        [Required]
         public int GuestID { get; set; }
 
         [Required]

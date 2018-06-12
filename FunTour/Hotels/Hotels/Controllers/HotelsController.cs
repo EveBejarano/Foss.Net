@@ -53,7 +53,7 @@ namespace Hotels.Controllers
         // GET: Hotels/Create
         public ActionResult Create()
         {
-            ViewBag.CountryID = new SelectList(hotelRepository.getCountries(), "CountryID", "CountryName");
+            ViewBag.CountryID = new SelectList(hotelRepository.getCities(), "ZipCode", "CityName");
             ViewBag.ChainId = new SelectList(hotelRepository.getHotelChains(), "ChainID", "ChainName");
             ViewBag.RatingID = new SelectList(hotelRepository.getStarRatings(), "RatingID", "RatingID");
             return View();
@@ -78,8 +78,7 @@ namespace Hotels.Controllers
             {
                 ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
             }
-
-            ViewBag.CountryID = new SelectList(hotelRepository.getCountries(), "CountryID", "CountryName", hotel.CountryID);
+            ViewBag.CountryID = new SelectList(hotelRepository.getCities(), "ZipCode", "CityName", hotel.ZipCode);
             ViewBag.ChainId = new SelectList(hotelRepository.getHotelChains(), "ChainID", "ChainName", hotel.ChainId);
             ViewBag.RatingID = new SelectList(hotelRepository.getStarRatings(), "RatingID", "RatingID", hotel.RatingID);
             return View(hotel);
@@ -97,7 +96,7 @@ namespace Hotels.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CountryID = new SelectList(hotelRepository.getCountries(), "CountryID", "CountryName", hotel.CountryID);
+            ViewBag.CountryID = new SelectList(hotelRepository.getCities(), "ZipCode", "CityName", hotel.ZipCode);
             ViewBag.ChainId = new SelectList(hotelRepository.getHotelChains(), "ChainID", "ChainName", hotel.ChainId);
             ViewBag.RatingID = new SelectList(hotelRepository.getStarRatings(), "RatingID", "RatingID", hotel.RatingID);
             return View(hotel);
@@ -123,7 +122,7 @@ namespace Hotels.Controllers
                 ModelState.AddModelError(string.Empty, "Unable to save changes. Try again, and if the problem persists contact your system administrator.");
             }
 
-            ViewBag.CountryID = new SelectList(hotelRepository.getCountries(), "CountryID", "CountryName", hotel.CountryID);
+            ViewBag.CountryID = new SelectList(hotelRepository.getCities(), "ZipCode", "CityName", hotel.ZipCode);
             ViewBag.ChainId = new SelectList(hotelRepository.getHotelChains(), "ChainID", "ChainName", hotel.ChainId);
             ViewBag.RatingID = new SelectList(hotelRepository.getStarRatings(), "RatingID", "RatingID", hotel.RatingID);
             return View(hotel);

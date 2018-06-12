@@ -182,11 +182,15 @@
     <Compile Include="Models\Agent.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingStatus.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\HotelChain.cs" />
+    <Compile Include="Models\Parameters.cs" />
+    <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\RoomCount.cs" />
     <Compile Include="Models\RoomType.cs" />
     <Compile Include="Models\StarRating.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -20,11 +21,21 @@ namespace Hotels.Controllers
 
 
         // GET: api/HotelsAPI
-        public IQueryable GetHotel()
+        public IQueryable GetHotels()
         {
             var query =
                     from data in db.Hotel
-                    select new { data.HotelID, data.HotelName, data.HotelAddress, data.StarRating.RatingImage };
+                    select new
+                    {
+                        data.HotelID,
+                        data.HotelName,
+                        data.HotelAddress,
+                        data.StarRating.RatingImage,
+                        data.ZipCode,
+                        data.City.CityName,
+                        data.City.Region.RegionName,
+                        data.City.Region.Country.CountryName
+                    };
             return query;
         }
 
@@ -124,36 +135,118 @@ namespace Hotels.Controllers
             return db.Hotel.Count(e => e.HotelID == id) > 0;
         }
 
-        [Route("api/HotelsbyCity/{city}")]
-        public IQueryable GetHotelsbyCity(string city)
+        [HttpGet]
+        [Route("api/GetHotelsByZipCode/{zip}")]
+        public IQueryable GetHotelsByZipCode(string zip)
         {
             var query =
                 from data in db.Hotel
-                where data.HotelCity.Equals(city)
-                select new { data.HotelID, data.HotelName, data.HotelAddress, data.StarRating.RatingImage };
-
+                where data.ZipCode.Equals(zip)
+                select new
+                {
+                    data.HotelID,
+                    data.HotelName,
+                    data.HotelAddress,
+                    data.StarRating.RatingImage,
+                    data.ZipCode,
+                    data.City.CityName,
+                    data.City.Region.RegionName,
+                    data.City.Region.Country.CountryName
+                };
             return query;
-
         }
 
-        [Route("api/Availability/{city}/{date_start}/{date_end}")]
-        public IQueryable Availability(string city, DateTime date_start, DateTime date_end)
+        [HttpPost]
+        [Route("api/GetAvailability")]
+        public List<RoomCount> GetAvailability(Parameters parameters)
         {
-           var v =
-                from book in db.Booking
-                 where (book.Room.RoomType.Hotel.HotelCity == city) &&
-                       (book.StartDate >= date_start) &&
-                       (book.EndDate <= date_end)
-                 select book;
+            var roomTypeList = RoomTypeList(parameters).ToList();
+            var i = 0;
+            var Availability = new List<RoomCount>();
+            if (!roomTypeList.Count.Equals(0))
+            {
+                while (i < (roomTypeList.Count()))
+                {
+                    var newRoomCount = (CreateRoomCount(roomTypeList.ElementAt(i), parameters));
+                    Availability.Add(newRoomCount);
+                    i++;
+                };
+            }
+            return Availability;
+        }
 
-           var query =
+        public IEnumerable<RoomType> RoomTypeList(Parameters parameters)
+        {
+            var query =
+                from data in db.RoomType.Include(h => h.Hotel)
+                                        .Include(h => h.Hotel.City).Include(h => h.Hotel.City.Region).Include(h => h.Hotel.City.Region.Country)
+                where ((data.Hotel.City.CityName == parameters.City)
+                        && (data.Hotel.City.Region.RegionName == parameters.Region)
+                        && (data.Hotel.City.Region.Country.CountryName == parameters.Country))
+                select data;
+            if (query == null)
+            { return null; }
+            var list = query.ToList();
+            var roomTypeList = new List<RoomType>();
+            var i = 0;
+            if ((list.Count) > 0)
+            {
+                while (i < list.Count())
+                {
+                    if ((CountRooms(list.ElementAt(i).RoomTypeID, parameters)) > 0)
+                    {
+                        roomTypeList.Add(list.ElementAt(i));
+                    }
+                    i++;
+                }
+            }
+            return roomTypeList;
+        }
+
+        public RoomCount CreateRoomCount(RoomType roomType, Parameters parameters)
+        {
+
+                var roomCount  =  new RoomCount
+                {
+                    HotelID = roomType.HotelID,
+                    HotelName = roomType.Hotel.HotelName,
+                    HotelAddress = roomType.Hotel.HotelAddress,
+                    HotelCity = roomType.Hotel.City.CityName,
+                    HotelRegion = roomType.Hotel.City.Region.RegionName,
+                    HotelCountry = roomType.Hotel.City.Region.Country.CountryName,
+                    RoomTypeID = roomType.RoomTypeID,
+                    RoomDescription = roomType.RoomDescription,
+                    StandardRate = roomType.StandardRate,
+                    FreeRoomCount = CountRooms(roomType.RoomTypeID, parameters)
+                };
+            return roomCount;
+        }
+
+        public IEnumerable<Room> AvRooms(int RoomTypeID, Parameters parameters)
+        {
+            var v =
+                from book in db.Booking
+                where ((book.Room.RoomTypeID == RoomTypeID) &&
+                (book.StartDate >= parameters.Date_start) &&
+                (book.EndDate <= parameters.Date_end))
+                select book;
+            var query =
                 from data in db.Room
-                where (data.RoomType.Hotel.HotelCity == city) && (!v.Any(book=>(book.RoomID == data.RoomID)))
-                select new { data.RoomID, data.RoomType.RoomDescription, data.RoomType.StandardRate,
-                             data.RoomType.HotelID, data.RoomType.Hotel.HotelName, data.RoomType.Hotel.HotelCity,
-                             data.RoomType.Hotel.Country.CountryName};
-            return query; 
+                where (data.RoomTypeID == RoomTypeID) && (!v.Any(book => (book.RoomID == data.RoomID)))
+                select data;
+
+            if (query == null)
+            { return null; }
+
+            return query.ToList();
 
         }
+
+        public int CountRooms(int RoomTypeID, Parameters parameters)
+        {
+            var list = AvRooms(RoomTypeID, parameters);
+            return list.Count();
+        }
+
     }
 }

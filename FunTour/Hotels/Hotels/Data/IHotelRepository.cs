@@ -10,7 +10,7 @@ namespace Hotels.Data
     {
         IEnumerable<Hotel> GetHotels();
         IQueryable GetHotelsByCity(string city);
-        IQueryable getCountries();
+        IQueryable getCities();
         IQueryable getHotelChains();
         IQueryable getStarRatings();
 
