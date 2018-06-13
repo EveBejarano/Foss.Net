@@ -34,6 +34,22 @@ namespace FlightsAPI.Controllers
 
             return Ok(filghtPlace);
         }
+        //GET para que Eve encuentre la info del asiento del cliente con el DNI
+        [ResponseType(typeof(FilghtPlace))]
+        [Route("api/GetEvesPlace4/{DNI}")]
+        public IHttpActionResult GetEvesPlace4(int DNI)
+        {
+            IQueryable<FilghtPlace> filghtPlace = db.FilghtPlaces.Where(e => e.Place_Owner_DNI == DNI);
+
+            if (filghtPlace == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(filghtPlace);
+        }
+
+
 
         // PUT: api/FilghtPlaces/5
         [ResponseType(typeof(void))]
@@ -99,6 +115,53 @@ namespace FlightsAPI.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = filghtPlace.numPlace }, filghtPlace);
         }
+
+        // POST que le deja a Eve crear un asiento con los datos de su cliente en un vuelo
+
+        public class PlaceData
+        {
+            public string ClientName { get; set; }
+            public int ClientDNI { get; set; }
+            public string idFlight { get; set; }
+
+        }
+
+
+        [ResponseType(typeof(FilghtPlace))]
+        [Route("api/PostEvesPlace3")]
+        public IHttpActionResult PostEvesPlace3(PlaceData data)
+        {
+            FilghtPlace place = new FilghtPlace();
+            DateTime Actual = DateTime.Now;
+
+            place.Place_Owner_DNI = data.ClientDNI;
+            place.Place_Owner_Name = data.ClientName;
+            place.idFlight = data.idFlight;
+            place.FP_Date = Actual;
+
+
+            db.FilghtPlaces.Add(place);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (FilghtPlaceExists(place.numPlace))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtRoute("DefaultApi", new { id = place.numPlace }, place);
+        }
+
+
 
         // DELETE: api/FilghtPlaces/5
         [ResponseType(typeof(FilghtPlace))]

@@ -11,7 +11,8 @@ namespace FlightsAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using Newtonsoft.Json;
+
     public partial class Destination
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,16 +22,21 @@ namespace FlightsAPI.Models
             this.CommercialFlights1 = new HashSet<CommercialFlight>();
             this.ScalesOnFlights = new HashSet<ScalesOnFlight>();
         }
-    
+        
+        [JsonIgnore]
         public string idAirport { get; set; }
         public string nameAirport { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-    
+
+
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommercialFlight> CommercialFlights { get; set; }
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommercialFlight> CommercialFlights1 { get; set; }
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ScalesOnFlight> ScalesOnFlights { get; set; }
     }

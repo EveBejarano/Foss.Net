@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FunTourDataLayer.Hotel
+namespace FunTourDataLayer.Models
 {
     public class HotelCompany
     {
@@ -23,7 +23,7 @@ namespace FunTourDataLayer.Hotel
 
         public string Information { get; set; }
 
-        public string APIURLToGetRooms { get; set; }
+        public string APIURLToGetHotel { get; set; }
         public string APIURLToReserveRoom { get; set; }
         public string APIURLToCancelReservation { get; set; }
 

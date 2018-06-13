@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Repositories;
-using FunTourDataLayer.Locality;
+using FunTourDataLayer.Hotel;
+using FunTourDataLayer.Models;
 using FunTourDataLayer.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -23,9 +24,10 @@ namespace BusinessLayer.UnitOfWorks
         private GenericRepository<Event> eventRepository;
 
         private GenericRepository<City> cityRepository;
-
-
-
+        private GenericRepository<FlightCompany> flightCompanyRepository;
+        private GenericRepository<BusCompany> busCompanyRepository;
+        private GenericRepository<HotelCompany> hotelCompanyRepository;
+        private GenericRepository<EventCompany> eventCompanyRepository;
         public RolesRepository<IdentityRole,RoleDetails> RolesRepository
         {
             get
@@ -144,6 +146,62 @@ namespace BusinessLayer.UnitOfWorks
                 return cityRepository;
             }
         }
+
+
+        public GenericRepository<FlightCompany> FlightCompanyRepository
+        {
+            get
+            {
+
+                if (this.flightCompanyRepository == null)
+                {
+                    this.flightCompanyRepository = new GenericRepository<FlightCompany>(context);
+                }
+                return flightCompanyRepository;
+            }
+        }
+
+        public GenericRepository<BusCompany> BusCompanyRepository
+        {
+            get
+            {
+
+                if (this.busCompanyRepository == null)
+                {
+                    this.busCompanyRepository = new GenericRepository<BusCompany>(context);
+                }
+                return busCompanyRepository;
+            }
+        }
+
+
+        public GenericRepository<HotelCompany> HotelCompanyRepository
+        {
+            get
+            {
+
+                if (this.hotelCompanyRepository == null)
+                {
+                    this.hotelCompanyRepository = new GenericRepository<HotelCompany>(context);
+                }
+                return hotelCompanyRepository;
+            }
+        }
+
+
+        public GenericRepository<EventCompany> EventCompanyRepository
+        {
+            get
+            {
+
+                if (this.eventCompanyRepository == null)
+                {
+                    this.eventCompanyRepository = new GenericRepository<EventCompany>(context);
+                }
+                return eventCompanyRepository;
+            }
+        }
+
         public void Save()
         {
             context.SaveChanges();
@@ -167,6 +225,11 @@ namespace BusinessLayer.UnitOfWorks
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public void ManageNewTravelPackage(TravelPackage travelPackage)
+        {
+            throw new NotImplementedException();
         }
     }
 }

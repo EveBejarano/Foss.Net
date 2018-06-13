@@ -11,9 +11,11 @@ namespace FlightsAPI.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class FilghtPlace
     {
+        [Key]
         public int numPlace { get; set; }
         public string Place_Owner_Name { get; set; }
         public int Place_Owner_DNI { get; set; }

@@ -11,12 +11,16 @@ namespace FlightsAPI
         {
             // Web API configuration and services
 
-            /*var json = config.Formatters.JsonFormatter;
-          json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
-          config.Formatters.Remove(config.Formatters.XmlFormatter);*/
+            
+            
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            /*The 'ObjectContent`1' type failed to serialize the response body for content type 
+             'application/xml; charset=utf-8';
+
             var json = config.Formatters.JsonFormatter;
             json.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
-            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.Remove(config.Formatters.XmlFormatter);*/
             //Esto fue agregado porque daba ese error al consultar 
 
 

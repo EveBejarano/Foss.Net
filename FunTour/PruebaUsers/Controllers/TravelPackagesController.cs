@@ -10,7 +10,7 @@ using BusinessLayer.UnitOfWorks;
 using FunTour.Models;
 using FunTourDataLayer.Models;
 using FuntourBusinessLayer.Service;
-using FunTourDataLayer.Locality;
+using FunTourDataLayer.Models;
 
 namespace PruebaUsers.Controllers
 {
@@ -157,8 +157,8 @@ namespace PruebaUsers.Controllers
         {
             if (travelPackageViewModel.FlightOrBus)
             {
-                IEnumerable<Flight> ListOfFlightsToGo = Service.GetFlights(travelPackageViewModel.FromDay, travelPackageViewModel.FromPlace.CP, travelPackageViewModel.ToPlace.CP);
-                IEnumerable<Flight> ListOfFlightsToBack = Service.GetFlights( travelPackageViewModel.ToDay, travelPackageViewModel.FromPlace.CP, travelPackageViewModel.ToPlace.CP);
+                IEnumerable<Flight> ListOfFlightsToGo = Service.GetFlights(travelPackageViewModel.FromDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
+                IEnumerable<Flight> ListOfFlightsToBack = Service.GetFlights( travelPackageViewModel.ToDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
 
 
                 ViewBag.FlightsToGo = new SelectList(ListOfFlightsToGo, "Id_Flight", "Id_Flight");
@@ -362,6 +362,15 @@ namespace PruebaUsers.Controllers
                 Event = travelPackage.Event
             };
 
+            travelPackage.SetReservationAmount();
+            travelPackageViewModel.ReservationAmount = travelPackage.ReservationAmount;
+
+            travelPackage.SetPrice();
+            travelPackageViewModel.TotalPrice = travelPackage.TotalPrice;
+
+            Service.UnitOfWork.TravelPackageRepository.Update(travelPackage);
+            Service.UnitOfWork.Save();
+
             if (travelPackageViewModel.FlightOrBus)
             {
                     travelPackageViewModel.ToGoFlight = travelPackage.ToGoFlight;
@@ -381,8 +390,10 @@ namespace PruebaUsers.Controllers
 
             travelPackage.Creator = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(ControllerContext.HttpContext.User.Identity.Name);
             Service.UnitOfWork.TravelPackageRepository.Update(travelPackage);
+
             Service.UnitOfWork.Save();
 
+            Service.UnitOfWork.ManageNewTravelPackage(travelPackage);
             return RedirectToAction("Index");
         }
 

@@ -1,4 +1,4 @@
-﻿using FunTourDataLayer.Locality;
+﻿using FunTourDataLayer.Models;
 using FunTourDataLayer.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,10 @@ namespace FunTour.Models
 {
     public class TravelPackageViewModel
     {
+        public TravelPackageViewModel()
+        {
+            ReservationAmount =0;
+        }
         public int Id_TravelPackage { get; set; }
 
         [Display(Name = "Nombre del Paquete")]
@@ -35,7 +39,12 @@ namespace FunTour.Models
         public virtual Bus ToBackBus { get; set; }
         public virtual Event Event { get; set; }
 
+        [Display(Name = "Cantidad de Reservaciones Posibles")]
+        public int ReservationAmount { get; set; }
         public virtual City FromPlace { get; set; }
         public virtual City ToPlace { get; set; }
+
+        [Display(Name = "Precio Total del Paquete")]
+        public float TotalPrice { get; internal set; }
     }
 }

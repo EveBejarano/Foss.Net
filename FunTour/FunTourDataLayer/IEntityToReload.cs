@@ -8,11 +8,11 @@ namespace FunTourDataLayer
 {
     public interface IEntityToReload
     {
-        //Genera un nuevo objeto que tiene que ser serializado para mandar la request a la API con los parametros ingresados
-        object NewEntity(string _parameters);
+        ////Genera un nuevo objeto que tiene que ser serializado para mandar la request a la API con los parametros ingresados
+        //object NewEntity(string _parameters);
 
-        //Genera los parametros que se necesitan para la request y los devuelve en formato string
-        string GenerateParameters();
+        ////Genera los parametros que se necesitan para la request y los devuelve en formato string
+        //string GenerateParameters();
 
         //Toma el string de respuesta de una API y lo convierte en el tipo necesario para guardar en la BD.
         IEnumerable<object> DesearializeJson(string data);

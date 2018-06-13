@@ -63,6 +63,13 @@
     <Compile Include="Repositories\RolesRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Service\DataService.cs" />
+    <Compile Include="Service\GetBusRequest.cs" />
+    <Compile Include="Service\GetBusResponse.cs" />
+    <Compile Include="Service\GetFlightRequest.cs" />
+    <Compile Include="Service\GetFlightResponse.cs" />
+    <Compile Include="Service\GetHotelsRequest.cs" />
+    <Compile Include="Service\GetHotelsResponse.cs" />
+    <Compile Include="Service\Plane.cs" />
     <Compile Include="UnitOfWorks\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

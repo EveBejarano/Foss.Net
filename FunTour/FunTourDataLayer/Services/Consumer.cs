@@ -13,82 +13,64 @@ namespace FunTourDataLayer.Services
 {
     public class Consumer<TEntity> where TEntity : class
     {
-        private readonly ApplicationDbContext _context;
 
-        internal DbSet<TEntity> dbSet;
-        internal IEntityToReload IEntity;
-
-        public Consumer(ApplicationDbContext context, IEntityToReload IEntity)
-        {
-            this._context = context;
-            this.dbSet = context.Set<TEntity>();
-            this.IEntity = IEntity;
-        }
-
-        public async Task<bool> ReLoadEntities(string URL, string _parameters) 
+        public async Task<TEntity> ReLoadEntities(string URL, string typeRequest, object ModelRequest) 
         {
 
-            try
-            {
-                var EntityList = await GetEntitiesFromAPIReturnListElements(URL, _parameters);
+                var ModelResponse = await GetEntitiesFromAPIReturnModelRequest(URL, typeRequest, ModelRequest);
+           
+                return ModelResponse;
 
-                var Result = SaveListEntitiesToDataBase(EntityList);
-
-                return Result;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         
-        public async Task<IEnumerable<Object>> GetEntitiesFromAPIReturnListElements(string URL, string _parameters)
+        private async Task<TEntity> GetEntitiesFromAPIReturnModelRequest(string URL, string typeRequest, object ModelRequest)
         {
             var Url = URL;
 
             string data;
 
-            var _entity = IEntity.NewEntity(_parameters);
-
-            string Json = JsonConvert.SerializeObject(_entity);
+            string Json = JsonConvert.SerializeObject(ModelRequest);
             var request = new StringContent(Json, Encoding.UTF8, "application/json");
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage res = await client.PostAsync(Url, request))
+                switch (typeRequest)
                 {
-                    using (HttpContent content = res.Content)
-                    {
-                        data = await content.ReadAsStringAsync();
-                    }
+                    case "PUT":
+                        using (HttpResponseMessage res = await client.PutAsync(Url, request))
+                        {
+                            using (HttpContent content = res.Content)
+                            {
+                                data = await content.ReadAsStringAsync();
+                            }
+                        }
+                        break;
+                    case "GET":
+                        using (HttpResponseMessage res = await client.GetAsync(Url + request))
+                        {
+                            using (HttpContent content = res.Content)
+                            {
+                                data = await content.ReadAsStringAsync();
+                            }
+                        }
+                        break;
+                    case "POST":
+                        using (HttpResponseMessage res = await client.PostAsync(Url, request))
+                        {
+                            using (HttpContent content = res.Content)
+                            {
+                                data = await content.ReadAsStringAsync();
+                            }
+                        }
+                        break;
+                    default:
+                        data = "";
+                        break;
                 }
             }
 
-            return IEntity.DesearializeJson(data);
-        }
-
-        public bool SaveListEntitiesToDataBase( IEnumerable<Object> EntityList)
-        {
-            if (EntityList.First().GetType() != IEntity.GetType())
-            {
-                return false;
-            }
-
-            try
-            {
-                _context.Database.ExecuteSqlCommand("TRUNCATE TABLE ", dbSet);
-
-                foreach (TEntity item in EntityList)
-                {
-                    dbSet.Add(item);
-                }
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return JsonConvert.DeserializeObject<TEntity>(data);
         }
 
     }
