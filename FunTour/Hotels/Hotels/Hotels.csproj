@@ -180,9 +180,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Agent.cs" />
+    <Compile Include="Models\BookDTO.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingStatus.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\GuestData.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Hotel.cs" />
