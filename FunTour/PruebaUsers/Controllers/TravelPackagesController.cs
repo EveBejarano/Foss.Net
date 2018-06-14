@@ -168,8 +168,8 @@ namespace PruebaUsers.Controllers
             }
             else
             {
-                IEnumerable<Bus> ListOfBusesToGo = Service.GetBuses(travelPackageViewModel.FromDay, travelPackageViewModel.FromPlace.CP, travelPackageViewModel.ToPlace.CP);
-                IEnumerable<Bus> ListOfBusesToBack = Service.GetBuses(travelPackageViewModel.FromDay, travelPackageViewModel.FromPlace.CP, travelPackageViewModel.ToPlace.CP);
+                IEnumerable<Bus> ListOfBusesToGo = Service.GetBuses(travelPackageViewModel.FromDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
+                IEnumerable<Bus> ListOfBusesToBack = Service.GetBuses(travelPackageViewModel.FromDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
 
                 ViewBag.BusesToGo = new SelectList(ListOfBusesToGo, "Id_Bus", "Id_Bus");
                 ViewBag.BusesToBack = new SelectList(ListOfBusesToBack, "Id_Bus", "Id_Bus");
@@ -261,8 +261,8 @@ namespace PruebaUsers.Controllers
             }
             else
             {
-                FromDay = travelPackageViewModel.ToGoBus.ArrivedDate;
-                ToDay = travelPackageViewModel.ToBackBus.DepartureDate;
+                FromDay = travelPackageViewModel.ToGoBus.DateTimeArrival;
+                ToDay = travelPackageViewModel.ToBackBus.DateTimeDeparture;
             }
 
             IEnumerable<Hotel> ListOfHotels = Service.GetHotels(travelPackageViewModel.ToPlace.CP, FromDay, ToDay);

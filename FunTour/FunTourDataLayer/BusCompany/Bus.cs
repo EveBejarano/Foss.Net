@@ -16,12 +16,16 @@ namespace FunTourDataLayer.Models
         }
 
         [Key]
-        public int Id_Bus { get; set; }
+        public int IdAPI_Bus { get; set; }
 
-        public string Description { get; set; }
-        public DateTime DepartureDate{ get; set; }
-        public DateTime ArrivedDate { get; set; }
-        public float Price { get; set; }
+        public string Origin { get; set; }
+        public string Destination { get; set; }
+        public DateTime DateTimeDeparture { get; set; }
+        public DateTime DateTimeArrival { get; set; }
+        public string Company { get; set; }
+        public string Class { get; set; }
+        public int Capacity { get; set; }
+        public double Price { get; set; }
         public int NotReservedSeats { get; set; }
 
 
@@ -36,20 +40,12 @@ namespace FunTourDataLayer.Models
             throw new NotImplementedException();
         }
 
-        string IEntityToReload.GenerateParameters()
-        {
-            throw new NotImplementedException();
-        }
 
         IEnumerable<object> IEntityToReload.MappingJson(object APIResponse)
         {
             throw new NotImplementedException();
         }
 
-        object IEntityToReload.NewEntity(string _parameters)
-        {
-            throw new NotImplementedException();
-        }
 
         void IEntityToReload.ReLoadTable()
         {

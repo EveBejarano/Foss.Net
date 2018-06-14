@@ -33,11 +33,21 @@ namespace FuntourBusinessLayer.Service
 
             GetBusResponse getBusResponse = consumerBuss.ReLoadEntities(BusCompany.APIURLToGetSeats, "POST", getBusRequest).Result;
 
-            foreach (var item in getBusResponse)
+            foreach (var item in getBusResponse.Buses)
             {
                 var auxBus = new Bus
                 {
-
+                    IdAPI_Bus = item.Id,
+                    Destination = item.Destination,
+                    Origin = item.Origin,
+                    DateTimeArrival = item.DateTimeArrival,
+                    DateTimeDeparture = item.DateTimeDeparture,
+                    Company = item.Company,
+                    BusCompany = BusCompany,
+                    Class= item.Class,
+                    Capacity = item.Capacity,
+                    Price = item.Price,
+                    NotReservedSeats = item.Capacity
                 };
                 ListOfBus.Add(auxBus);
             }

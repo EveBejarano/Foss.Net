@@ -43,13 +43,13 @@
         @foreach (FunTourDataLayer.Models.Bus item in ViewBag.BusesToGoToShow)
         {
 
-            <tr>
-                <td>@item.Id_Bus</td>
-                <td>@item.DepartureDate</td>
-                <td>@item.ArrivedDate</td>
-                <td>@item.NotReservedSeats</td>
-                <td>@item.Price</td>
-            </tr>
+        <tr>
+            <td>@item.IdAPI_Bus</td>
+            <td>@item.DateTimeArrival</td>
+            <td>@item.DateTimeDeparture</td>
+            <td>@item.NotReservedSeats</td>
+            <td>@item.Price</td>
+        </tr>
         }
     </table>
 
@@ -63,7 +63,7 @@
         <a href="#">
             El colectivo asociado en este momento al paquete es:
             @Model.ToGoBus.BusCompany.Name
-            @Model.ToGoBus.Id_Bus
+            @Model.ToGoBus.IdAPI_Bus
         </a>
         <legend><strong>Cambiar Colectivo Asociado al Paquetepara ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
     }
@@ -82,13 +82,13 @@
         @foreach (FunTourDataLayer.Models.Bus item in ViewBag.BusesToBackToShow)
         {
 
-            <tr>
-                <td>@item.Id_Bus</td>
-                <td>@item.DepartureDate</td>
-                <td>@item.ArrivedDate</td>
-                <td>@item.NotReservedSeats</td>
-                <td>@item.Price</td>
-            </tr>
+        <tr>
+            <td>@item.IdAPI_Bus</td>
+            <td>@item.DateTimeArrival</td>
+            <td>@item.DateTimeDeparture</td>
+            <td>@item.NotReservedSeats</td>
+            <td>@item.Price</td>
+        </tr>
         }
     </table>
 
@@ -102,7 +102,7 @@
         <a href="#">
             El colectivo asociado en este momento al paquete es:
             @Model.ToBackBus.BusCompany.Name
-            @Model.ToBackBus.Id_Bus
+            @Model.ToBackBus.IdAPI_Bus
         </a>
         <legend><strong>Cambiar Colectivo Asociado al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
     }

@@ -1,20 +1,20 @@
 ﻿namespace FuntourBusinessLayer.Service
 {
 
-//    {
-//	"City": "Corrientes",
+        //    {
+        //	"City": "Corrientes",
 	
-//	"Region": "Corrientes",
+        //	"Region": "Corrientes",
 	
-//	"Country": "Argentina",
+        //	"Country": "Argentina",
 	
-//	"Date_start": "2018-06-07",
+        //	"Date_start": "2018-06-07",
 	
-//	"Date_end": "2018-06-08"
+        //	"Date_end": "2018-06-08"
 
-//}
-internal class GetHotelsRequest
-    {
-    }
+        //}
+    internal class GetHotelsRequest
+        {
+        }
 
 }
