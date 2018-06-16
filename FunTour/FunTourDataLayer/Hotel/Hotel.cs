@@ -39,20 +39,13 @@ namespace FunTourDataLayer.Models
             throw new NotImplementedException();
         }
 
-        string IEntityToReload.GenerateParameters()
-        {
-            throw new NotImplementedException();
-        }
+
 
         IEnumerable<object> IEntityToReload.MappingJson(object APIResponse)
         {
             throw new NotImplementedException();
         }
-
-        object IEntityToReload.NewEntity(string _parameters)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         void IEntityToReload.ReLoadTable()
         {

@@ -1,0 +1,4 @@
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunToutBusinessLayer\obj\Debug\netcoreapp2.0\FunToutBusinessLayer.csprojAssemblyReference.cache
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunToutBusinessLayer\obj\Debug\netcoreapp2.0\FunToutBusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunToutBusinessLayer\obj\Debug\netcoreapp2.0\FunToutBusinessLayer.AssemblyInfoInputs.cache
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunToutBusinessLayer\obj\Debug\netcoreapp2.0\FunToutBusinessLayer.AssemblyInfo.cs

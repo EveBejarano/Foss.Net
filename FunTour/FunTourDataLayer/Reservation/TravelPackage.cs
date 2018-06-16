@@ -33,7 +33,7 @@ namespace FunTourDataLayer.Models
 
         public bool FlightOrBus { get; set; }
 
-        public float TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
 
         public int ReservationAmount { get; set; }
 

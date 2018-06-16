@@ -17,3 +17,24 @@ C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\F
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.dll
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.pdb
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.csprojAssemblyReference.cache
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.csprojAssemblyReference.cache
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.csproj.CoreCompileInputs.cache
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.pdb
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\FunTourDataLayer.dll.config
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\FunTourDataLayer.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\FunTourDataLayer.pdb
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\EntityFramework.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\EntityFramework.xml
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\Newtonsoft.Json.xml
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\es\Microsoft.AspNet.Identity.Core.resources.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\bin\Debug\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
+C:\Users\evebe\source\repos\Foss.Net\FunTour\FunTourDataLayer\obj\Debug\FunTourDataLayer.csproj.CopyComplete

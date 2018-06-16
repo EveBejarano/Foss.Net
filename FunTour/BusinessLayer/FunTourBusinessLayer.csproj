@@ -78,6 +78,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\CoreDataLayer\CoreDataLayer.csproj">
+      <Project>{c0a9d522-1da2-4786-ae5d-ac28fc3a7f78}</Project>
+      <Name>CoreDataLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FunTourDataLayer\FunTourDataLayer.csproj">
       <Project>{966d98fd-5121-49f2-8819-358e5eb04840}</Project>
       <Name>FunTourDataLayer</Name>
