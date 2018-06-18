@@ -139,11 +139,70 @@ namespace BusAPI.Controllers
                     data.Bus.Class,
                     data.Bus.Capacity,
                     data.Price,
-
+                    AvailableSeats = AvSeats(data.TripID)
                 };
 
             return query;
         }
         
+        [HttpPost]
+        [Route("api/CreateBookings")]
+        public List<BookData> CreateBookings(BookDTO book)
+        {
+            var seatList = AvSeats(book.TripID);
+            var bookList = new List<Booking>();
+            var i = 0;
+            if (seatList.Count() < book.SeatCount)
+            {
+                return null;
+            }
+
+            while (i < book.SeatCount)
+            {
+                var booking = new Booking
+                {
+                    TripID = book.TripID,
+                    BusID = (db.Trips.Find(book.TripID).BusID),
+                    SeatID = (seatList.ElementAt(i).SeatID)
+                };
+                db.Bookings.Add(booking);
+                db.SaveChanges();
+                bookList.Add(booking);
+                i++;
+            }
+
+            var BDlist = new List<BookData>();
+            i = 0;
+            if (!bookList.Count.Equals(0))
+            {
+                while (i < (bookList.Count()))
+                {
+                    var newBookData = new BookData
+                    {
+                        BookingID = bookList.ElementAt(i).BookingID,
+                        TripID = (db.Bookings.Find(bookList.ElementAt(i).BookingID).TripID)
+                    };
+                    BDlist.Add(newBookData);
+                    i++;
+                };
+            }
+            return BDlist;
+        }
+
+        public IEnumerable<Seat> AvSeats(int tripID)
+        {
+            var v = (db.Trips.Find(tripID).Bookings);
+
+            var query =
+            from data in db.Seats
+            where (data.BusID == (db.Trips.Find(tripID).BusID))
+            && (!v.Any(book => (book.SeatID == data.SeatID)))
+            select data;
+
+            if (query == null)
+            { return null; }
+
+            return query.ToList();
+        }
     }
 }
