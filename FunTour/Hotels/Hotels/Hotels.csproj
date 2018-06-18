@@ -159,7 +159,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AgentsController.cs" />
-    <Compile Include="Controllers\BookingsAPIController.cs" />
     <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\BookingStatusController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
@@ -180,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Agent.cs" />
+    <Compile Include="Models\BookData.cs" />
     <Compile Include="Models\BookDTO.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingStatus.cs" />
