@@ -118,7 +118,7 @@ namespace BusAPI.Controllers
         
         [HttpPost]
         [Route("api/Trips")]
-        public IQueryable GetTripsAvailable(Parameters parameters)
+        public IQueryable GetTripsAvailable(Parameters parameters) //post que devuelve datos de viajes a partir de una fecha, con origen y destino
         {
             if (parameters == null)
             {
@@ -152,12 +152,12 @@ namespace BusAPI.Controllers
             var seatList = AvSeats(book.TripID);
             var bookList = new List<Booking>();
             var i = 0;
-            if (seatList.Count() < book.SeatCount)
+            if (seatList.Count() < book.SeatCount) // si la cantidad de asientos que se quieren reservar son más que los disponibles
             {
                 return null;
             }
 
-            while (i < book.SeatCount)
+            while (i < book.SeatCount) //bucle para crear n reservas
             {
                 var booking = new Booking
                 {
@@ -173,7 +173,7 @@ namespace BusAPI.Controllers
 
             var BDlist = new List<BookData>();
             i = 0;
-            if (!bookList.Count.Equals(0))
+            if (!bookList.Count.Equals(0)) //si hay asientos disponibles
             {
                 while (i < (bookList.Count()))
                 {
@@ -186,10 +186,10 @@ namespace BusAPI.Controllers
                     i++;
                 };
             }
-            return BDlist;
+            return BDlist; //devuelve los ids de las reservas creadas
         }
 
-        public IEnumerable<Seat> AvSeats(int tripID)
+        public IEnumerable<Seat> AvSeats(int tripID) //devuelve asientos disponibles en un viaje
         {
             var v = (db.Trips.Find(tripID).Bookings);
 
