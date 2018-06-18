@@ -27,7 +27,7 @@ namespace BusAPI.Models
         public double Price { get; set; }
 
         public DateTime DateTimeTrip { get; set; }
-
+        public DateTime DateTimeArrival { get; set; }
         public ICollection<Booking> Bookings { get; set; }
     }
 }

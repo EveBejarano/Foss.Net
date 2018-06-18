@@ -115,28 +115,35 @@ namespace BusAPI.Controllers
         {
             return db.Trips.Count(e => e.TripID == id) > 0;
         }
-
-        [Route("api/Trips/{date}-{date2}")]
-        public IQueryable GetTripsBetweenDates(DateTime date, DateTime date2)
+        
+        [HttpPost]
+        [Route("api/Trips")]
+        public IQueryable GetTripsAvailable(Parameters parameters)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             var query =
                 from data in db.Trips
-                where (data.DateTimeTrip >= date) && (data.DateTimeTrip <= date2)
-                select data;
+                where (data.DateTimeTrip >= parameters.Date) && (data.OriginCity.CityName.Equals(parameters.Origin)) && (data.DestinationCity.CityName.Equals(parameters.Destination))
+                select new
+                {
+                    data.TripID,
+                    Origin = data.OriginCity.CityName,
+                    Destination = data.DestinationCity.CityName,
+                    DateTimeDeparture = data.DateTimeTrip,
+                    data.DateTimeArrival,
+                    data.Bus.Company,
+                    data.Bus.Class,
+                    data.Bus.Capacity,
+                    data.Price,
+
+                };
 
             return query;
         }
-
-        [Route("api/TripsByCompany/{company}")]
-        public IQueryable GetTripsByCompany(string comp)
-        {
-            var query =
-                from data in db.Trips
-                where data.Bus.Company == comp
-                select data;
-
-            return query;
-        }
-
+        
     }
 }

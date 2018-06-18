@@ -5,6 +5,7 @@ using System.Web;
 using BusAPI.Models;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using BusAPI.Migrations;
 
 
 namespace BusAPI.DAL
@@ -51,6 +52,8 @@ namespace BusAPI.DAL
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            Database.SetInitializer<BusContext>(
+            new MigrateDatabaseToLatestVersion<BusContext, Configuration>());
         }
     }
 }
