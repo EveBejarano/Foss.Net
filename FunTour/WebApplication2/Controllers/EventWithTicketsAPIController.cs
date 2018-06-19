@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Threading.Tasks;
 using Events.DAL;
 using Events.Models;
 
@@ -18,22 +19,42 @@ namespace Events.Controllers
         private EventsContext db = new EventsContext();
 
         // GET: api/EventWithTicketsAPI
-        public IQueryable<EventWithTicket> GetEventsWithTickets()
+        public IQueryable<EventWithTicketDTO> GetEventsWithTickets()
         {
-            return db.EventsWithTickets;
+            var evento = from b in db.EventsWithTickets
+                         select new EventWithTicketDTO()
+                         {
+                             EventWithTicketID = b.EventWithTicketID,
+                             Description = b.Description,
+                             City = b.City.CityName,
+                             Transport = b.Transport.TransportType,
+                             EventDate = b.EventDate,
+                             Adress = b.Addres,
+                             HasTickets = b.HasTickets,
+                             MaxTickets = b.MaxTicket
+                         };
+
+            return evento;
         }
 
         // GET: api/EventWithTicketsAPI/5
-        [ResponseType(typeof(EventWithTicket))]
-        public IHttpActionResult GetEventWithTicket(int id)
+        [ResponseType(typeof(EventWithTicketDTO))]
+        public async Task<IHttpActionResult> GetEvento(int id)
         {
-            EventWithTicket eventWithTicket = db.EventsWithTickets.Find(id);
-            if (eventWithTicket == null)
-            {
-                return NotFound();
-            }
+            var evento = await db.EventsWithTickets.Include(b => b.City).Select(b =>
+       new EventWithTicketDTO()
+       {
+           EventWithTicketID = b.EventWithTicketID,
+           Description = b.Description,
+           City = b.City.CityName,
+           Transport = b.Transport.TransportType,
+           EventDate = b.EventDate,
+           Adress = b.Addres,
+           HasTickets = b.HasTickets,
+           MaxTickets = b.MaxTicket
+       }).SingleOrDefaultAsync(b => b.EventWithTicketID == id);
 
-            return Ok(eventWithTicket);
+            return Ok(evento);
         }
 
         // PUT: api/EventWithTicketsAPI/5
@@ -73,7 +94,7 @@ namespace Events.Controllers
 
         // POST: api/EventWithTicketsAPI
         [ResponseType(typeof(EventWithTicket))]
-        public IHttpActionResult PostEventWithTicket(EventWithTicket eventWithTicket)
+        public async Task<IHttpActionResult> PostEventWithTicket(EventWithTicket eventWithTicket)
         {
             if (!ModelState.IsValid)
             {
@@ -81,23 +102,39 @@ namespace Events.Controllers
             }
 
             db.EventsWithTickets.Add(eventWithTicket);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
+
+            // New code:
+            // Load Evento
+            db.Entry(eventWithTicket).Reference(x => x.City).Load();
+
+            var dto = new EventWithTicketDTO()
+            {
+                EventWithTicketID = eventWithTicket.EventWithTicketID,
+                Description = eventWithTicket.Description,
+                City = eventWithTicket.City.CityName,
+                Transport = eventWithTicket.Transport.TransportType,
+                EventDate = eventWithTicket.EventDate,
+                Adress = eventWithTicket.Addres,
+                HasTickets = eventWithTicket.HasTickets,
+                MaxTickets = eventWithTicket.MaxTicket
+            };
 
             return CreatedAtRoute("DefaultApi", new { id = eventWithTicket.EventWithTicketID }, eventWithTicket);
         }
 
         // DELETE: api/EventWithTicketsAPI/5
         [ResponseType(typeof(EventWithTicket))]
-        public IHttpActionResult DeleteEventWithTicket(int id)
+        public async Task<IHttpActionResult> DeleteEventWithTicket(int id)
         {
-            EventWithTicket eventWithTicket = db.EventsWithTickets.Find(id);
+            EventWithTicket eventWithTicket = await db.EventsWithTickets.FindAsync(id);
             if (eventWithTicket == null)
             {
                 return NotFound();
             }
 
             db.EventsWithTickets.Remove(eventWithTicket);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return Ok(eventWithTicket);
         }
@@ -116,60 +153,97 @@ namespace Events.Controllers
             return db.EventsWithTickets.Count(e => e.EventWithTicketID == id) > 0;
         }
 
-        [Route("api/EventsWithTickets")]
-        public IQueryable GetAvailable()
+        [HttpPost]
+        [Route("api/EventsByHasTickets")] //Muestra los eventos, ingresando si tiene tickets (true or false), y devolviendo el ID de ticket
+                                          //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion, si tiene tickets
+                                          //y los tickets maximos
+        public IQueryable GetEventsByHasTickets(Parameters parameters)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             var query =
                 from data in db.EventsWithTickets
-                where data.HasTickets == true
-                select new { data.City, data.Addres, data.EventDate, data.Transport, data.MaxTicket, data.Description };
+                where (data.HasTickets.Equals(parameters.HasTickets))
+                select new
+                {
+                    data.EventWithTicketID,
+                    data.Description,
+                    data.City.CityName,
+                    data.Transport.TransportType,
+                    data.EventDate,
+                    data.Addres,
+                    data.HasTickets,
+                    data.MaxTicket
+
+                };
 
             return query;
+
         }
 
-        [Route("api/EventsInCity/{city}")]
-        public IQueryable GetCityEvents(string cityName)
+        [HttpPost]
+        [Route("api/EventsByCity")] //Muestra los eventos, ingresando sólo la ciudad, y devolviendo el ID de ticket
+                                    //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion, si tiene tickets
+                                    //y los tickets maximos
+        public IQueryable GetEventsByCity(Parameters parameters)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             var query =
                 from data in db.EventsWithTickets
-                where data.City.CityName.Equals(cityName)
-                select new { data.City, data.Addres, data.EventDate, data.Transport, data.MaxTicket, data.Description };
+                where (data.City.CityName.Equals(parameters.City))
+                select new
+                {
+                    data.EventWithTicketID,
+                    data.Description,
+                    data.City.CityName,
+                    data.Transport.TransportType,
+                    data.EventDate,
+                    data.Addres,
+                    data.HasTickets,
+                    data.MaxTicket
+
+                };
 
             return query;
+
         }
 
-        [Route("api/EventsByDate/{date}")]
-        public IQueryable GetCityByDate(DateTime date)
+        [HttpPost]
+        [Route("api/EventsByCityDate")] //Muestra los eventos, ingresando la ciudad y una fecha inicial y final, y devolviendo el ID de ticket
+                                        //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion, si tiene tickets
+                                        //y los tickets maximos
+        public IQueryable GetEventsByCityDate(Parameters parameters)
         {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
             var query =
                 from data in db.EventsWithTickets
-                where data.EventDate == date
-                select new { data.City, data.Addres, data.EventDate, data.Transport, data.MaxTicket, data.Description };
+                where ((data.City.CityName.Equals(parameters.City)) && (data.EventDate >= parameters.Date_start) && (data.EventDate <= parameters.Date_end))
+                select new
+                {
+                    data.EventWithTicketID,
+                    data.Description,
+                    data.City.CityName,
+                    data.Transport.TransportType,
+                    data.EventDate,
+                    data.Addres,
+                    data.HasTickets,
+                    data.MaxTicket
+
+                };
 
             return query;
+
         }
-
-        [Route("api/Events/{date}/{date2}")]
-        public IQueryable GetEventsBetweenDates(DateTime date, DateTime date2)
-        {
-            var query =
-                from data in db.EventsWithTickets
-                where (data.EventDate >= date) && (data.EventDate <= date2)
-                select new { data.City, data.Addres, data.EventDate, data.Transport, data.MaxTicket, data.Description };
-
-            return query;
-        }
-
-        [Route("api/Events/{maxPrice}")]
-        public IQueryable GetEventsWithPriceLowerThan(double price)
-        {
-            var query =
-                from data in db.Tickets
-                where (data.Price <= price)
-                select new { data.EventWithTicket.City, data.EventWithTicket.Addres, data.EventWithTicket.EventDate, data.EventWithTicket.Transport, data.EventWithTicket.MaxTicket, data.EventWithTicket.Description };
-
-            return query;
-
-       }
     }
 }

@@ -10,7 +10,7 @@ namespace Events.Models
     public class Person
         {
             [Key]
-            public string DNI { get; set; }
+            public int DNI { get; set; }
             public string Name { get; set; }
             public string Surname { get; set; }
 

@@ -21,6 +21,10 @@ namespace Events.Models
         public int TransportID { get; set; }
         public virtual Transport Transport { get; set; }
 
+        [ForeignKey("EventCompany")]
+        public int CompanyID { get; set; }
+        public virtual EventCompany EventCompany { get; set; }
+
         public DateTime EventDate { get; set; }
 
         [Required]

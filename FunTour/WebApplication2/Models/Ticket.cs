@@ -18,7 +18,7 @@ namespace Events.Models
         public virtual EventWithTicket EventWithTicket { get; set; }
 
         [ForeignKey("Person")]
-        public string DNI { get; set; }
+        public int DNI { get; set; }
         public virtual Person Person { get; set; }
 
     }

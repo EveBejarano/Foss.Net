@@ -47,7 +47,7 @@ namespace WebApplication2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PersonID,Name,Surname,DNI")] Person person)
+        public ActionResult Create([Bind(Include = "DNI,Name,Surname")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace WebApplication2.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PersonID,Name,Surname,DNI")] Person person)
+        public ActionResult Edit([Bind(Include = "DNI,Name,Surname")] Person person)
         {
             if (ModelState.IsValid)
             {

@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Events.DAL;
@@ -18,20 +19,32 @@ namespace Events.Controllers
         private EventsContext db = new EventsContext();
 
         // GET: api/Tickets
-        public IQueryable<Ticket> GetTickets()
+        public IQueryable<TicketDTO> GetTicketsDisponibles()
         {
-            return db.Tickets;
+            var ticket = from b in db.Tickets
+                         select new TicketDTO()
+                         {
+                             TicketID = b.TicketID,
+                             EventWithTicketID = b.EventWithTicketID,
+                             Price = b.Price,
+                             PersonID = b.DNI
+                         };
+
+            return ticket;
         }
 
         // GET: api/Tickets/5
-        [ResponseType(typeof(Ticket))]
-        public IHttpActionResult GetTicket(int id)
+        [ResponseType(typeof(TicketDTO))]
+        public async Task<IHttpActionResult> GetTickets(int id)
         {
-            Ticket ticket = db.Tickets.Find(id);
-            if (ticket == null)
-            {
-                return NotFound();
-            }
+            var ticket = await db.Tickets.Include(b => b.EventWithTicket).Select(b =>
+       new TicketDTO()
+       {
+           TicketID = b.TicketID,
+           EventWithTicketID = b.EventWithTicketID,
+           Price = b.Price,
+           PersonID = b.DNI
+       }).SingleOrDefaultAsync(b => b.EventWithTicketID == id);
 
             return Ok(ticket);
         }
@@ -73,7 +86,7 @@ namespace Events.Controllers
 
         // POST: api/Tickets
         [ResponseType(typeof(Ticket))]
-        public IHttpActionResult PostTicket(Ticket ticket)
+       public async Task<IHttpActionResult> PostTicket(Ticket ticket)
         {
             if (!ModelState.IsValid)
             {
@@ -90,7 +103,16 @@ namespace Events.Controllers
                 {
                     db.Tickets.Add(ticket);
                     query.MaxTicket--;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
+
+                    db.Entry(ticket).Reference(x => x.Person).Load();
+                    var dto = new TicketDTO()
+                    {
+                        TicketID = ticket.TicketID,
+                        Price = ticket.Price,
+                        EventWithTicketID = ticket.EventWithTicketID,
+                        PersonID = ticket.DNI
+                    };
 
                     return CreatedAtRoute("DefaultApi", new { id = ticket.TicketID }, ticket);
                 }
@@ -102,17 +124,17 @@ namespace Events.Controllers
 
         // DELETE: api/Tickets/5
         [ResponseType(typeof(Ticket))]
-        public IHttpActionResult DeleteTicket(int id)
+        public async Task<IHttpActionResult> DeleteTicket(int id)
         {
-            Ticket ticket = db.Tickets.Find(id);
+            Ticket ticket = await db.Tickets.FindAsync(id);
             if (ticket == null)
             {
                 return NotFound();
             }
 
             db.Tickets.Remove(ticket);
-            db.SaveChanges();
-            
+            await db.SaveChangesAsync();
+
             return Ok(ticket);
         }
 
@@ -128,6 +150,87 @@ namespace Events.Controllers
         private bool TicketExists(int id)
         {
             return db.Tickets.Count(e => e.TicketID == id) > 0;
+        }
+
+        [HttpPost]
+        [Route("api/TicketsByEvents")] //Muestra los tickets por eventos, ingresando el ID de evento y devolviendo el ID de ticket
+                                       //el precio, el ID de evento, el nombre de la persona, y el Apellido
+        public IQueryable GetTicketsByEvents(ParametersTicket parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            var query =
+                from data in db.Tickets
+                where ((data.EventWithTicketID.Equals(parameters.EventWithTicketID)))
+                select new
+                {
+                    data.TicketID,
+                    data.Price,
+                    data.EventWithTicketID,
+                    data.Person.Name,
+                    data.Person.Surname
+
+                };
+
+            return query;
+
+        }
+
+        [HttpPost]
+        [Route("api/TicketsByPerson")] //Muestra los tickets por persona, ingresando el nombre y el apellido, y devolviendo el id de ticket
+                                       //el precio, el ID de evento, el nombre y el apellido
+        public IQueryable GetTicketsByPerson(ParametersTicket parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            var query =
+                from data in db.Tickets
+                where ((data.Person.Name.Equals(parameters.Name)) && (data.Person.Surname.Equals(parameters.Surname)))
+                select new
+                {
+                    data.TicketID,
+                    data.Price,
+                    data.EventWithTicketID,
+                    data.Person.Name,
+                    data.Person.Surname
+
+                };
+
+            return query;
+
+        }
+
+        [HttpPost]
+        [Route("api/TicketsByPrice")] //Muestra los tickets por un rango de precios, ingresando el precio inicial y final,
+                                      //y devolviendo el id de ticket, el precio, el ID de evento, el nombre y el apellido
+        public IQueryable GetTicketsByPrice(ParametersTicket parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            var query =
+                from data in db.Tickets
+                where ((data.Price >= parameters.Price_Start) && (data.Price <= parameters.Price_End))
+                select new
+                {
+                    data.TicketID,
+                    data.Price,
+                    data.EventWithTicketID,
+                    data.Person.Name,
+                    data.Person.Surname
+
+                };
+
+            return query;
+
         }
     }
 }

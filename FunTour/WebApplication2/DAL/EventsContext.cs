@@ -14,6 +14,7 @@ namespace Events.DAL
         {
         }
 
+        public DbSet<EventCompany> EventCompanies { get; set; }
         public DbSet<EventWithTicket> EventsWithTickets { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Country> Countries { get; set; }

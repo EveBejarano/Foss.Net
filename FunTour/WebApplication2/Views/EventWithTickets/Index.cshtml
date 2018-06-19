@@ -12,6 +12,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.EventCompany.Name)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.City.CityName)
         </th>
         <th>
@@ -38,6 +41,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.EventCompany.Name)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.City.CityName)
         </td>
         <td>
@@ -59,9 +65,9 @@
             @Html.DisplayFor(modelItem => item.MaxTicket)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EventWithTicketID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EventWithTicketID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EventWithTicketID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.EventWithTicketID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.EventWithTicketID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.EventWithTicketID })
         </td>
     </tr>
 }

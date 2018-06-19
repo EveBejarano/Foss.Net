@@ -18,7 +18,7 @@ namespace Events.Controllers
         // GET: EventWithTickets
         public ActionResult Index()
         {
-            var eventsWithTickets = db.EventsWithTickets.Include(e => e.City).Include(e => e.Transport).Include(e => e.Tickets);
+            var eventsWithTickets = db.EventsWithTickets.Include(e => e.EventCompany).Include(e => e.City).Include(e => e.Transport).Include(e => e.Tickets);
             return View(eventsWithTickets.ToList());
         }
 
@@ -40,6 +40,7 @@ namespace Events.Controllers
         // GET: EventWithTickets/Create
         public ActionResult Create()
         {
+            ViewBag.CompanyID = new SelectList(db.EventCompanies, "CompanyID", "Name");
             ViewBag.CityID = new SelectList(db.Cities, "CityID", "CityName");
             ViewBag.TransportID = new SelectList(db.Transports, "TransportID", "TransportType");
             return View();
@@ -50,7 +51,7 @@ namespace Events.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventWithTicketID,CityID,TransportID,EventDate,Description,Addres,HasTickets,MaxTicket")] EventWithTicket eventWithTicket)
+        public ActionResult Create([Bind(Include = "EventWithTicketID,CompanyID,CityID,TransportID,EventDate,Description,Addres,HasTickets,MaxTicket")] EventWithTicket eventWithTicket)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +63,7 @@ namespace Events.Controllers
                     }
                 return View("DateError") ;
             }
+            ViewBag.CompanyID = new SelectList(db.EventCompanies, "CompanyID", "Name", eventWithTicket.CompanyID);
             ViewBag.CityID = new SelectList(db.Cities, "CityID", "CityName", eventWithTicket.CityID);
             ViewBag.TransportID = new SelectList(db.Transports, "TransportID", "TransportType", eventWithTicket.TransportID);
             return View(eventWithTicket);
@@ -79,6 +81,7 @@ namespace Events.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CompanyID = new SelectList(db.EventCompanies, "CompanyID", "Name", eventWithTicket.CompanyID);
             ViewBag.CityID = new SelectList(db.Cities, "CityID", "CityName", eventWithTicket.CityID);
             ViewBag.TransportID = new SelectList(db.Transports, "TransportID", "TransportType", eventWithTicket.TransportID);
             return View(eventWithTicket);
@@ -89,7 +92,7 @@ namespace Events.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventWithTicketID,CityID,TransportID,EventDate,Description,Addres,HasTickets,MaxTicket")] EventWithTicket eventWithTicket)
+        public ActionResult Edit([Bind(Include = "EventWithTicketID,CompanyID,CityID,TransportID,EventDate,Description,Addres,HasTickets,MaxTicket")] EventWithTicket eventWithTicket)
         {
             if (ModelState.IsValid)
             {
@@ -97,6 +100,7 @@ namespace Events.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CompanyID = new SelectList(db.EventCompanies, "CompanyID", "Name", eventWithTicket.CompanyID);
             ViewBag.CityID = new SelectList(db.Cities, "CityID", "CityName", eventWithTicket.CityID);
             ViewBag.TransportID = new SelectList(db.Transports, "TransportID", "TransportType", eventWithTicket.TransportID);
             return View(eventWithTicket);
