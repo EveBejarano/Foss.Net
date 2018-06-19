@@ -1,0 +1,62 @@
+//Para obtener los viajes a partir de una fecha, entre dos ciudades api/Trips
+{
+    "Date": "2018-06-07",
+    "Origin": "Corrientes",
+    "Destination": "Buenos Aires"
+}
+//Lo que devuelve. Ciudades, horas de salida y llegada
+//Companía, clase, capacidad total, precio y asientos disponibles para reservar
+[
+    {
+        "TripID": 1,
+        "Origin": "Corrientes",
+        "Destination": "Buenos Aires",
+        "DateTimeDeparture": "2018-06-10T00:00:00",
+        "DateTimeArrival": "2018-06-10T08:00:00",
+        "Company": "Flechabus",
+        "Class": "Semicama",
+        "Capacity": 68,
+        "Price": 1200,
+        "AvailableSeats": 7
+    },
+    {
+        "TripID": 2,
+        "Origin": "Corrientes",
+        "Destination": "Buenos Aires",
+        "DateTimeDeparture": "2018-06-08T19:00:00",
+        "DateTimeArrival": "2018-06-09T03:00:00",
+        "Company": "Tata Rapido",
+        "Class": "Semicama",
+        "Capacity": 36,
+        "Price": 1000,
+        "AvailableSeats": 6
+    },
+    {
+        "TripID": 3,
+        "Origin": "Corrientes",
+        "Destination": "Buenos Aires",
+        "DateTimeDeparture": "2018-06-09T06:00:00",
+        "DateTimeArrival": "2018-06-09T14:00:00",
+        "Company": "Aguila Bis",
+        "Class": "Cama",
+        "Capacity": 72,
+        "Price": 1500,
+        "AvailableSeats": 6
+    }
+]
+//Para crear las reservas. SeatCount es la cantidad de asientos que se quieren reservar /api/CreateBookings
+{
+    "TripID": 1,
+    "SeatCount": 2
+}
+//Devuelve así. El tripID es para saber que se creó bien cada una
+[
+    {
+        "BookingID": 7,
+        "TripID": 1
+    },
+    {
+        "BookingID": 8,
+        "TripID": 1
+    }
+]
