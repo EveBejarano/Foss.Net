@@ -7,7 +7,6 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using BusAPI.Migrations;
 
-
 namespace BusAPI.DAL
 {
     public class BusContext : DbContext

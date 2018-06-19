@@ -118,7 +118,7 @@ namespace BusAPI.Controllers
         
         [HttpPost]
         [Route("api/Trips")]
-        public IQueryable GetTripsAvailable(Parameters parameters) //post que devuelve datos de viajes a partir de una fecha, con origen y destino
+        public List<TripDetails> GetTripsAvailable(Parameters parameters) //post que devuelve datos de viajes a partir de una fecha, con origen y destino
         {
             if (parameters == null)
             {
@@ -126,25 +126,43 @@ namespace BusAPI.Controllers
             }
 
             var query =
-                from data in db.Trips
+                from data in db.Trips.Include(t => t.OriginCity).Include(t => t.DestinationCity).Include(t => t.Bus)
                 where (data.DateTimeTrip >= parameters.Date) && (data.OriginCity.CityName.Equals(parameters.Origin)) && (data.DestinationCity.CityName.Equals(parameters.Destination))
-                select new
+                select data;
+                if (query == null)
+                { return null; }
+                var list = query.ToList();
+            var Availability = new List<TripDetails>();
+            var i = 0;
+                if (!list.Count.Equals(0))
                 {
-                    data.TripID,
-                    Origin = data.OriginCity.CityName,
-                    Destination = data.DestinationCity.CityName,
-                    DateTimeDeparture = data.DateTimeTrip,
-                    data.DateTimeArrival,
-                    data.Bus.Company,
-                    data.Bus.Class,
-                    data.Bus.Capacity,
-                    data.Price,
-                    AvailableSeats = AvSeats(data.TripID)
+                    while (i < list.Count())
+                    {
+                        var newTripDetails = (CreateTripDetails(list.ElementAt(i)));
+                        Availability.Add(newTripDetails);
+                        i++;
+                    };
                 };
-
-            return query;
+            return Availability;
         }
         
+        public TripDetails CreateTripDetails (Trip trip)
+        {
+            var newTD = new TripDetails
+            {
+                TripID = trip.TripID,
+                Origin = trip.OriginCity.CityName,
+                Destination = trip.DestinationCity.CityName,
+                DateTimeDeparture = trip.DateTimeTrip,
+                DateTimeArrival = trip.DateTimeArrival,
+                Company = trip.Bus.Company,
+                Class = trip.Bus.Class,
+                Capacity = trip.Bus.Capacity,
+                Price = trip.Price,
+                AvailableSeats = (AvSeats(trip.TripID).Count())
+            };
+            return newTD;
+        }
         [HttpPost]
         [Route("api/CreateBookings")]
         public List<BookData> CreateBookings(BookDTO book)
@@ -163,7 +181,8 @@ namespace BusAPI.Controllers
                 {
                     TripID = book.TripID,
                     BusID = (db.Trips.Find(book.TripID).BusID),
-                    SeatID = (seatList.ElementAt(i).SeatID)
+                    SeatID = (seatList.ElementAt(i).SeatID),
+                    ClientID = 1
                 };
                 db.Bookings.Add(booking);
                 db.SaveChanges();
@@ -189,20 +208,23 @@ namespace BusAPI.Controllers
             return BDlist; //devuelve los ids de las reservas creadas
         }
 
-        public IEnumerable<Seat> AvSeats(int tripID) //devuelve asientos disponibles en un viaje
+        public List<Seat> AvSeats(int tripID) //devuelve asientos disponibles en un viaje
         {
-            var v = (db.Trips.Find(tripID).Bookings);
-
+            var v =
+                (from book in db.Bookings
+                 where (book.TripID == tripID)
+                 select book.SeatID).ToList();
+            var Bus = (db.Trips.Find(tripID).BusID);
             var query =
-            from data in db.Seats
-            where (data.BusID == (db.Trips.Find(tripID).BusID))
-            && (!v.Any(book => (book.SeatID == data.SeatID)))
-            select data;
+            (from data in db.Seats
+            where ((data.BusID == (Bus))
+            && (!v.Any(b => (b == data.SeatID))))
+            select data).ToList();
 
             if (query == null)
             { return null; }
 
-            return query.ToList();
+            return query;
         }
     }
 }
