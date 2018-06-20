@@ -11,7 +11,7 @@ namespace Hotels.Models
         [Key]
         public int RatingID { get; set; }
 
-        public byte[] RatingImage { get; set; }
+        public string RatingImage { get; set; }
 
         public ICollection<Hotel> Hotels { get; set; }
     }

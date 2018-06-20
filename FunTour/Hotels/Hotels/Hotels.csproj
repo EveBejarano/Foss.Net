@@ -171,18 +171,28 @@
     <Compile Include="Controllers\RoomsController.cs" />
     <Compile Include="Controllers\RoomTypesController.cs" />
     <Compile Include="Controllers\StarRatingsController.cs" />
+    <Compile Include="Data\GenericRepository.cs" />
     <Compile Include="Data\HotelsContext.cs" />
+    <Compile Include="Data\HotelRepository.cs" />
+    <Compile Include="Data\IHotelRepository.cs" />
+    <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Agent.cs" />
+    <Compile Include="Models\BookDTO.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\BookingStatus.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\GuestData.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Guest.cs" />
     <Compile Include="Models\Hotel.cs" />
     <Compile Include="Models\HotelChain.cs" />
+    <Compile Include="Models\Parameters.cs" />
+    <Compile Include="Models\Region.cs" />
     <Compile Include="Models\Room.cs" />
+    <Compile Include="Models\RoomCount.cs" />
     <Compile Include="Models\RoomType.cs" />
     <Compile Include="Models\StarRating.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

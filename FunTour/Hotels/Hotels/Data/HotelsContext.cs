@@ -21,6 +21,8 @@ namespace Hotels.Data
         public DbSet<Hotel> Hotel { get; set; }
         public DbSet<Guest> Guest { get; set; }
         public DbSet<Country> Country { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<Region> Region { get; set; }
         public DbSet<Booking> Booking { get; set; }
         public DbSet<RoomType> RoomType { get; set; }
     }

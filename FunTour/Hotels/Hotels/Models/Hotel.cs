@@ -13,8 +13,13 @@ namespace Hotels.Models
         public int HotelID { get; set; }
            
         public string ChainId { get; set; }
-        public string CountryID { get; set; }
+
+        public string CityID { get; set; }
+   
         public int RatingID { get; set; }
+
+        [Required]
+        public string ZipCode { get; set; }
 
         [Required]
         public string HotelName { get; set; }
@@ -27,12 +32,9 @@ namespace Hotels.Models
         public string HotelWebsite { get; set; }
         public string HotelDetails { get; set; }
 
-        [Required]
-        public string HotelCity { get; set; }
-
         public HotelChain HotelChain { get; set; }
         public StarRating StarRating { get; set; }
-        public Country Country { get; set; }
+        public City City { get; set; }
         public virtual ICollection<RoomType> RoomTypes { get; set; }
 
     }
