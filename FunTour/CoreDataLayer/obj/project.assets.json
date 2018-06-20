@@ -12683,9 +12683,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\evebe\\source\\repos\\Foss.Net\\FunTour\\CoreDataLayer\\CoreDataLayer.csproj",
-      "projectName": "CoreDataLayer",
-      "projectPath": "C:\\Users\\evebe\\source\\repos\\Foss.Net\\FunTour\\CoreDataLayer\\CoreDataLayer.csproj",
+      "projectUniqueName": "C:\\Users\\evebe\\source\\repos\\Foss.Net\\FunTour\\CoreDataLayer\\FunTourServiceLayer.csproj",
+      "projectName": "FunTourServiceLayer",
+      "projectPath": "C:\\Users\\evebe\\source\\repos\\Foss.Net\\FunTour\\CoreDataLayer\\FunTourServiceLayer.csproj",
       "packagesPath": "C:\\Users\\evebe\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\evebe\\source\\repos\\Foss.Net\\FunTour\\CoreDataLayer\\obj\\",
       "projectStyle": "PackageReference",

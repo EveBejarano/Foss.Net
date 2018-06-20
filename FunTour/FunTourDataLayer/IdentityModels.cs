@@ -51,6 +51,7 @@ namespace FunTourDataLayer.Models
         public DbSet<ReservedTicket> ReservedTickets { get; set; }
         public DbSet<TravelPackage> TravelPackages { get; set; }
 
+        public DbSet<Destination> Destinations { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

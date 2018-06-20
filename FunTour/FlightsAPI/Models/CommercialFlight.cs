@@ -24,34 +24,27 @@ namespace FlightsAPI.Models
         }
 
         public string idFlight { get; set; }
-
         [JsonIgnore]
         public decimal Distance { get; set; }
-
         public System.DateTime Deport { get; set; }
         public System.DateTime Arrive { get; set; }
         public float Price { get; set; }
         public Nullable<int> Disponible_Places { get; set; }
         public string Flight_To { get; set; }
         public string Flight_From { get; set; }
-        public virtual Destination Destination { get; set; }
-        public virtual Destination Destination1 { get; set; }
-
         [JsonIgnore]
         public string Flight_Plane { get; set; }
-
-        [JsonIgnore]
+    
+        public virtual Destination Destination { get; set; }
+        public virtual Destination Destination1 { get; set; }
         public virtual Plane Plane { get; set; }
 
-        
         [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FlightPersonal> FlightPersonals { get; set; }
-
         [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FilghtPlace> FilghtPlaces { get; set; }
-
         [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ScalesOnFlight> ScalesOnFlights { get; set; }

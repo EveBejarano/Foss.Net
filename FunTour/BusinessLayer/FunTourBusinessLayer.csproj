@@ -62,14 +62,6 @@
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Repositories\RolesRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
-    <Compile Include="Service\DataService.cs" />
-    <Compile Include="Service\GetBusRequest.cs" />
-    <Compile Include="Service\GetBusResponse.cs" />
-    <Compile Include="Service\GetFlightRequest.cs" />
-    <Compile Include="Service\GetFlightResponse.cs" />
-    <Compile Include="Service\GetHotelsRequest.cs" />
-    <Compile Include="Service\GetHotelsResponse.cs" />
-    <Compile Include="Service\Plane.cs" />
     <Compile Include="UnitOfWorks\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,9 +70,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\CoreDataLayer\CoreDataLayer.csproj">
+    <ProjectReference Include="..\CoreDataLayer\FunTourServiceLayer.csproj">
       <Project>{c0a9d522-1da2-4786-ae5d-ac28fc3a7f78}</Project>
-      <Name>CoreDataLayer</Name>
+      <Name>FunTourServiceLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\FunTourDataLayer\FunTourDataLayer.csproj">
       <Project>{966d98fd-5121-49f2-8819-358e5eb04840}</Project>

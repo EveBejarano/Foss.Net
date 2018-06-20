@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunTourDataLayer", "FunTour
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlightsAPI", "FlightsAPI\FlightsAPI.csproj", "{45FC170D-6E92-4607-9CEB-8DE5119F44EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreDataLayer", "CoreDataLayer\CoreDataLayer.csproj", "{C0A9D522-1DA2-4786-AE5D-AC28FC3A7F78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunTourServiceLayer", "CoreDataLayer\FunTourServiceLayer.csproj", "{C0A9D522-1DA2-4786-AE5D-AC28FC3A7F78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

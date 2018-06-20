@@ -14,7 +14,8 @@ namespace FlightsAPI.Models
     using Newtonsoft.Json;
 
     public partial class Destination
-    {
+    {   
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Destination()
         {
@@ -23,7 +24,7 @@ namespace FlightsAPI.Models
             this.ScalesOnFlights = new HashSet<ScalesOnFlight>();
         }
         
-        [JsonIgnore]
+        
         public string idAirport { get; set; }
         public string nameAirport { get; set; }
         public string City { get; set; }

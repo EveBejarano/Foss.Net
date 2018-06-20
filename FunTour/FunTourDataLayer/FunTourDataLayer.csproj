@@ -66,6 +66,7 @@
     <Compile Include="BusCompany\BusCompany.cs" />
     <Compile Include="EventCompany\Event.cs" />
     <Compile Include="EventCompany\EventCompany.cs" />
+    <Compile Include="FlightCompany\Destination.cs" />
     <Compile Include="FlightCompany\Flight.cs" />
     <Compile Include="FlightCompany\FlightCompany.cs" />
     <Compile Include="Hotel\Hotel.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="Reservation\ReservedSeat.cs" />
     <Compile Include="Reservation\ReservedTicket.cs" />
     <Compile Include="Reservation\TravelPackage.cs" />
-    <Compile Include="Services\Consumer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
