@@ -22,12 +22,13 @@ namespace BusinessLayer.UnitOfWorks
         private GenericRepository<Flight> flightRepository;
         private GenericRepository<Bus> busRepository;
         private GenericRepository<Event> eventRepository;
-
+        private GenericRepository<Reservation> reservationRepository;
         private GenericRepository<City> cityRepository;
         private GenericRepository<FlightCompany> flightCompanyRepository;
         private GenericRepository<BusCompany> busCompanyRepository;
         private GenericRepository<HotelCompany> hotelCompanyRepository;
         private GenericRepository<EventCompany> eventCompanyRepository;
+
         public RolesRepository<IdentityRole,RoleDetails> RolesRepository
         {
             get
@@ -79,8 +80,17 @@ namespace BusinessLayer.UnitOfWorks
             }
         }
 
-
-
+        public GenericRepository<Reservation> ReservationRepository
+        {
+            get
+            {
+                if (this.reservationRepository == null)
+                {
+                    this.reservationRepository = new GenericRepository<Reservation>(context);
+                }
+                return reservationRepository;
+            }
+        }
 
         public GenericRepository<Hotel> HotelRepository
         {

@@ -47,7 +47,7 @@ namespace PruebaUsers.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == Id).FirstOrDefault();
+            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id).FirstOrDefault();
 
             var travelPackageViewModel = new TravelPackageViewModel
             {
