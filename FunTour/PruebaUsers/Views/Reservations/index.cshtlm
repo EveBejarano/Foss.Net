@@ -1,0 +1,27 @@
+@model IEnumerable<FunTourDataLayer.Models.Reservation>
+
+@{
+	viewBag.Title="Index";
+}
+
+<h2> Index </h2>
+
+<p>
+	@Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+	<tr>
+		<th></tf>
+	</tr>
+
+	@foreach (var item in model) {
+		<tr>
+			<td>
+				@Html.ActionLink("Details", new { id=item, Id_Reservation }) |
+				@Html.ActionLink("Delete", new { id=item, Id_Reservation }) |
+			</td>
+		</tr>
+	}
+
+</table>

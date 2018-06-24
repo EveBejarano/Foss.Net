@@ -70,7 +70,7 @@ namespace PruebaUsers.Controllers
 				ReservedSeat = reservationViewModel.reservedSeat,
 				//BusReservedSeat = reservationViewModel.reservedSeat,
 				ReservedTicket = reservationViewModel.ticket,
-				paid = reservationViewModel.Pagado
+				paid = reservationViewModel.Pagado,
 
 			};
 
@@ -84,7 +84,7 @@ namespace PruebaUsers.Controllers
 			return View(ReservationViewModel);
 		}
 		
-		//GET: Reservation
+		//GET: Reservation/Edit
 		public ActionResult Edit(int? id)
 		{
 			if (id == null) { return new HttpStatusCodeResult(HttpStatusCode.BadRequest); }
@@ -94,7 +94,7 @@ namespace PruebaUsers.Controllers
 			if (reservation == null) { return HttpNotFound(); }
 
 		}	
-
+		
 
 	}
 }
