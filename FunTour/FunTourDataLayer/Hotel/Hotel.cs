@@ -25,10 +25,7 @@ namespace FunTourDataLayer.Models
 
         public int NotReservedRooms { get; set; }
         
-
-        public string APIURLToGetTickets { get; set; }
-        public string APIURLToReserveRoom{ get; set; }
-        public string APIURLToCancelReservation { get; set; }
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TravelPackage> TravelPackage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

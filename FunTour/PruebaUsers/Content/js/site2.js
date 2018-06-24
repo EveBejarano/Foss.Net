@@ -1,7 +1,7 @@
 ﻿function editFeedback(id) {
     var description = $("#feed-" + id + " #feed-description").val();
     var note = $("#feed-" + id + " #feed-note").val();
-    var serviceURL = "/feedbacks/Edit/" + id;
+    var DataServiceURL = "/feedbacks/Edit/" + id;
     $.ajax({
         type: "POST",
         url: "http://localhost:60350/feedbacks/Edit/?id=" + id + "&description=" + description + "&note=" + note,

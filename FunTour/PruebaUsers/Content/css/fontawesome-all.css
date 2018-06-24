@@ -1927,7 +1927,7 @@ readers do not read off random characters that represent icons */
 .fa-server:before {
   content: "\f233"; }
 
-.fa-servicestack:before {
+.fa-DataServicestack:before {
   content: "\f3ec"; }
 
 .fa-share:before {

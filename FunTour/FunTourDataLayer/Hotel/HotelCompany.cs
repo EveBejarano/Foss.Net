@@ -24,7 +24,8 @@ namespace FunTourDataLayer.Models
         public string Information { get; set; }
 
         public string APIURLToGetHotel { get; set; }
-        public string APIURLToReserveRoom { get; set; }
+        public string APIURLToReserveRoomsToTravelPackage { get; set; }
+        public string APIURLToReserveRoomByClient { get; set; }
         public string APIURLToCancelReservation { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -3,15 +3,13 @@ using FunTourDataLayer.Models;
 using FunTourDataLayer.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BusinessLayer.UnitOfWorks;
 
-namespace FuntourBusinessLayer.Service
+namespace FunTourServiceLayer.Service
 {
     public class DataService
     {
-
+        public UnitOfWork UnitOfWork { get; set; }
 
         public IEnumerable<Bus> GetBuses(DateTime toDay, string fromPlace, string toPlace)
         {
@@ -83,38 +81,38 @@ namespace FuntourBusinessLayer.Service
 
 
 
-        public IEnumerable<Flight> GetFlights(DateTime toDay, City fromPlace, City toPlace)
-        {
-            var getFlightRequest = new GetFlightRequest
-            {
-                fromPlace = fromPlace,
-                toPlace = toPlace,
-                toDay = toDay
+        //public IEnumerable<Flight> GetFlights(DateTime toDay, City fromPlace, City toPlace)
+        //{
+        //    var getFlightRequest = new GetFlightRequest
+        //    {
+        //        fromPlace = fromPlace,
+        //        toPlace = toPlace,
+        //        toDay = toDay
 
-            };
+        //    };
 
-            FlightCompany FlightCompany = UnitOfWork.FlightCompanyRepository.Get().FirstOrDefault();
+        //    FlightCompany FlightCompany = UnitOfWork.FlightCompanyRepository.Get().FirstOrDefault();
 
-            List<Flight> ListOfFlights = new List<Flight>();
+        //    List<Flight> ListOfFlights = new List<Flight>();
 
-            var consumerFlights = new Consumer<GetFlightResponse>();
+        //    var consumerFlights = new Consumer<GetFlightResponse>();
 
-            GetFlightResponse getFlightResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToGetSeats, "POST", getFlightRequest).Result;
+        //    GetFlightResponse getFlightResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToGetSeats, "POST", getFlightRequest).Result;
 
-            foreach (var item in getFlightResponse.CommercialFlights)
-            {
-                var auxFlight = new Flight
-                {
-                    Id_Flight = item.idFlight,
-                    DepartureDate = item.Deport,
-                    ArrivedDate = item.Arrive,
-                    Price = item.Price,
-                    NotReservedSeats = item.Disponible_Places,
+        //    foreach (var item in getFlightResponse.CommercialFlights)
+        //    {
+        //        var auxFlight = new Flight
+        //        {
+        //            Id_Flight = item.idFlight,
+        //            DepartureDate = item.Deport,
+        //            ArrivedDate = item.Arrive,
+        //            Price = item.Price,
+        //            NotReservedSeats = item.Disponible_Places,
 
-                };
-                ListOfFlights.Add(auxFlight);
-            }
-            return ListOfFlights;
-        }
+        //        };
+        //        ListOfFlights.Add(auxFlight);
+        //    }
+        //    return ListOfFlights;
+        //}
     }
 }

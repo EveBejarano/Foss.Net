@@ -1,4 +1,4 @@
-﻿namespace FuntourBusinessLayer.Service
+﻿namespace FunTourServiceLayer.Service
 {
 
     //    Ejemplo para crear las reservas

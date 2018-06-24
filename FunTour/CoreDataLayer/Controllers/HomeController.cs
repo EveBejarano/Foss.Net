@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using FuntourBusinessLayer.Service;
+using FunTourServiceLayer.Service;
 using FunTourDataLayer.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Core.Models;

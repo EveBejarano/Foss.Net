@@ -11,6 +11,8 @@ namespace FunTourDataLayer.Models
 
         [Key]
         public int Id_ReservedRoom { get; set; }
+        public int HotelID { get; set; }
+        public int BookingID { get; set; }
 
         public virtual Hotel Hotel { get; set; }
         public virtual Reservation Reservation { get; set; }

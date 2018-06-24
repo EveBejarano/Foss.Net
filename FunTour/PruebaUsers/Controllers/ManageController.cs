@@ -118,14 +118,14 @@ namespace FunTour.Controllers
             }
             // Generar el token y enviarlo
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            if (UserManager.SmsService != null)
+            if (UserManager.SmsDataService != null)
             {
                 var message = new IdentityMessage
                 {
                     Destination = model.Number,
                     Body = "Su código de seguridad es: " + code
                 };
-                await UserManager.SmsService.SendAsync(message);
+                await UserManager.SmsDataService.SendAsync(message);
             }
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }

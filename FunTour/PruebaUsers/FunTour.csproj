@@ -61,12 +61,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -81,8 +78,6 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
-    </Reference>
-    <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -225,8 +220,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap-grid.css" />
     <Content Include="Content\css\bootstrap-grid.min.css" />
     <Content Include="Content\css\bootstrap-reboot.css" />
@@ -289,10 +282,7 @@
     <Content Include="Content\webfonts\fa-regular-400.svg" />
     <Content Include="Content\webfonts\fa-solid-900.svg" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -334,19 +324,8 @@
     <Content Include="Content\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\webfonts\fa-solid-900.woff" />
     <Content Include="Content\webfonts\fa-solid-900.woff2" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-common.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.custom.min.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -418,13 +397,13 @@
     <Content Include="Views\TravelPackages\Edit.cshtml" />
     <Content Include="Views\TravelPackages\Index.cshtml" />
     <Content Include="Views\TravelPackages\AddServicesToTravel.cshtml" />
-    <Content Include="Views\TravelPackages\AddFlightToTravelPackagePartialView.cshtml" />
-    <Content Include="Views\TravelPackages\AddHotelToTravelPackagePartialView.cshtml" />
-    <Content Include="Views\TravelPackages\AddBusToTravelPackagePartialView.cshtml" />
-    <Content Include="Views\TravelPackages\AddEventToTravelPackagePartialView.cshtml" />
+    <Content Include="Views\TravelPackages\_AddFlightToTravelPackagePartialView.cshtml" />
+    <Content Include="Views\TravelPackages\_AddHotelToTravelPackagePartialView.cshtml" />
+    <Content Include="Views\TravelPackages\_AddBusToTravelPackagePartialView.cshtml" />
+    <Content Include="Views\TravelPackages\_AddEventToTravelPackagePartialView.cshtml" />
     <Content Include="Views\TravelPackages\AddServicesInPlace.cshtml" />
-    <Content Include="Views\TravelPackages\AddFromPlaceReturnPartialView.cshtml" />
-    <Content Include="Views\TravelPackages\AddToPlaceReturnPartialView.cshtml" />
+    <Content Include="Views\TravelPackages\_AddFromPlaceReturnPartialView.cshtml" />
+    <Content Include="Views\TravelPackages\_AddToPlaceReturnPartialView.cshtml" />
     <Content Include="Views\TravelPackages\AddPlaces.cshtml" />
     <Content Include="Views\TravelPackages\ShowToConfirmCreation.cshtml" />
   </ItemGroup>
@@ -433,30 +412,23 @@
     <Folder Include="Views\NotAuthorized\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\FunTourBusinessLayer.csproj">
-      <Project>{F586E335-DEFD-4088-B671-175DCC463EF6}</Project>
+      <Project>{f586e335-defd-4088-b671-175dcc463ef6}</Project>
       <Name>FunTourBusinessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\FunTourDataLayer\FunTourDataLayer.csproj">
       <Project>{966D98FD-5121-49F2-8819-358E5EB04840}</Project>
       <Name>FunTourDataLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -25,7 +25,7 @@ namespace FunTourDataLayer.Models
         public string Company { get; set; }
         public string Class { get; set; }
         public int Capacity { get; set; }
-        public double Price { get; set; }
+        public float Price { get; set; }
         public int NotReservedSeats { get; set; }
 
 

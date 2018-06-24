@@ -1,20 +1,20 @@
 ﻿@model FunTour.Models.TravelPackageViewModel
 
 @{
-    ViewBag.Title = "AddServicesToTravel";
+    ViewBag.Title = "AddDataServicesToTravel";
 }
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('AddServicesToTravelReturn').click(function () {
+        $('AddDataServicesToTravelReturn').click(function () {
             var _packageId = $('#Id_TravelPackage').val();
 
             var _parameters = { TravelPackageId: _packageId };
             $.ajax({
-                url: "/TravelPackages/AddServicesToTravelReturn",
+                url: "/TravelPackages/AddDataServicesToTravelReturn",
                 type: "GET",
-                data: _parameters,
-                success:
+                data: _parameters
+                //success:
                     //function (data, textStatus, jqXHR) {
                     //$('#PermissionsTable').html(data);
                     //$('#PermissionId').val("");
@@ -33,7 +33,7 @@
 {
 
     <div>
-        @Html.Partial("AddFlightToTravelPackagePartialView", Model)
+        @Html.Partial("_AddFlightToTravelPackagePartialView", Model)
 
     </div>
 }
@@ -41,12 +41,12 @@ else
 {
 
     <div>
-        @Html.Partial("AddBusToTravelPackagePartialView", Model)
+        @Html.Partial("_AddBusToTravelPackagePartialView", Model)
     </div>
 }
 <br />
-@*<input type="button" id="AddServicesToTravelReturn" value="Guardar y Continuar..." />*@
-@Html.ActionLink("Guardar y Continuar", "AddServicesToTravelReturn", new { TravelPackageId = Model.Id_TravelPackage }) |
+@*<input type="button" id="AddDataServicesToTravelReturn" value="Guardar y Continuar..." />*@
+@Html.ActionLink("Guardar y Continuar", "AddDataServicesToTravelReturn", new { TravelPackageId = Model.Id_TravelPackage }) |
 @Html.ActionLink("Volver Atrás", "AddPlaces", new { travelPackageViewModel = Model })
 
 

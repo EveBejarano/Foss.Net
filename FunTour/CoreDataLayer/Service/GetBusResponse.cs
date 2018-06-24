@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FuntourBusinessLayer.Service
+namespace FunTourServiceLayer.Service
 {
     internal class GetBusResponse
     {

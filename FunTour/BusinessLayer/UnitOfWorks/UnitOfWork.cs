@@ -1,13 +1,7 @@
 ﻿using BusinessLayer.Repositories;
-using FunTourDataLayer.Hotel;
-using FunTourDataLayer.Models;
 using FunTourDataLayer.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.UnitOfWorks
 {
@@ -226,10 +220,6 @@ namespace BusinessLayer.UnitOfWorks
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        public void ManageNewTravelPackage(TravelPackage travelPackage)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

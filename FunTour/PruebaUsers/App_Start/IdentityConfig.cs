@@ -15,7 +15,7 @@ using FunTour.Models;
 
 namespace FunTour
 {
-    public class EmailService : IIdentityMessageService
+    public class EmailDataService : IIdentityMessageDataService
     {
         public Task SendAsync(IdentityMessage message)
         {
@@ -24,7 +24,7 @@ namespace FunTour
         }
     }
 
-    public class SmsService : IIdentityMessageService
+    public class SmsDataService : IIdentityMessageDataService
     {
         public Task SendAsync(IdentityMessage message)
         {
@@ -77,8 +77,8 @@ namespace FunTour
                 Subject = "Código de seguridad",
                 BodyFormat = "Su código de seguridad es {0}"
             });
-            manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
+            manager.EmailDataService = new EmailDataService();
+            manager.SmsDataService = new SmsDataService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {

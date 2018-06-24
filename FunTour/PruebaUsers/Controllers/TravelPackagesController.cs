@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using BusinessLayer.UnitOfWorks;
 using FunTour.Models;
 using FunTourDataLayer.Models;
-using FuntourBusinessLayer.Service;
-using FunTourDataLayer.Models;
+using FunTourServiceLayer.Service;
 
 namespace PruebaUsers.Controllers
 {
     public class TravelPackagesController : Controller
     {
+        private const string AddServicesInPlaceString = "AddServicesInPlace";
+        private const string AddServicesToTravelString = "AddServicesToTravel";
+        private const string AddPlacesString = "AddPlaces";
         private readonly DataService Service = new DataService();
 
         // GET: TravelPackages
@@ -47,7 +45,7 @@ namespace PruebaUsers.Controllers
         [HttpGet]
         public ActionResult Create(int id)
         {
-            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == Id).FirstOrDefault();
+            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id).FirstOrDefault();
 
             var travelPackageViewModel = new TravelPackageViewModel
             {
@@ -82,11 +80,15 @@ namespace PruebaUsers.Controllers
             {
                 Service.UnitOfWork.TravelPackageRepository.Insert(travelPackage);
                 Service.UnitOfWork.Save();
-                return RedirectToAction("AddPlaces", routeValues: new {travelPackageViewModel});
+                return RedirectToAction(AddPlacesString, routeValues: new {travelPackageViewModel});
             }
 
             return View(travelPackageViewModel);
         }
+
+
+        #region Places
+
 
         public ActionResult AddPlaces(TravelPackageViewModel travelPackageView)
         {
@@ -119,9 +121,9 @@ namespace PruebaUsers.Controllers
             {
                 travelPackage.ToPlace = travelPackage.ToPlace;
                 travelPackage.FromPlace = travelPackage.FromPlace;
-                return RedirectToAction("AddServicesToTravel", routeValues: new { travelPackageViewModel });
+                return RedirectToAction(AddServicesToTravelString, routeValues: new { travelPackageViewModel });
             }
-            return RedirectToAction("AddPlaces", routeValues: new { travelPackageViewModel }); ;
+            return RedirectToAction(AddPlacesString, routeValues: new { travelPackageViewModel }); ;
         }
 
         [HttpGet]
@@ -149,9 +151,9 @@ namespace PruebaUsers.Controllers
         }
 
 
+        #endregion
 
-
-
+        #region Bus&Flights
 
         public ActionResult AddServicesToTravel(TravelPackageViewModel travelPackageViewModel)
         {
@@ -203,17 +205,17 @@ namespace PruebaUsers.Controllers
                 {
                     travelPackageViewModel.ToGoFlight = travelPackage.ToGoFlight;
                     travelPackageViewModel.ToBackFlight = travelPackage.ToBackFlight;
-                    return RedirectToAction("AddServicesInPlace", routeValues: new { travelPackageViewModel });
+                    return RedirectToAction(AddServicesInPlaceString, routeValues: new { travelPackageViewModel });
                 }
 
                 if (travelPackage.ToGoBus != null && travelPackage.ToBackBus != null)
                 {
                     travelPackageViewModel.ToGoBus = travelPackage.ToGoBus;
                     travelPackageViewModel.ToBackBus = travelPackage.ToBackBus;
-                    return RedirectToAction("AddServicesInPlace", routeValues: new { travelPackageViewModel });
+                    return RedirectToAction(AddServicesInPlaceString, routeValues: new { travelPackageViewModel });
                 }
             }
-            return RedirectToAction("AddServicesToTravel", routeValues: new { travelPackageViewModel }); ;
+            return RedirectToAction(AddServicesToTravelString, routeValues: new { travelPackageViewModel }); ;
         }
 
         [HttpGet]
@@ -245,9 +247,9 @@ namespace PruebaUsers.Controllers
             }
         }
 
+        #endregion
 
-
-
+        #region Hotels&Events
 
 
         public ActionResult AddServicesInPlace(TravelPackageViewModel travelPackageViewModel)
@@ -265,8 +267,8 @@ namespace PruebaUsers.Controllers
                 ToDay = travelPackageViewModel.ToBackBus.DateTimeDeparture;
             }
 
-            IEnumerable<Hotel> ListOfHotels = Service.GetHotels(travelPackageViewModel.ToPlace.CP, FromDay, ToDay);
-            IEnumerable<Event> ListOfEvents = Service.GetEvents(travelPackageViewModel.ToPlace.CP, FromDay, ToDay);
+            IEnumerable<Hotel> ListOfHotels = Service.GetHotels(travelPackageViewModel.ToPlace, FromDay, ToDay);
+            IEnumerable<Event> ListOfEvents = Service.GetEvents(travelPackageViewModel.ToPlace, FromDay, ToDay);
 
             ViewBag.Hotels = new SelectList(Service.UnitOfWork.HotelRepository.Get(), "Id_Hotel", "Name");
             ViewBag.Events = new SelectList(Service.UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
@@ -313,7 +315,7 @@ namespace PruebaUsers.Controllers
                 }
             }
 
-            return RedirectToAction("AddServicesInPlace", routeValues: new { travelPackageViewModel }); ;
+            return RedirectToAction(AddServicesInPlaceString, routeValues: new { travelPackageViewModel }); ;
         }
 
         [HttpGet]
@@ -342,7 +344,7 @@ namespace PruebaUsers.Controllers
             }
         }
 
-
+        #endregion
 
         public ActionResult ShowToConfirmCreation(int TravelPackageId)
         {
@@ -390,10 +392,20 @@ namespace PruebaUsers.Controllers
 
             travelPackage.Creator = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(ControllerContext.HttpContext.User.Identity.Name);
             Service.UnitOfWork.TravelPackageRepository.Update(travelPackage);
-
             Service.UnitOfWork.Save();
 
-            Service.UnitOfWork.ManageNewTravelPackage(travelPackage);
+
+            Service.SetHotelReservationToNewTravelPackage(travelPackage);
+            Service.SetEventReservationToNewTravelPackage(travelPackage);
+            if (travelPackage.FlightOrBus)
+            {
+                Service.SetFlightReservationToNewTravelPackage(travelPackage);
+
+            }
+            else
+            {
+                Service.SetBusReservationToNewTravelPackage(travelPackage);
+            }
             return RedirectToAction("Index");
         }
 

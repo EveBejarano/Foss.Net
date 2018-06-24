@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FuntourBusinessLayer.Service
+namespace FunTourServiceLayer.Service
 {
     internal class GetBusRequest
     {

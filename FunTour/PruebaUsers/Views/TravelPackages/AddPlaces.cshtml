@@ -32,14 +32,14 @@
     <div id="FromCity">
     </div>
     <div>
-        @Html.Partial("AddFromPlaceReturnPartialView", Model)
+        @Html.Partial("_AddFromPlaceReturnPartialView", Model)
     </div>
     <br />
 
     <div id="ToCity">
     </div>
     <div>
-        @Html.Partial("AddToPlaceReturnPartialView", Model)
+        @Html.Partial("_AddToPlaceReturnPartialView", Model)
     </div>
     <br />
 
@@ -48,7 +48,7 @@
 
 @*<input type="button" id="AddPlacesReturn" value="Continuar..." />*@
 
-@Html.ActionLink("Guardar y Continuar", "AddServicesToTravelReturn", new { TravelPackageId = Model.Id_TravelPackage }) |
+@Html.ActionLink("Guardar y Continuar", "AddDataServicesToTravelReturn", new { TravelPackageId = Model.Id_TravelPackage }) |
 @Html.ActionLink("Volver Atrás", "Create", new { id = Model.Id_TravelPackage })
 
 <div>

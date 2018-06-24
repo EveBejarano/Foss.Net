@@ -21,3 +21,7 @@ C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\BusinessLayer\obj\Debug\FunT
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\BusinessLayer\obj\Debug\FunTourBusinessLayer.csproj.CopyComplete
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\BusinessLayer\obj\Debug\BusinessLayer.exe
 C:\Users\Eve Bejarano\Source\Repos\Foss.Net\FunTour\BusinessLayer\obj\Debug\BusinessLayer.pdb
+C:\Users\evebe\source\repos\Foss.Net\FunTour\BusinessLayer\obj\Debug\FunTourBusinessLayer.csprojAssemblyReference.cache
+C:\Users\evebe\source\repos\Foss.Net\FunTour\BusinessLayer\obj\Debug\FunTourBusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\evebe\source\repos\Foss.Net\FunTour\BusinessLayer\obj\Debug\BusinessLayer.exe
+C:\Users\evebe\source\repos\Foss.Net\FunTour\BusinessLayer\obj\Debug\BusinessLayer.pdb

@@ -1,4 +1,4 @@
-﻿namespace FuntourBusinessLayer.Service
+﻿namespace FunTourServiceLayer.Service
 {
     internal class GetFlightRequest
     {
