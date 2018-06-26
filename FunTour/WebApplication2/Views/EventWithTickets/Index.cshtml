@@ -21,6 +21,9 @@
             @Html.DisplayNameFor(model => model.Transport.TransportType)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.EventDate)
         </th>
         <th>
@@ -30,7 +33,7 @@
             @Html.DisplayNameFor(model => model.Addres)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.HasTickets)
+            @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MaxTicket)
@@ -50,6 +53,9 @@
             @Html.DisplayFor(modelItem => item.Transport.TransportType)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.EventDate)
         </td>
         <td>
@@ -59,7 +65,7 @@
             @Html.DisplayFor(modelItem => item.Addres)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.HasTickets)
+            @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MaxTicket)

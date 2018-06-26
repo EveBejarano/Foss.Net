@@ -25,12 +25,13 @@ namespace Events.Controllers
                          select new EventWithTicketDTO()
                          {
                              EventWithTicketID = b.EventWithTicketID,
+                             Name = b.Name,
                              Description = b.Description,
                              City = b.City.CityName,
                              Transport = b.Transport.TransportType,
                              EventDate = b.EventDate,
                              Adress = b.Addres,
-                             HasTickets = b.HasTickets,
+                             Price = b.Price,
                              MaxTickets = b.MaxTicket
                          };
 
@@ -45,12 +46,13 @@ namespace Events.Controllers
        new EventWithTicketDTO()
        {
            EventWithTicketID = b.EventWithTicketID,
+           Name = b.Name,
            Description = b.Description,
            City = b.City.CityName,
            Transport = b.Transport.TransportType,
            EventDate = b.EventDate,
            Adress = b.Addres,
-           HasTickets = b.HasTickets,
+           Price = b.Price,
            MaxTickets = b.MaxTicket
        }).SingleOrDefaultAsync(b => b.EventWithTicketID == id);
 
@@ -111,12 +113,13 @@ namespace Events.Controllers
             var dto = new EventWithTicketDTO()
             {
                 EventWithTicketID = eventWithTicket.EventWithTicketID,
+                Name = eventWithTicket.Name,
                 Description = eventWithTicket.Description,
                 City = eventWithTicket.City.CityName,
                 Transport = eventWithTicket.Transport.TransportType,
                 EventDate = eventWithTicket.EventDate,
                 Adress = eventWithTicket.Addres,
-                HasTickets = eventWithTicket.HasTickets,
+                Price = eventWithTicket.Price,
                 MaxTickets = eventWithTicket.MaxTicket
             };
 
@@ -154,10 +157,10 @@ namespace Events.Controllers
         }
 
         [HttpPost]
-        [Route("api/EventsByHasTickets")] //Muestra los eventos, ingresando si tiene tickets (true or false), y devolviendo el ID de ticket
-                                          //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion, si tiene tickets
-                                          //y los tickets maximos
-        public IQueryable GetEventsByHasTickets(Parameters parameters)
+        [Route("api/EventsByEventCompany")] //Muestra los eventos, ingresando sólo la compañia, y devolviendo el ID de ticket
+                                    //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion
+                                    //y los tickets maximos
+        public IQueryable GetEventsByEventCompany(Parameters parameters)
         {
             if (parameters == null)
             {
@@ -166,16 +169,17 @@ namespace Events.Controllers
 
             var query =
                 from data in db.EventsWithTickets
-                where (data.HasTickets.Equals(parameters.HasTickets))
+                where (data.EventCompany.CompanyID.Equals(parameters.EventCompany))
                 select new
                 {
                     data.EventWithTicketID,
+                    data.Name,
                     data.Description,
                     data.City.CityName,
                     data.Transport.TransportType,
                     data.EventDate,
                     data.Addres,
-                    data.HasTickets,
+                    data.Price,
                     data.MaxTicket
 
                 };
@@ -185,8 +189,61 @@ namespace Events.Controllers
         }
 
         [HttpPost]
+        [Route("api/EventsByPrice")] //Muestra los eventos por un rango de precios, ingresando el precio inicial y final,
+                                      //y devolviendo los datos del evento
+        public IQueryable EventsByPrice(Parameters parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            var query =
+                from data in db.EventsWithTickets
+                where ((data.Price >= parameters.Price_Start) && (data.Price <= parameters.Price_End))
+                select new
+                {
+                    data.EventWithTicketID,
+                    data.Name,
+                    data.Description,
+                    data.City.CityName,
+                    data.Transport.TransportType,
+                    data.EventDate,
+                    data.Addres,
+                    data.Price,
+                    data.MaxTicket
+
+                };
+
+            return query;
+
+        }
+
+        [HttpPost]
+        [Route("api/TicketsByEventsAmount")] //Muestra los tickets por evento, y devolviendo el id del evento y del ticket
+        public IQueryable GetTicketsByEventsAmount(Parameters parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+
+            var query =
+                from data in db.Ticks
+                where ((data.EventWithTicketID.Equals(parameters.EventWithTicketsID)) && (data.EventWithTicket.MaxTicket >= parameters.TicketAmount))
+                select new
+                {
+                    data.EventWithTicketID,
+                    data.TicketID
+                };
+
+            return query;
+
+        }
+
+        [HttpPost]
         [Route("api/EventsByCity")] //Muestra los eventos, ingresando sólo la ciudad, y devolviendo el ID de ticket
-                                    //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion, si tiene tickets
+                                    //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion
                                     //y los tickets maximos
         public IQueryable GetEventsByCity(Parameters parameters)
         {
@@ -201,12 +258,13 @@ namespace Events.Controllers
                 select new
                 {
                     data.EventWithTicketID,
+                    data.Name,
                     data.Description,
                     data.City.CityName,
                     data.Transport.TransportType,
                     data.EventDate,
                     data.Addres,
-                    data.HasTickets,
+                    data.Price,
                     data.MaxTicket
 
                 };
@@ -217,7 +275,7 @@ namespace Events.Controllers
 
         [HttpPost]
         [Route("api/EventsByCityDate")] //Muestra los eventos, ingresando la ciudad y una fecha inicial y final, y devolviendo el ID de ticket
-                                        //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion, si tiene tickets
+                                        //la descripcion, la ciudad, el tipo de transporte, la fecha, direccion
                                         //y los tickets maximos
         public IQueryable GetEventsByCityDate(Parameters parameters)
         {
@@ -232,12 +290,13 @@ namespace Events.Controllers
                 select new
                 {
                     data.EventWithTicketID,
+                    data.Name,
                     data.Description,
                     data.City.CityName,
                     data.Transport.TransportType,
                     data.EventDate,
                     data.Addres,
-                    data.HasTickets,
+                    data.Price,
                     data.MaxTicket
 
                 };

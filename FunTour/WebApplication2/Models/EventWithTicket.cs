@@ -28,12 +28,13 @@ namespace Events.Models
         public DateTime EventDate { get; set; }
 
         [Required]
+        public string Name { get; set; }
         public string Description { get; set; }
   
         public string Addres { get; set; }
-        public bool HasTickets { get; set; }
+        public double Price { get; set; }
         public int MaxTicket { get; set; }
 
-        public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<Tick> Tick { get; set; }
     }
 }

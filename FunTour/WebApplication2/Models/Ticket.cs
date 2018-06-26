@@ -7,18 +7,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Events.Models
 {
-    public class Ticket
+    public class Ticket //ESTO ES UNA RESERVA
     {
         [Key]
-        public int TicketID { get; set; }
-        public double Price { get; set; }
+        public int ReservaID { get; set; }
 
-        [ForeignKey("EventWithTicket")]
-        public int EventWithTicketID { get; set; }
-        public virtual EventWithTicket EventWithTicket { get; set; }
+        [ForeignKey("Tick")]
+        public int TicketID { get; set; }
+        public virtual Tick Tick { get; set; }
 
         [ForeignKey("Person")]
-        public int DNI { get; set; }
+        public int PersonID { get; set; }
         public virtual Person Person { get; set; }
 
     }

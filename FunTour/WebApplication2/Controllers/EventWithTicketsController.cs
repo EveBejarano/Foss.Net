@@ -18,7 +18,7 @@ namespace Events.Controllers
         // GET: EventWithTickets
         public ActionResult Index()
         {
-            var eventsWithTickets = db.EventsWithTickets.Include(e => e.EventCompany).Include(e => e.City).Include(e => e.Transport).Include(e => e.Tickets);
+            var eventsWithTickets = db.EventsWithTickets.Include(e => e.EventCompany).Include(e => e.City).Include(e => e.Transport).Include(e => e.Tick);
             return View(eventsWithTickets.ToList());
         }
 
@@ -51,7 +51,7 @@ namespace Events.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventWithTicketID,CompanyID,CityID,TransportID,EventDate,Description,Addres,HasTickets,MaxTicket")] EventWithTicket eventWithTicket)
+        public ActionResult Create([Bind(Include = "EventWithTicketID,CompanyID,CityID,TransportID,Name,EventDate,Description,Addres,Price,MaxTicket")] EventWithTicket eventWithTicket)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace Events.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventWithTicketID,CompanyID,CityID,TransportID,EventDate,Description,Addres,HasTickets,MaxTicket")] EventWithTicket eventWithTicket)
+        public ActionResult Edit([Bind(Include = "EventWithTicketID,CompanyID,CityID,TransportID,Name,EventDate,Description,Addres,Price,MaxTicket")] EventWithTicket eventWithTicket)
         {
             if (ModelState.IsValid)
             {

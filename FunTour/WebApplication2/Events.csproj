@@ -190,8 +190,9 @@
     <Compile Include="Controllers\EventWithTicketsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PeopleController.cs" />
-    <Compile Include="Controllers\Tickets1Controller.cs" />
-    <Compile Include="Controllers\TicketsController.cs" />
+    <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\TicketsAPIController.cs" />
+    <Compile Include="Controllers\TicksController.cs" />
     <Compile Include="Controllers\TransportsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\EventsContext.cs" />
@@ -204,8 +205,8 @@
     <Compile Include="Models\EventWithTicket.cs" />
     <Compile Include="Models\EventWithTicketDTO.cs" />
     <Compile Include="Models\Parameters.cs" />
-    <Compile Include="Models\ParametersTicket.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Tick.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\TicketDTO.cs" />
     <Compile Include="Models\Transport.cs" />
@@ -303,11 +304,16 @@
     <Content Include="Views\EventCompanies\Details.cshtml" />
     <Content Include="Views\EventCompanies\Edit.cshtml" />
     <Content Include="Views\EventCompanies\Index.cshtml" />
-    <Content Include="Views\Tickets1\Create.cshtml" />
-    <Content Include="Views\Tickets1\Delete.cshtml" />
-    <Content Include="Views\Tickets1\Details.cshtml" />
-    <Content Include="Views\Tickets1\Edit.cshtml" />
-    <Content Include="Views\Tickets1\Index.cshtml" />
+    <Content Include="Views\Ticks\Create.cshtml" />
+    <Content Include="Views\Ticks\Delete.cshtml" />
+    <Content Include="Views\Ticks\Details.cshtml" />
+    <Content Include="Views\Ticks\Edit.cshtml" />
+    <Content Include="Views\Ticks\Index.cshtml" />
+    <Content Include="Views\Ticket\Create.cshtml" />
+    <Content Include="Views\Ticket\Delete.cshtml" />
+    <Content Include="Views\Ticket\Details.cshtml" />
+    <Content Include="Views\Ticket\Edit.cshtml" />
+    <Content Include="Views\Ticket\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
