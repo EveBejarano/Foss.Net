@@ -54,6 +54,14 @@ namespace PruebaUsers.Controllers
 
 			return View(reservationViewModel);
 		}
+		
+		public ActionResult PayReservation(int ReservationID)
+		{
+			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationID).FirstOrDefault();
+
+			// No tengo idea como se Pagaria
+		}
+
 
 		// POST: Reservation/Create
 		[HttpPost]
