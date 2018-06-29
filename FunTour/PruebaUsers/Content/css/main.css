@@ -1,117 +1,56 @@
-.card-inf {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 0px;
-  border-radius: 0.25rem; }
+div.navbar-fixed.general {
+    margin: 0px 0px 0px 0px;
+}
+.section-search input {
+    padding: 5px !important;
+    font-size: 18px !important;
+    width: 90% !important;
+    border: #f4f4f4 3px solid !important;
+}
 
-.card-inf-gray {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #dee2e6;
-  background-clip: border-box;
-  border: 0px;
-  border-radius: 0.25rem; }
+.section-follow .fa-4x {
+    margin: 5px 10px;
+}
 
-.card-header-inf {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 0px; }
-  .card-header-inf:first-child {
-    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0; }
-  .card-header-inf + .list-group .list-group-item:first-child {
-    border-top: 0; }
+a.brand-logo {
+    margin: 0px 0px 0px 50px;
+}
 
-.card-body-inf {
-  flex: 1 1 auto;
-  padding: 1.25rem; }
+body.img {
+    background-image: url('../images/Lobito lindo.jpg');
+    background-size: cover;
+}
 
-.btn-inf {
-  color: #fff;
-  background-color: #39568D; }
-  .btn-inf:hover {
-    background-color: #5d84cc; }
+.login {
+    margin-top: 100px;
+}
 
-#blog-post-inf a {
-  color: #fff; }
-  #blog-post-inf a:hover {
-    color: #5d84cc; }
+    .login.center.card {
+        background: rgba(0, 0, 0, .6);
+        border-radius: 10px;
+    }
 
-.shad-inf {
-  box-shadow: 10px 0 20px rgba(47, 49, 52, 0.1);
-  z-index: 2; }
+.card-action.redonded.white-text.amber {
+    border-radius: 5px;
+}
 
-.bg-inf-1 {
-  background-color: #943535; }
+.login.center.card label {
+    font-size: 16px;
+    color: #ccc;
+}
 
-.bg-inf-2 {
-  background-color: #B47130; }
+.login.center.card input {
+    font-size: 20px !important;
+    color: #fff;
+}
 
-.bg-inf-3 {
-  background-color: #E4CD2E; }
+.login.center.card button:hover {
+    padding: 0px 40px;
+}
 
-.bg-inf-4 {
-  background-color: #88B137; }
-
-.bg-inf-5 {
-  background-color: #B9CE7F; }
-
-.bg-inf-6 {
-  background-color: #7BB6B3; }
-
-.bg-inf-7 {
-  background-color: #4F9ACC; }
-
-.bg-inf-8 {
-  background-color: #795799; }
-
-.bg-inf-9 {
-  background-color: #B57DAE; }
-
-.bg-inf-10 {
-  background-color: #B2B2B9; }
-
-.bg-inf-11 {
-  background-color: #2F3134; }
-
-.bg-inf-12 {
-  background-color: #2F3134; }
-
-.bg-inf-blue {
-  background-color: #39568D; }
-
-.bg-inf-light {
-  background-color: #5d84cc; }
-
-.bg-inf-gray {
-  background-color: #dee2e6; }
-
-.form-control-transparent {
-  display: block;
-  width: 100%;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-image: none;
-  background-clip: padding-box;
-  border: 0px solid #ced4da;
-  border-bottom: 1px solid #9292A0;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s; }
-
-.form-control-transparent:focus {
-  color: #495057;
-  background-color: #fff;
-  outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-
-/*# sourceMappingURL=main.css.map */
+div.caption.center-align.banner {
+    background: rgba(128, 128, 128, .2);
+    width: 1920px;
+    vertical-align: top;
+    color: #f4f4f4;
+}
