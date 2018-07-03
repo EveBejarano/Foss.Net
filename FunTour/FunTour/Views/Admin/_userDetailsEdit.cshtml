@@ -1,0 +1,58 @@
+﻿@model FunTour.ActualModels.UserModel
+@{if (Model != null)
+  {     
+    <div id="expanderContent">
+        <table style='width: 100%'>     
+            <tr>
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    @Html.LabelFor(model => model.FirstName)
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Html.TextBoxFor(model => model.FirstName, new { @class = "singlelinetextinput" })
+                    @Html.ValidationMessageFor(model => model.FirstName)
+                </td>
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    @Html.LabelFor(model => model.LastName)
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Html.TextBoxFor(model => model.LastName, new { @class = "singlelinetextinput" })
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </td>    
+            </tr>
+            <tr>
+                @*<td style='width: 10%; font-weight: bold' class='userTable'>
+                    @Html.LabelFor(model => model.Title)
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Html.TextBoxFor(model => model.Title, new { @class = "singlelinetextinput" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </td>*@     
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    @Html.LabelFor(model => model.Email)
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "singlelinetextinput" })
+                    @Html.ValidationMessageFor(model => model.Email)
+                </td>                
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    @Html.LabelFor(model => model.Inactive)
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Html.TextBoxFor(model => model.Inactive, new { @class = "singlelinetextinput" })
+                    @Html.ValidationMessageFor(model => model.Inactive)
+                </td>            
+            </tr>
+            <tr>
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    @Html.LabelFor(model => model.UserModelName)
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Html.TextBoxFor(model => model.UserModelName, new { @class = "singlelinetextinput" })
+                    @Html.ValidationMessageFor(model => model.UserModelName)
+                </td>                        
+               <td></td>
+            </tr>
+        </table>
+    </div>
+  }
+}

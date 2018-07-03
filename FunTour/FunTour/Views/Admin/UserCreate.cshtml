@@ -1,0 +1,86 @@
+﻿@model FunTour.ActualModels.UserModel
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='submit']").button();
+    })
+</script>
+
+
+<div class="panel">
+    @using (Html.BeginForm("UserCreate", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+    <fieldset>
+        <legend><strong> Crear Usuario</strong></legend>
+        <br />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserModelName, new { @class = "col-md-2 control-label" })
+
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.UserModelName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, new { @class = "col-md-2 control-label" })
+
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsSysAdmin, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsSysAdmin, new { @class = "form-control" })
+            </div>
+        </div>
+
+
+        <br />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Crear Usuario" />
+            </div>
+        </div>
+    </fieldset>
+    }
+</div>
+<div>
+    @Html.ActionLink("Go to FunTour", "Index", "Admin")
+</div>

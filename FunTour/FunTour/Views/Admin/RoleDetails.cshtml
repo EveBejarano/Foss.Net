@@ -1,0 +1,70 @@
+﻿@model FunTourDataLayer.Models.RoleDetails
+@{
+    ViewBag.Title = "Role: " + Html.DisplayFor(model => model.RoleDescription);
+}
+<script type="text/javascript">
+    $(function () {
+        $(":input[type='button']").button();
+    })
+</script>
+<div class="row">
+    <div class="panel">
+        <fieldset>
+            <legend>
+                <h3>
+                    Role Details
+                </h3>
+            </legend>
+            <div>
+                <table style='width: 100%'>
+                    <tr>
+                        <td style='width: 120px;font-weight: bold' class='userTable'>
+                            @Html.LabelFor(model => model.RoleName)
+                        </td>
+                        <td class='userTable'>
+                            @Html.DisplayFor(model => model.RoleName, new { style = "width:350px" })
+                            @Html.ValidationMessageFor(model => model.RoleName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='font-weight: bold' class='userTable'>
+                            @Html.LabelFor(model => model.RoleDescription)
+                        </td>
+                        <td class='userTable'>
+                            @Html.DisplayFor(model => model.RoleDescription, new { style = "width:90%" })
+                            @Html.ValidationMessageFor(model => model.RoleDescription)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style='width: 100px; font-weight: bold' class='userTable'>
+                            @Html.LabelFor(model => model.IsSysAdmin, "System Role")
+                        </td>
+                        <td class='userTable'>
+                            @Html.DisplayFor(model => model.IsSysAdmin)
+                            @Html.ValidationMessageFor(model => model.IsSysAdmin)
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <input type="button" value="Edit" onclick="location.href='@Url.Action("RoleEdit", "Admin", new { id = Model.Id_Role })'" />
+        </fieldset>
+        <div>
+            <fieldset>
+                <legend>
+                    <h3>
+                        Permissions Associated with this Role
+                    </h3>
+                </legend>
+
+                <div id="PermissionsTable">
+                    @Html.Partial("_ListPermissions", Model)
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<br />
+<div>
+    @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+</div>

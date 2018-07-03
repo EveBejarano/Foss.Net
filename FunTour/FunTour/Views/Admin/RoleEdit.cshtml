@@ -1,0 +1,98 @@
+﻿@model FunTourDataLayer.Models.RoleDetails
+@{
+    ViewBag.Title = "Edit " + Model.RoleDescription + " Role";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='submit']").button();
+        $(":input[type='button']").button();
+    });
+</script>
+<div class="panel">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id_Role)
+        <fieldset>
+            <legend>
+                <h3>
+                    Role Details
+                </h3>
+            </legend>
+                <table style='width: 100%'>
+                    <tr>
+                        <td style='width: 120px;font-weight: bold'>
+                            @Html.LabelFor(model => model.RoleName)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(model => model.RoleName, new { @class = "singlelinetextinput" })
+                            @Html.ValidationMessageFor(model => model.RoleName)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='font-weight: bold'>
+                            @Html.LabelFor(model => model.RoleDescription, new { style = "vertical-align:top" })
+                        </td>
+                        <td>
+                            @Html.TextAreaFor(model => model.RoleDescription, new { @class = "multilinetextinput" })
+                            @Html.ValidationMessageFor(model => model.RoleDescription)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style='font-weight: bold'>
+                            @Html.LabelFor(model => model.IsSysAdmin, "System Role")
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(model => model.IsSysAdmin)
+                            @Html.ValidationMessageFor(model => model.IsSysAdmin)
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <input type="submit" value="Save" />
+        </fieldset>
+    }
+    <fieldset>
+        <legend>
+            <h3>
+                Users Associated with this Role
+            </h3>
+        </legend>
+        <div id="UsersTable">
+            @Html.Partial("_ListUsersTable4Role", Model)
+            <br />
+        </div>
+        <div>
+            @Html.Partial("_AddUserToUsersTable4Role", Model)
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Go to Users", "Index", "Admin")
+        </div>
+    </fieldset>
+    <br />-->
+    <fieldset>
+        <legend>
+            <h3>
+                Permissions Associated with this Role
+            </h3>
+        </legend>
+
+        <div id="PermissionsTable">
+            @Html.Partial("_ListPermissions", Model)
+            <br />
+        </div>
+        <div>
+            @Html.Partial("_AddPermission2PermissionsTable4Role", Model)
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Go to Permissions", "PermissionIndex", "Admin")
+        </div>
+    </fieldset>
+
+</div>
+<br />
+<div>
+    @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+</div>

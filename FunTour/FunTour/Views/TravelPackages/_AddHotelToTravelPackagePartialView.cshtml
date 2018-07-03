@@ -1,0 +1,72 @@
+﻿@model FunTour.Models.TravelPackageViewModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddHotel').click(function () {
+            var _hotelId = $('#Hotels').val();
+            var _packageId = $('#Id_TravelPackage').val();
+
+            if (_hotelId == '') {
+                return false;
+            }
+
+            var _parameters = { HotelId: _hotelId, TravelPackageId: _packageId};
+            $.ajax({
+                url: "/TravelPackages/AddHotelToTravelPackagePartialView",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+
+@Html.HiddenFor(model => model.Id_TravelPackage)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+
+    <h1>Hoteles Disponibles</h1>>
+    <table style="width:100%">
+        <tr>
+            <th>ID Hotel</th>
+            <th>Nombre del Hotel</th>
+            <th>Descripcion</th>
+            <th>Cantidad de Habitaciones Libres</th>
+            <th>Precio</th>
+        </tr>
+        @foreach (FunTourDataLayer.Models.Hotel item in ViewBag.HotelsToShow)
+        {
+
+        <tr>
+            <td>@item.Id_Hotel</td>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>@item.NotReservedRooms</td>
+            <td>@item.Price</td>
+        </tr>
+        }
+    </table>
+    @if (Model.Hotel == null)
+    {
+        <legend><strong>Agregar Hotel al Paquete</strong></legend>
+
+    }
+    else
+    {
+        <a href="#">
+            El hotel asociado en este momento al paquete es:
+            @Model.Hotel.Name
+
+        </a>
+        <legend><strong>Cambiar Hotel Asociado al Paquete:</strong></legend>
+    }
+
+    @Html.DropDownList("Hotels", null, string.Empty, new { style = "width:350px" })
+
+    <input type="button" id="AddHotel" value="Agregar Hotel" />
+</fieldset>

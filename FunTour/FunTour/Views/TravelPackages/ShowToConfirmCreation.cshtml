@@ -1,0 +1,207 @@
+﻿@model FunTour.Models.TravelPackageViewModel
+
+@{
+    ViewBag.Title = "ShowToConfirmCreation";
+}
+
+<h2>ShowToConfirmCreation</h2>
+
+<div>
+    <h4>TravelPackage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PackageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PackageName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FromDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FromDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ToDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ToDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReservationAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReservationAmount)
+        </dd>
+
+
+        <dt>
+            Lugar de Salida del Viaje:
+        </dt>
+
+        <dd>
+            @Model.FromPlace.Name - @Model.FromPlace.Province.Name  - @Model.FromPlace.Province.Country.Name
+        </dd>
+
+        <dt>
+            Lugar de Destino del Viaje:
+        </dt>
+
+        <dd>
+            @Model.ToPlace.Name - @Model.ToPlace.Province.Name  - @Model.ToPlace.Province.Country.Name
+        </dd>
+
+    </dl>
+
+    @if (Model.FlightOrBus)
+    {
+        <h1>Vuelo de Ida</h1>
+        <table style="width:100%">
+            <tr>
+                <th>ID Vuelo</th>
+                <th>Fecha de Salida</th>
+                <th>Fecha de Llegada</th>
+                <th>Cantidad de Asientos Libres</th>
+                <th>Precio</th>
+            </tr>
+
+            <tr>
+                <td>@Model.ToGoFlight.Id_Flight</td>
+                <td>@Model.ToGoFlight.DepartureDate</td>
+                <td>@Model.ToGoFlight.ArrivedDate</td>
+                <td>@Model.ToGoFlight.NotReservedSeats</td>
+                <td>@Model.ToGoFlight.Price</td>
+            </tr>
+        </table>
+
+        <h1>Vuelo de Vuelta</h1>
+        <table style="width:100%">
+            <tr>
+                <th>ID Vuelo</th>
+                <th>Fecha de Salida</th>
+                <th>Fecha de Llegada</th>
+                <th>Cantidad de Asientos Libres</th>
+                <th>Precio</th>
+            </tr>
+
+            <tr>
+                <td>@Model.ToBackFlight.Id_Flight</td>
+                <td>@Model.ToBackFlight.DepartureDate</td>
+                <td>@Model.ToBackFlight.ArrivedDate</td>
+                <td>@Model.ToBackFlight.NotReservedSeats</td>
+                <td>@Model.ToBackFlight.Price</td>
+            </tr>
+        </table>
+    }
+    else
+    {
+        <h1>Colectivo de Ida</h1>
+        <table style="width:100%">
+            <tr>
+                <th>ID Colectivo</th>
+                <th>Fecha de Salida</th>
+                <th>Fecha de Llegada</th>
+                <th>Cantidad de Asientos Libres</th>
+                <th>Precio</th>
+            </tr>
+
+            <tr>
+                <td>@Model.ToGoBus.Id_Bus</td>
+                <td>@Model.ToGoBus.DepartureDate</td>
+                <td>@Model.ToGoBus.ArrivedDate</td>
+                <td>@Model.ToGoBus.NotReservedSeats</td>
+                <td>@Model.ToGoBus.Price</td>
+            </tr>
+
+        </table>
+        <h1>Colectivo de Vuelta</h1>
+        <table style="width:100%">
+            <tr>
+                <th>ID Colectivo</th>
+                <th>Fecha de Salida</th>
+                <th>Fecha de Llegada</th>
+                <th>Cantidad de Asientos Libres</th>
+                <th>Precio</th>
+            </tr>
+
+            <tr>
+                <td>@Model.ToBackBus.Id_Bus</td>
+                <td>@Model.ToBackBus.DepartureDate</td>
+                <td>@Model.ToBackBus.ArrivedDate</td>
+                <td>@Model.ToBackBus.NotReservedSeats</td>
+                <td>@Model.ToBackBus.Price</td>
+            </tr>
+        </table>
+    }
+
+
+    <h1>Hotel Seleccionado</h1>>
+    <table style="width:100%">
+        <tr>
+            <th>ID Hotel</th>
+            <th>Nombre del Hotel</th>
+            <th>Descripcion</th>
+            <th>Cantidad de Habitaciones Libres</th>
+            <th>Precio</th>
+        </tr>
+
+        <tr>
+            <td>@Model.Hotel.Id_Hotel</td>
+            <td>@Model.Hotel.Name</td>
+            <td>@Model.Hotel.Description</td>
+            <td>@Model.Hotel.NotReservedRooms</td>
+            <td>@Model.Hotel.Price</td>
+        </tr>
+
+    </table>
+
+    <h1>Evento Seleccionado</h1>>
+    <table style="width:100%">
+        <tr>
+            <th>ID Evento</th>
+            <th>Nombre del Evento</th>
+            <th>Descripcion</th>
+            <th>Cantidad de Habitaciones Libres</th>
+            <th>Precio</th>
+        </tr>
+
+        <tr>
+            <td>@Model.Event.Id_Event</td>
+            <td>@Model.Event.Name</td>
+            <td>@Model.Event.Description</td>
+            <td>@Model.Event.AvailableTickets</td>
+            <td>@Model.Event.Price</td>
+        </tr>
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Volver Atrás", "AddDataServicesInPlace", new { travelPackageViewModel = Model }) |
+    @Html.ActionLink("Guardar Paquete", "ConfirmCreation", new { id = Model.Id_TravelPackage }) |
+    @Html.ActionLink("Cancelar Creación", "CancelCreation", new { id = Model.Id_TravelPackage })
+    @Html.ActionLink("Back to List", "Index")
+</p>

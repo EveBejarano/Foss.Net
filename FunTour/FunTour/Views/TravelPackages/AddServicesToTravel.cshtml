@@ -1,0 +1,33 @@
+﻿@model FunTour.Models.TravelPackageViewModel
+
+@{
+    ViewBag.Title = "AddServicesToTravel";
+}
+
+<h2>Agregar Forma De Transporte:</h2>
+
+
+
+@if (ViewBag.FlightOrBus == true)
+    {
+
+        <div>
+            @Html.Partial("_AddFlightToTravelPackagePartialView", Model)
+
+        </div>
+    }
+    else
+    {
+
+        <div>
+            @Html.Partial("_AddBusToTravelPackagePartialView", Model)
+        </div>
+    }
+<
+@Html.ActionLink("Guardar y Continuar", "AddServicesToTravelReturn", new { TravelPackageId = Model.Id_TravelPackage }) |
+    @Html.ActionLink("Volver Atrás", "AddPlaces", new { travelPackageViewModel = Model })
+
+
+    <div>
+        @Html.ActionLink("Volver al Menú", "Index")
+    </div>

@@ -1,0 +1,62 @@
+﻿@model FunTourDataLayer.Models.Permission
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='submit']").button();
+        $(":input[type='button']").button();
+    });
+</script>
+<div class="panel">
+    <fieldset>
+        <legend>
+            <h3>Permission Details</h3>
+        </legend>
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(model => model.Id_Permission)
+            <table style='width: 100%'>
+                <tr>
+                    <td style='width: 120px;font-weight: bold'>
+                        @Html.LabelFor(model => model.PermissionDescription, "Description")
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.PermissionDescription, new { style = "width:450px" })
+                        @Html.ValidationMessageFor(model => model.PermissionDescription)
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <input type="submit" value="Update Permission" />
+            <br />
+            <br />
+        }
+    </fieldset>
+</div>
+<br />
+<div>
+    <br />
+    <fieldset>
+        <legend>
+            <h3>
+                Roles Associated with this Permission
+            </h3>
+        </legend>
+
+        <div id="RolesTable">
+            @Html.Partial("_ListRolesTable4Permission", Model)
+        </div>
+        <div>
+            @Html.Partial("_AddRole4Permission", Model)
+        </div>
+        <br />
+        <div>
+            @Html.ActionLink("Go to Permissions", "PermissionIndex", "Admin")
+        </div>
+    </fieldset>
+
+</div>
+<br />
+<div>
+    @Html.ActionLink("Go to Permissions", "PermissionIndex", "Admin")
+</div>

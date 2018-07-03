@@ -1,0 +1,53 @@
+﻿@model FunTourDataLayer.Models.RoleDetails
+@{
+    ViewBag.Title = "Create Role";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='submit']").button();
+        $(":input[type='button']").button();
+    })
+</script>
+<div class="panel">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)    
+        <fieldset>
+            <legend>
+                <h3>
+                    Create Role</h3>
+            </legend>
+            <table style='width: 100%'>
+                <tr>
+                    <td style='width: 10%; font-weight: bold' class='userTable'>
+                        @Html.LabelFor(model => model.RoleName)
+                    </td>
+                    <td style='width: 28%' class='userTable'>
+                        @Html.TextBoxFor(model => model.RoleName, new { style = "width:450px" })
+                        @Html.ValidationMessageFor(model => model.RoleName)
+                    </td>
+                    <td style='width: 8%; font-weight: bold' class='userTable'>
+                        @Html.LabelFor(model => model.IsSysAdmin, "System Role")
+                    <td style='width: 20%' class='userTable'>
+                        @Html.EditorFor(model => model.IsSysAdmin)
+                        @Html.ValidationMessageFor(model => model.IsSysAdmin)
+                    </td>
+                </tr>           
+                <tr>
+                    <td style='width: 10%; font-weight: bold' class='userTable'>
+                        @Html.LabelFor(model => model.RoleDescription)
+                    </td>
+                    <td style='width: 28%' class='userTable'>
+                        @Html.TextBoxFor(model => model.RoleDescription, new { style = "width:450px" })
+                        @Html.ValidationMessageFor(model => model.RoleDescription)
+                    </td>                    
+                </tr>        
+            </table>
+            <br />
+            <input type="submit" value="Create Role" />
+        </fieldset>
+    }
+</div>
+<div>
+    @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+</div>

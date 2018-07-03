@@ -1,0 +1,90 @@
+﻿@model IEnumerable<FunTour.ActualModels.UserModel>
+<script type="text/javascript">
+	$(document).ready(function () {
+		//Unbind the original image 'href' set by the controller...
+		$('.deleteUser').attr('href', 'javascript://');
+		$('.deleteUser').click(function () {
+			$dialog.data('id', $(this).attr('id')).data('Id', $(this).attr('Id')).dialog("open");
+		});
+
+		var $dialog = $('<div/>')
+		.html("Warning: This will delete the selected User from the System and will prevent future access to the System.<br/><br/>Do you wish to continue?")
+		.dialog({
+			autoOpen: false,
+			resizable: false,
+			height: 250,
+			modal: true,
+			title: 'Delete User',
+			buttons: [
+						{
+							text: "Continue",
+							id: "continuebtn",
+							click: function () {
+								var _id = $(this).data('Id');
+								var _parameters = { userId: _id };
+								$.ajax({
+									url: "/Admin/DeleteUserReturnPartialView",
+									type: "GET",
+									data: _parameters,
+									success: function (data, textStatus, jqXHR) {
+										$('#UserTable').html(data);
+									}
+								});
+								$(this).dialog('close');
+							}
+						},
+						{
+							text: "Cancel",
+							id: "cancelbtn",
+							click: function () {
+								$(this).dialog("close");
+							}
+						}]
+		});
+	});
+</script>
+<div class="panel" id="divFunTour">
+    <table id="UserTable" style="width:100%">
+        <thead>
+        <th>
+            UserName
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            First Name
+        </th>
+        <th></th>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (item.FirstName != null && item.LastName != null)
+                    {
+                        @Html.ActionLink(item.UserModelName, "UserDetails", new { id = item.UserModelName })
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.UserModelName)
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    <center>
+                        <a href="@Url.Action("UserEdit", "Admin", new { UserName = item.UserModelName })" id=@item.UserModelName>
+                            <img src="@Url.Content("~/Content/images/pen.png")" style="float: centre" />
+                        </a>
+                        <img class="deleteUser" src="@Url.Content("~/Content/images/bin.png")" style="float: centre" />
+                    </center>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

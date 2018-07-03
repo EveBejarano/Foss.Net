@@ -1,0 +1,38 @@
+﻿@*<script type="text/javascript">
+    $(document).ready(function () {    
+        $(":input[type='button']").button();  
+        $('#AddRole').click(function () {
+            var _userId = $('#UserId').val();
+            var _id = $('#RoleId').val();
+
+            if (_userId == '') {
+                return false;
+            }
+
+            var _parameters = { userId: _userId, id: _id };
+            $.ajax({
+                url: "/Admin/AddUserRoleReturnPartialView",
+                type: "GET",
+                data: _parameters,
+                success: function (data, textStatus, jqXHR) {
+                    $('#RolesTable').html(data);
+                }
+            });
+        });
+    });
+</script>
+<input name='UserId' id='UserId' type="hidden" value="@ViewBag.UserId" />
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 650px">
+    <legend><strong>Add Role To User</strong></legend>
+    <br />
+    <label>
+        Role:
+    </label>
+    @{
+
+        Html.DropDownList("RoleId", FunTour.Controllers.AdminController.RoleList(ViewBag.UserId), string.Empty, new { style = "width:250px" });
+    }
+    
+    <input type="button" id="AddRole" value="Add Role" />
+</fieldset>*@

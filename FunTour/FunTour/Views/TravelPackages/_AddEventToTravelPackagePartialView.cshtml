@@ -1,0 +1,73 @@
+﻿@model FunTour.Models.TravelPackageViewModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddEvent').click(function () {
+            var _eventId = $('#Events').val();
+            var _packageId = $('#Id_TravelPackage').val();
+
+            if (_eventId == '') {
+                return false;
+            }
+
+            var _parameters = { EventId: _eventId, TravelPackageId: _packageId};
+            $.ajax({
+                url: "/TravelPackages/AddEventToTravelPackagePartialView",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+
+@Html.HiddenFor(model => model.Id_TravelPackage)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+
+
+    <h1>Eventes Disponibles</h1>>
+    <table style="width:100%">
+        <tr>
+            <th>ID Evento</th>
+            <th>Nombre del Evento</th>
+            <th>Descripcion</th>
+            <th>Cantidad de Tickets Disponibles</th>
+            <th>Precio</th>
+        </tr>
+        @foreach (FunTourDataLayer.Models.Event item in ViewBag.EventsToShow)
+        {
+
+        <tr>
+            <td>@item.Id_Event</td>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td>@item.AvailableTickets</td>
+            <td>@item.Price</td>
+        </tr>
+        }
+    </table>
+
+    @if (Model.Event == null)
+    {
+        <legend><strong>Agregar Evento al Paquete</strong></legend>
+
+    }
+    else
+    {
+        <a href="#">
+            El evento asociado en este momento al paquete es:
+            @Model.Event.Name
+        </a>
+        <legend><strong>Cambiar Evento Asociado al Paquete:</strong></legend>
+    }
+
+    @Html.DropDownList("Events", null, string.Empty, new { style = "width:350px" })
+
+    <input type="button" id="AddEvent" value="Agregar Evento" />
+</fieldset>

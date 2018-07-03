@@ -1,0 +1,78 @@
+﻿@model FunTour.Models.RegisterViewModel
+@{
+
+                ViewBag.Title = "Registrarse";
+}
+<div class="container ">
+    <div class="row login">
+        <div class="col s8 offset-s2">
+            <div class="card center login">
+                <div class="card-action grey lighten-3 white-text redonded">
+                    <h3 class="purple-text text-darken-3" style="font-family:'Pacifico',cursive;">Crear cuenta</h3>
+                </div>
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                    <div class="card-content">
+                        <div class="form-field ">
+                            @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label" })
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="form-field ">
+                            @Html.LabelFor(model => model.FirstName, new { @class = "col-md-2 control-label" })
+                            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="form-field ">
+                            @Html.LabelFor(model => model.LastName, new { @class = "col-md-2 control-label" })
+                            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="form-field ">
+                            @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="form-field ">
+                            @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-md-2 control-label" })
+                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="form-field ">
+                            @Html.LabelFor(model => model.Password, new { @class = "col-md-2 control-label" })
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <div class="form-field ">
+                            @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" class="btn-large red darken-1" value="Registrarse" />
+                        </div>
+                    </div>
+                    <br />
+                }
+            </div>
+        </div>
+    </div>
+</div>

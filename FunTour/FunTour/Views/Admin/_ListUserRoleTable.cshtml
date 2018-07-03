@@ -1,0 +1,82 @@
+﻿@model FunTour.ActualModels.UserModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var $dialog = $('<div class="ui-dialog"></div>')
+		.html('Do you wish to delete this Role?')
+		.dialog({
+		    autoOpen: false,
+		    resizable: false,
+		    height: 150,
+		    modal: true,
+		    title: 'Delete Confirmation?',
+		    open: function () {
+		        $("#deletebtn").button({ icons: { primary: "ui-icon-trash" } });
+		    },
+		    buttons: [
+                        {
+                            text: "Delete",
+                            id: "deletebtn",
+                            click: function () {
+                                var _url = window.location;
+                                var _userId = window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1);
+                                var _id = $(this).data('id');
+
+                                var _parameters = { userId: _userId, id: _id };
+                                $.ajax({
+                                    url: "/Admin/DeleteUserRoleReturnPartialView",
+                                    type: "GET",
+                                    data: _parameters,
+                                    success: function (data, textStatus, jqXHR) {
+                                        $('#RolesTable').html(data);
+                                    }
+                                });
+                                $(this).dialog('close');
+                            }
+                        },
+                        {
+                            text: "Cancel",
+                            id: "cancelbtn",
+                            click: function () { $(this).dialog("close"); }
+                        }]
+		});
+
+        $(".bin").click(function () {
+            $dialog.data("id", $(this).attr("id")).dialog("open");
+        });
+    })
+</script>
+
+@{if (Model.UserModelRoles.Count == 0)
+{
+    <h2><font color="red">No Associated Roles...</font></h2>
+    <br />
+}
+else
+{
+    <table id="RoleTable" style="width: 65%">
+        <thead>
+        <th style="width: 90%">
+            Role
+        </th>
+        <th>
+            Action
+        </th>
+        </thead>
+        @foreach (var role in Model.UserModelRoles.OrderBy(r => r.RoleDescription))
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(role.RoleName, "RoleDetails", new { id = role.Id_UserRole })
+                </td>
+                <td>
+                    <center><img class="bin" src="@Url.Content("~/Content/images/bin.png")" alt="Delete" id="@role.Id_UserRole" /></center>
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+}
+}
+
+<br />

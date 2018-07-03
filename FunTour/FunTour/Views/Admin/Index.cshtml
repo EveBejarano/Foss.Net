@@ -1,0 +1,71 @@
+﻿
+@model IEnumerable<FunTour.ActualModels.UserModel>
+@{
+    ViewBag.Title = "RBAC Administration";
+
+}
+
+<script>
+    $(function () {
+        $("#pbFilter").click(function () {
+            $.get("/Admin/filter4FunTour", { _surname: $("#SurnameId").val() }, function (data) {
+                $("#divFunTour").html(data);
+            })
+        })
+    });
+
+    $(function () {
+        $("#pbReset").click(function () {
+            $("#SurnameId").val('');
+            $.get("/Admin/filterReset", {}, function (data) {
+                $("#divFunTour").html(data);
+            })
+        })
+    });
+
+    $(document).ready(function () {
+        $(":input[type='button']").button();
+    });
+</script>
+
+
+<fieldset>
+    <legend>
+        <h3>
+            System FunTour
+        </h3>
+    </legend>
+    <fieldset style="font: 100%; border: Black; border-style: solid; border-width: thin; width: 30%">
+        <legend><strong>Search Filter</strong></legend>
+        <br />
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <h3>
+                            Last Name:
+                        </h3>
+                    </td>
+                    <td>
+                        @Html.TextBox("SurnameId", string.Empty, new { style = "width:200px", maxlength = 30 })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="button" value="Apply Filter" id="pbFilter" name="pbFilter" />
+                        <input type="button" value="Reset" id="pbReset" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </fieldset>
+    <br />
+    <br />
+    @Html.Partial("_ListUserTable", Model)
+    <br />    
+    <div>
+        <input type="button" value="Create User" onclick="location.href='@Url.Action("UserCreate", "Admin")'" />
+        <br />
+    </div>
+</fieldset>
