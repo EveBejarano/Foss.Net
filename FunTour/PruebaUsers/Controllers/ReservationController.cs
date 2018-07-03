@@ -58,7 +58,9 @@ namespace PruebaUsers.Controllers
 		public ActionResult PayReservation(int ReservationID)
 		{
 			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationID).FirstOrDefault();
-
+			reservation.Paid = true;
+			Service.UnitOfWork.ReservationRepository.Update(reservation);
+			Service.UnitOfWork.Save();
 			// No tengo idea como se Pagaria
 		}
 
