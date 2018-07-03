@@ -1,0 +1,27 @@
+﻿
+
+@using Microsoft.AspNet.Identity
+@{ if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav navbar-nav ml-auto  mt-2 mt-md-0 enlace" }))
+        {
+            @Html.AntiForgeryToken();
+
+
+            <li><a class="nav-item nav-link text-white" href="#">ADMINISTRADOR</a></li>
+            <li><a class="nav-item nav-link text-white" href="href="/home/About">ABOUT</a></li>
+            <li><a class="nav-item nav-link text-white" href="/home/Contact">CONTACTO</a></li>
+            <li><a class="nav-item nav-link text-white" href="/Home/Index">INICIO</a></li>
+            <li><a class="nav-item nav-link text-white" href="javascript:document.getElementById('logoutForm').submit()">CERRAR SESIÓN</a></li>
+            <li>@Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class= "nav-item nav-link text-white" })</li>
+
+        }
+    }
+    else
+    {
+        <li><a class="nav-item nav-link text-white" href="/Home">INICIO</a></li>
+        <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+
+    }
+}

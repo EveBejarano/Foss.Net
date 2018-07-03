@@ -1,0 +1,42 @@
+﻿@model FlightsAPI.Models.Employee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Employ_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employ_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DNI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DNI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Emp_Occupation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emp_Occupation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idEmploy }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
