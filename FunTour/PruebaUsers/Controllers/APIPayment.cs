@@ -2,14 +2,13 @@
 using MercadoPago.DataStructures.Payment;
 using MercadoPago.Resources;
 
-namespace MercadoPagoExample.Payments
+namespace PruebaUsers.Controllers
 {
     public class APIPayment
     {
         public string DoPayment()
         {
-            MercadoPago.SDK.ClientId = "2845946758815722";
-            MercadoPago.SDK.ClientSecret = "Joa4kK1zRAbmseZgrFhYGoPbjRV5aXSq";
+            MercadoPago.SDK.SetAccessToken(TEST-2845946758815722-062022-863d1d2f7b9de36797605a09fff60f9d-207564866);
 
             Payment payment = new Payment
             {
