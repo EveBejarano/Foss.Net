@@ -5,7 +5,7 @@ using System.Web;
 using FunTour.Models;
 using FunTourBusinessLayer.UnitOfWorks;
 
-namespace FunTour.ActualModels
+namespace FunTour.Models
 {
     public class UserRole
     {
