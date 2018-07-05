@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FunTourDataLayer.Models.Permission>
+﻿@model IEnumerable<FunTourDataLayer.AccountManagement.Permission>
 @{
     ViewBag.Title = "Rights";
 }
@@ -24,7 +24,7 @@
             Action
         </th>
         </thead>
-        @foreach (FunTourDataLayer.Models.Permission item in Model)
+        @foreach (FunTourDataLayer.AccountManagement.Permission item in Model)
         {
             <tr>
                 <td>
