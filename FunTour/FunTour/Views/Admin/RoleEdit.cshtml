@@ -1,5 +1,8 @@
 ﻿@model FunTourDataLayer.AccountManagement.RoleDetails
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
     ViewBag.Title = "Edit " + Model.RoleDescription + " Role";
 }
 <script type="text/javascript">
@@ -19,37 +22,37 @@
                     Role Details
                 </h3>
             </legend>
-                <table style='width: 100%'>
-                    <tr>
-                        <td style='width: 120px;font-weight: bold'>
-                            @Html.LabelFor(model => model.RoleName)
-                        </td>
-                        <td>
-                            @Html.TextBoxFor(model => model.RoleName, new { @class = "singlelinetextinput" })
-                            @Html.ValidationMessageFor(model => model.RoleName)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style='font-weight: bold'>
-                            @Html.LabelFor(model => model.RoleDescription, new { style = "vertical-align:top" })
-                        </td>
-                        <td>
-                            @Html.TextAreaFor(model => model.RoleDescription, new { @class = "multilinetextinput" })
-                            @Html.ValidationMessageFor(model => model.RoleDescription)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style='font-weight: bold'>
-                            @Html.LabelFor(model => model.IsSysAdmin, "System Role")
-                        </td>
-                        <td>
-                            @Html.CheckBoxFor(model => model.IsSysAdmin)
-                            @Html.ValidationMessageFor(model => model.IsSysAdmin)
-                        </td>
-                    </tr>
-                </table>
-                <br />
-                <input type="submit" value="Save" />
+            <table style='width: 100%'>
+                <tr>
+                    <td style='width: 120px;font-weight: bold'>
+                        @Html.LabelFor(model => model.RoleName)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.RoleName, new { @class = "singlelinetextinput" })
+                        @Html.ValidationMessageFor(model => model.RoleName)
+                    </td>
+                </tr>
+                <tr>
+                    <td style='font-weight: bold'>
+                        @Html.LabelFor(model => model.RoleDescription, new { style = "vertical-align:top" })
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.RoleDescription, new { @class = "multilinetextinput" })
+                        @Html.ValidationMessageFor(model => model.RoleDescription)
+                    </td>
+                </tr>
+                <tr>
+                    <td style='font-weight: bold'>
+                        @Html.LabelFor(model => model.IsSysAdmin, "System Role")
+                    </td>
+                    <td>
+                        @Html.CheckBoxFor(model => model.IsSysAdmin)
+                        @Html.ValidationMessageFor(model => model.IsSysAdmin)
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <input type="submit" value="Save" />
         </fieldset>
     }
     <fieldset>

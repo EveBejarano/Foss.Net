@@ -1,5 +1,8 @@
 ﻿@model FunTourDataLayer.AccountManagement.RoleDetails
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
     ViewBag.Title = "Role: " + Html.DisplayFor(model => model.RoleDescription);
 }
 <script type="text/javascript">
