@@ -1,5 +1,8 @@
 ﻿@model FunTourDataLayer.AccountManagement.Permission
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
     ViewBag.Title = "Create";
 }
 <script type="text/javascript">
@@ -12,20 +15,21 @@
     <fieldset>
         <legend>
             <h3>
-                Create Permission</h3>
+                Create Permission
+            </h3>
         </legend>
         @using (Html.BeginForm())
         {
-            @Html.ValidationSummary(true)    
+            @Html.ValidationSummary(true)
             <div class="editor-label">
                 @Html.LabelFor(model => model.PermissionDescription, "Permission Description")
             </div>
             <div class="editor-field">
                 @Html.TextBoxFor(model => model.PermissionDescription, new { style = "width:450px" })
                 @Html.ValidationMessageFor(model => model.PermissionDescription)
-            </div>          
+            </div>
             <br />
-            <input type="submit" value="Create" />           
+            <input type="submit" value="Create" />
         }
     </fieldset>
 </div>

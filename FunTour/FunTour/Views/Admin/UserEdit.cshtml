@@ -1,4 +1,7 @@
-﻿@model FunTour.ActualModels.UserModel
+﻿@model FunTour.Models.UserModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 @{
     ViewBag.Title = "User - " + Model.UserModelName;
 
@@ -35,34 +38,32 @@
         @foreach (var item in Model.SelectedRoles)
         {
 
-        <div class="form-group">
-            @Html.LabelFor(x => item.isSelected, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.CheckBoxFor(x => item.isSelected, new { @class = "form-control" })
+            <div class="form-group">
+                @Html.LabelFor(x => item.isSelected, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(x => item.isSelected, new { @class = "form-control" })
+                </div>
             </div>
-        </div>
 
 
-        @*Html.HiddenFor(x => item.RoleDetails.Id_Role)*@
-        @* Html.CheckBoxFor(x => item.isSelected)
-        @Html.LabelFor(x => item.isSelected, item.RoleDetails.RoleName)*@
-}
+            @*Html.HiddenFor(x => item.RoleDetails.Id_Role)*@
+            @* Html.CheckBoxFor(x => item.isSelected)
+                @Html.LabelFor(x => item.isSelected, item.RoleDetails.RoleName)*@
+        }
 
         @*<div class="panel" id="RolesTable">
-            @Html.Partial("_ListUserRoleTable", Model)
-        </div>
-        @Html.Partial("_ListEditableUserRoleTable")
-        <br />
-        <div>
-            @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
-        </div>*@
+                @Html.Partial("_ListUserRoleTable", Model)
+            </div>
+            @Html.Partial("_ListEditableUserRoleTable")
+            <br />
+            <div>
+                @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+            </div>*@
         <br />
         <input type="submit" value="Save" />
     </fieldset>
 
-    <fieldset>
-
-    </fieldset>    
+    <fieldset></fieldset>
 }
 <br />
 <div>
