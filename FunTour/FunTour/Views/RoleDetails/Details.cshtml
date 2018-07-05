@@ -1,0 +1,42 @@
+﻿@model FunTourDataLayer.Models.RoleDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RoleDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoleDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoleDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsSysAdmin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsSysAdmin)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_Role }) |
+    @Html.ActionLink("Volver al Menú", "Index")
+</p>

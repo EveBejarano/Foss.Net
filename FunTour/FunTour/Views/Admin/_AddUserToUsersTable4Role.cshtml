@@ -1,0 +1,35 @@
+﻿@model FunTourDataLayer.Models.RoleDetails
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$('#AddUser').attr("disabled", true);
+        $('#AddUser').click(function () {
+            var _userId = $('#UserList').val();
+            var _id = $('#Id_Role').val();
+            debugger;
+            if (_userId == '') {
+                return false;
+            }
+
+            var _parameters = { id: _id, UserId: _userId };
+            $.ajax({
+                url: "/Admin/AddUser2RoleReturnPartialView",
+                type: "GET",
+                data: _parameters,
+                success: function (data, textStatus, jqXHR) {
+                    $('#UsersTable').html(data);
+                    $('#UserList').val("");
+                    debugger;
+                }
+            });
+        });      
+    });
+</script>
+@Html.HiddenFor(model => model.Id_Role)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 650px">
+    <legend><strong>Add User To Role</strong></legend>
+    <br />
+    <label>User:  </label>
+    @Html.DropDownList("UserList", null, string.Empty, new { style = "width:250px" })
+    <input type="button" id="AddUser" value="Add User To Role" />
+</fieldset>

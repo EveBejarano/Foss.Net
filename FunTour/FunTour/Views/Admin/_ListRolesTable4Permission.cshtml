@@ -1,0 +1,87 @@
+﻿@model FunTourDataLayer.Models.Permission
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Unbind the original image 'href' set by the controller...
+        $('.deleteRole').attr('href', 'javascript://');
+        $('.deleteRole').click(function () {
+            $dialog.data('permissionId', $(this).attr('permissionId')).data('RoleId', $(this).attr('RoleId')).dialog("open");
+        });
+
+        var $dialog = $('<div/>')
+        .html("Warning: This will remove the selected Role from this Permission.  Removing this Role may prevent FunTour from accessing areas in the application.  Only remove this Role if you intend to restrict application access.<br/><br/>Do you wish to continue?")
+		.dialog({
+		    autoOpen: false,
+		    resizable: false,
+		    height: 250,
+		    modal: true,
+		    title: 'Remove Role',
+		    buttons: [
+                        {
+                            text: "Continue",
+                            id: "continuebtn",
+                            click: function () {
+                                var _permissionId = $(this).data('permissionId');
+                                var _RoleId = $(this).data('RoleId');
+
+                                var _parameters = { permissionId: _permissionId, id: _RoleId };
+                                $.ajax({
+                                    url: "/Admin/DeleteRoleFromPermissionReturnPartialView",
+                                    type: "GET",
+                                    data: _parameters,
+                                    success: function (data, textStatus, jqXHR) {
+                                        $('#RolesTable').html(data);
+                                    }
+                                });
+                                $(this).dialog('close');
+                            }
+                        },
+                        {
+                            text: "Cancel",
+                            id: "cancelbtn",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }]
+		});
+    });
+</script>
+@{if (Model.Roles.Count == 0)
+{
+    <h2><font color="red">No Associated Roles...</font></h2>
+    <br />
+}
+else
+{
+    <table id="PermissionTable" style="width: 65%">
+        <thead>
+        <th style="width:40%">
+            Role
+        </th>
+        <th>
+            Role Description
+        </th>
+        <th>
+            Action
+        </th>
+        </thead>
+        @foreach (FunTourDataLayer.Models.RoleDetails Role in Model.Roles.OrderBy(u => u.RoleDescription))
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(Role.RoleName, "RoleDetails", new { id = Role.Id_Role })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Role.RoleDescription)
+                </td>
+                <td>
+                    <center>
+                        <a href="@Url.Action("DeletePermission", "Admin", new { id = Role.Id_Role, permissionId = Model.Id_Permission })" class="deleteRole" permissionid=@Model.Id_Permission Roleid=@Role.Id_Role>
+                            <img src="@Url.Content("~/Content/images/bin.png")" alt="Delete Permission" />
+                        </a>
+                    </center>
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+}}

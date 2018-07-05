@@ -1,0 +1,53 @@
+﻿@model FunTour.ActualModels.UserModel
+@{if (Model != null)
+  {     
+    <div id="expanderContent">
+        <table style='width: 100%'>
+            <tr>
+                <td style='width: 8%; font-weight: bold' class='userTable'>
+                    Nombre de Usuario
+                </td>
+                <td style='width: 20%' class='userTable'>
+                    @Model.UserModelName
+                </td>
+                <td style='width: 8%; font-weight: bold' class='userTable'>
+                    Apellidos:
+                </td>
+                <td style='width: 20%' class='userTable'>
+                    @Model.LastName
+                </td>
+                <td style='width: 8%; font-weight: bold' class='userTable'>
+                    Nombres:
+                </td>
+                <td style='width: 20%' class='userTable'>
+                    @Model.FirstName
+                </td>
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    Email:
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Model.Email
+                </td>
+
+                <td style='width: 8%; font-weight: bold' class='userTable'>
+                    Número de Teléfono:
+                </td>
+                <td style='width: 20%' class='userTable'>
+                    @Model.PhoneNumber
+                </td>
+            </tr>
+            <tr>
+                <td style='font-weight: bold' class='userTable'>
+                    Inactivo:
+                </td>
+                <td class='userTable'>
+                    @Model.Inactive
+                </td>                
+            </tr>
+            <tr>                      
+               <td></td>
+            </tr>
+        </table>
+    </div>
+  }
+}

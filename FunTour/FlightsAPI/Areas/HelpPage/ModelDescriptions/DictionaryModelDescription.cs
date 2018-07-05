@@ -1,6 +1,0 @@
-namespace FlightsAPI.Areas.HelpPage.ModelDescriptions
-{
-    public class DictionaryModelDescription : KeyValuePairModelDescription
-    {
-    }
-}

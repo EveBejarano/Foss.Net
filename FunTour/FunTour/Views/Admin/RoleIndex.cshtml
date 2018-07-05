@@ -1,0 +1,63 @@
+﻿@model IEnumerable<FunTourDataLayer.Models.RoleDetails>
+@{
+  ViewBag.Title = "Roles";
+}
+<script type="text/javascript">
+  $(document).ready(function () {
+    $(":input[type='button']").button();
+  });
+</script>
+<fieldset>
+  <legend>
+    <h3>
+      Roles
+    </h3>
+  </legend>
+  <table id="RoleTable" style="width: 90%">
+    <thead>
+    <th>
+      Role Name
+    </th>
+    <th>
+      Role Description
+    </th>
+    <th>
+      Is System Admin
+    </th>
+    <th style="width: 8%">
+      Action
+    </th>
+    </thead>
+    @foreach (var item in Model)
+    {
+      <tr>
+        <td>
+          @Html.ActionLink(item.RoleName, "RoleName", new { id = item.Id_Role })
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.RoleDescription)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.IsSysAdmin)
+        </td>
+        <td>
+          <center>
+            <a href="@Url.Action("RoleEdit", "Admin", new { id = item.Id_Role })">
+              <img src="@Url.Content("~/Content/Images/pen.png")" alt="Edit Role" />
+            </a>
+            <a href="@Url.Action("RoleDelete", "Admin", new { id = item.Id_Role })">
+              <img src="@Url.Content("~/Content/Images/bin.png")" alt="Delete Role" />
+            </a>
+          </center>
+        </td>
+      </tr>
+    }
+  </table>
+  <br />
+  <div>
+    <input type="button" value="Create Role" onclick="location.href='@Url.Action("RoleCreate", "Admin")'" />
+    <br />
+  </div>
+</fieldset>
+<br />
+@Html.ActionLink("Go to FunTour", "Index", "Admin")

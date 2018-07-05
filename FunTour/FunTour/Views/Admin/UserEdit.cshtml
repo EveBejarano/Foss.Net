@@ -1,0 +1,70 @@
+﻿@model FunTour.ActualModels.UserModel
+@{
+    ViewBag.Title = "User - " + Model.UserModelName;
+
+    if ((Model.UserModelName != null) && (Model.UserModelName != ""))
+    {
+        ViewBag.Title = ViewBag.Title + " (" + Model.UserModelName + ")";
+    }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='button']").button();
+        $(":input[type='submit']").button();
+    });
+</script>
+
+
+@using (Html.BeginForm("UserEdit", "Admin", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <input name='Id_UserModel' id='Id_UserModel' type="hidden" value="@Model.Id_UserModel" />
+    <fieldset>
+        <legend>
+            <h3>
+                User Details
+            </h3>
+        </legend>
+        @Html.Partial("_userDetailsEdit", Model)
+
+        <legend>
+            <h3>
+                Roles Associated with this User
+            </h3>
+        </legend>
+        @foreach (var item in Model.SelectedRoles)
+        {
+
+        <div class="form-group">
+            @Html.LabelFor(x => item.isSelected, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(x => item.isSelected, new { @class = "form-control" })
+            </div>
+        </div>
+
+
+        @*Html.HiddenFor(x => item.RoleDetails.Id_Role)*@
+        @* Html.CheckBoxFor(x => item.isSelected)
+        @Html.LabelFor(x => item.isSelected, item.RoleDetails.RoleName)*@
+}
+
+        @*<div class="panel" id="RolesTable">
+            @Html.Partial("_ListUserRoleTable", Model)
+        </div>
+        @Html.Partial("_ListEditableUserRoleTable")
+        <br />
+        <div>
+            @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+        </div>*@
+        <br />
+        <input type="submit" value="Save" />
+    </fieldset>
+
+    <fieldset>
+
+    </fieldset>    
+}
+<br />
+<div>
+    @Html.ActionLink("Go to FunTour", "Index", "Admin")
+</div>

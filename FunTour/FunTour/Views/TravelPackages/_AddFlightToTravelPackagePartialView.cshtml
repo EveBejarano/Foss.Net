@@ -1,0 +1,114 @@
+﻿@model FunTour.Models.TravelPackageViewModel
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('AddFlight').click(function () {
+            var _toGoFlightId = $('#FlightsToGo').val();
+            var _toBackFlightId = $('#FlightsToBack').val();
+            var _packageId = $('#Id_TravelPackage').val();
+
+            if (_toGoFlightId == '' || _toBackFlightId == '') {
+                return false;
+            }
+
+            var _parameters = { ToGoFlightId: _toGoFlightId, ToBackFlightId: _toBackFlightId, TravelPackageId: _packageId };
+            $.ajax({
+                url: "/TravelPackages/AddFlightToTravelPackagePartialView",
+                type: "GET",
+                data: _parameters,
+                success:
+                    //function (data, textStatus, jqXHR) {
+                    //$('#PermissionsTable').html(data);
+                    //$('#PermissionId').val("");
+                //}
+            });
+        });
+    });
+</script>
+
+<h1>Vuelo de Ida</h1>>
+<table style="width:100%">
+    <tr>
+        <th>ID Vuelo</th>
+        <th>Fecha de Salida</th>
+        <th>Fecha de Llegada</th>
+        <th>Cantidad de Asientos Libres</th>
+        <th>Precio</th>
+    </tr>
+    @foreach (FunTourDataLayer.Models.Flight item in ViewBag.FlightsToGoToShow)
+    {
+
+        <tr>
+            <td>@item.Id_Flight</td>
+            <td>@item.DepartureDate</td>
+            <td>@item.ArrivedDate</td>
+            <td>@item.NotReservedSeats</td>
+            <td>@item.Price</td>
+        </tr>
+    }
+</table>
+
+
+@Html.HiddenFor(model => model.Id_TravelPackage)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+    @if (Model.ToGoFlight == null)
+    {
+        <legend><strong>Agregar Vuelo al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
+
+    }
+    else
+    {
+        <a href="#">
+            El vuelo asociado en este momento al paquete es:
+            @Model.ToGoFlight.FlightCompany.Name
+            @Model.ToGoFlight.Id_Flight
+        </a>
+        <legend><strong>Cambiar Vuelo Asociado al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
+    }
+
+    @Html.DropDownList("FlightsToGo", null, string.Empty, new { style = "width:350px" })
+
+
+    <h1>Vuelo de Vuelta</h1>>
+    <table style="width:100%">
+        <tr>
+            <th>ID Vuelo</th>
+            <th>Fecha de Salida</th>
+            <th>Fecha de Llegada</th>
+            <th>Cantidad de Asientos Libres</th>
+            <th>Precio</th>
+        </tr>
+        @foreach (FunTourDataLayer.Models.Flight item in ViewBag.FlightsToBackToShow)
+        {
+
+            <tr>
+                <td>@item.Id_Flight</td>
+                <td>@item.DepartureDate</td>
+                <td>@item.ArrivedDate</td>
+                <td>@item.NotReservedSeats</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </table>
+
+    @if (Model.ToBackFlight == null)
+    {
+        <legend><strong>Agregar Vuelo al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
+
+    }
+    else
+    {
+        <a href="#">
+            El vuelo asociado en este momento al paquete es:
+            @Model.ToBackFlight.FlightCompany.Name
+            @Model.ToBackFlight.Id_Flight
+        </a>
+        <legend><strong>Cambiar Vuelo Asociado al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
+    }
+
+    @Html.DropDownList("FlightsToBack", null, string.Empty, new { style = "width:350px" })
+
+
+    <input type="button" id="AddFlight" value="Agregar Vuelos" />
+</fieldset>

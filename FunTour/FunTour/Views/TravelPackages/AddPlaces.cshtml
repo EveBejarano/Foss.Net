@@ -1,0 +1,58 @@
+﻿
+@model FunTour.Models.TravelPackageViewModel
+
+@{
+    ViewBag.Title = "AddPlaces";
+}
+
+
+
+
+<h2>Lugares:</h2>
+
+<fieldset>
+    <div id="FromCity">
+    </div>
+    <div>
+        <legend><strong>Agregar Ciudad de Origen</strong></legend>
+
+        @Html.HiddenFor(model => model.Id_TravelPackage)
+        <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+                                      border-width: thin; border-color: Silver; width: 740px">
+            <div class="col-md-5">
+                @Html.DropDownList("FromCities", null, string.Empty, new { style = "display:initial" })
+
+            </div>
+        </fieldset>
+    </div>
+    <br />
+
+    <div id="ToCity">
+    </div>
+    <div>
+
+        <legend><strong>Agregar Ciudad de Destino</strong></legend>
+
+
+        @Html.HiddenFor(model => model.Id_TravelPackage)
+        <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+                                      border-width: thin; border-color: Silver; width: 740px">
+
+            @Html.DropDownList("ToCities", null, string.Empty, new { style = "display:initial" })
+
+
+        </fieldset>
+
+    </div>
+    <br />
+
+
+</fieldset>
+
+
+<button type="submit" onclick="AddCities()"> "Guardar y Continuar"</button>
+@Html.ActionLink("Volver Atrás", "Create", new { id = ViewBag.TravelPackage.Id_TravelPackage })
+
+<div>
+    @Html.ActionLink("Volver al Inicio...", "Index")
+</div>

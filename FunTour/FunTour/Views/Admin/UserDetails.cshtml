@@ -1,0 +1,35 @@
+﻿@model FunTour.ActualModels.UserModel
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":input[type='button']").button();
+        $(":input[type='submit']").button();
+    });
+</script>
+@using (Html.BeginForm("UserDetails", "Admin", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>
+            <h3>
+                User Details
+            </h3>
+        </legend>
+        @Html.Partial("_userDetails", Model)
+        <br />
+        <input type="button" value="Edit" onclick="location.href='@Url.Action("UserEdit", "Admin", new { id = Model.UserModelName })'" />
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            <h3>
+                Roles Associated with this User
+            </h3>
+        </legend>
+        <div class="panel" id="RolesTable">
+            @Html.Partial("_ListUserRoleTable", Model)
+        </div>        
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Go to FunTour", "Index", "Admin")
+</div>

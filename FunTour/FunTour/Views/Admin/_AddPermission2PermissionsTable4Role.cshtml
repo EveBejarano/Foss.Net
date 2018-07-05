@@ -1,0 +1,51 @@
+﻿@model FunTourDataLayer.Models.RoleDetails
+<script type="text/javascript">
+    $(document).ready(function () {     
+        $('AddPermission').click(function () {               
+            var _permissionId = $('#PermissionId').val();            
+            var _RoleId = $('#Id_Role').val();
+
+            if (_permissionId == '') {
+                return false;
+            }
+
+            var _parameters = { permissionId: _permissionId, id: _RoleId };
+            $.ajax({
+                url: "/Admin/AddPermission2RoleReturnPartialView",
+                type: "GET",
+                data: _parameters,
+                success: function (data, textStatus, jqXHR) {
+                    $('#PermissionsTable').html(data);
+                    $('#PermissionId').val("");
+                }
+            });
+        });
+
+        $('#AddAllPermissions').click(function () {
+            var _RoleId = $('#Id_Role').val();
+            var _parameters = { id: _RoleId };
+            debugger;
+            $.ajax({
+                url: "/Admin/AddAllPermissions2RoleReturnPartialView",
+                type: "GET",
+                data: _parameters,
+                success: function (data, textStatus, jqXHR) {
+                    $('#PermissionsTable').html(data);
+                    $('#PermissionId').val("");
+                }
+            });
+        });    
+    });
+</script>
+@Html.HiddenFor(model => model.Id_Role)
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
+    <legend><strong>Add Permission To Role</strong></legend>
+    <br />
+    <label>
+        Permission:
+    </label>    
+    @Html.DropDownList("PermissionId", null, string.Empty, new { style = "width:350px" })
+    <input type="button" id="AddPermission" value="Add Permission" />
+    <input type="button" id="AddAllPermissions" value="Add All Permissions" />
+</fieldset>

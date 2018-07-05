@@ -1,0 +1,83 @@
+﻿@model FunTourDataLayer.Models.RoleDetails
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Unbind the original image 'href' set by the controller...
+        $('.deleteUser').attr('href', 'javascript://');
+        $('.deleteUser').click(function () {
+            $dialog.data('id', $(this).attr('id')).data('userId', $(this).attr('userId')).dialog("open");
+        });
+
+        var $dialog = $('<div/>')
+		.html("This User will be removed from the selected Role.<br/><br/>Do you wish to continue?")
+		.dialog({
+		    autoOpen: false,
+		    resizable: false,
+		    height: 200,
+		    modal: true,
+		    title: 'Remove Role',
+		    buttons: [
+                        {
+                            text: "Continue",
+                            id: "continuebtn",
+                            click: function () {
+                                var _userId = $(this).data('userId');
+                                var _id = $(this).data('id');
+
+                                var _parameters = { userId: _userId, id: _id };
+                                $.ajax({
+                                    url: "/Admin/DeleteUserFromRoleReturnPartialView",
+                                    type: "GET",
+                                    data: _parameters,
+                                    success: function (data, textStatus, jqXHR) {
+                                        $('#FunTourTable').html(data);
+                                    }
+                                });
+                                $(this).dialog('close');
+                            }
+                        },
+                        {
+                            text: "Cancel",
+                            id: "cancelbtn",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }]
+		});
+    });
+</script>
+
+@{if (Model.Users.Count == 0)
+{
+    <h2><font color="red">No Associated Users...</font></h2>
+    <br />
+}
+else
+{
+    <table id="UserTable" style="width: 65%">
+        <thead>
+        <th style="width:90%">
+            User
+        </th>
+        <th>
+            Action
+        </th>
+        </thead>
+        @foreach (Microsoft.AspNet.Identity.EntityFramework.IdentityUser user in Model.Users.OrderBy(u => u.UserName))
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(user.UserName, "UserDetails", new { id = user.Id })
+                </td>
+                <td>
+                    <center>
+                        <a href="@Url.Action("DeleteUser", "Admin", new { id = Model.Id_Role, userId = user.Id })" class="deleteUser" id=@Model.Id_Role userid=@user.Id>
+                            <img src="@Url.Content("~/Content/images/bin.png")" />
+                        </a>
+                    </center>
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+}}
+
