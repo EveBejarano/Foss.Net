@@ -79,9 +79,13 @@
                 <td>
                     <center>
                         <a href="@Url.Action("UserEdit", "Admin", new { UserName = item.UserModelName })" id=@item.UserModelName>
-                            <img src="@Url.Content("~/Content/images/pen.png")" style="float: centre" />
+                            <i class="material-icons">create</i>
+
                         </a>
-                        <img class="deleteUser" src="@Url.Content("~/Content/images/bin.png")" style="float: centre" />
+                        <i class="material-icons">
+                            delete_forever
+                        </i>
+
                     </center>
                 </td>
             </tr>

@@ -10,12 +10,13 @@
         $(":input[type='button']").button();
     });
 </script>
-<fieldset>
-    <legend>
-        <h3>
-            Roles
-        </h3>
-    </legend>
+
+<div class="container">
+
+    <h3>
+        Roles
+    </h3>
+
     <table id="RoleTable" style="width: 90%">
         <thead>
         <th>
@@ -58,9 +59,10 @@
     </table>
     <br />
     <div>
-        <input type="button" value="Create Role" onclick="location.href='@Url.Action("RoleCreate", "Admin")'" />
+        <button class="waves-effect waves-light btn blue lighten-1" value="Create Role" onclick="location.href='@Url.Action("RoleCreate", "Admin")'">Crear</button>
         <br />
     </div>
-</fieldset>
-<br />
-@Html.ActionLink("Go to FunTour", "Index", "Admin")
+
+    <br />
+
+</div>

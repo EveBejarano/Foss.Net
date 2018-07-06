@@ -1,29 +1,34 @@
 ﻿@model FunTourDataLayer.Reservation.TravelPackage
-
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<div class="container">
+    <h3>Editar</h3>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>TravelPackage</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id_TravelPackage)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        <div class="form-horizontal">
+            <h4>TravelPackage</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id_TravelPackage)
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="waves-effect waves-light btn blue lighten-1">Guardar</button>
+                </div>
             </div>
         </div>
+    }
+    <br/>
+    <div>
+        @Html.ActionLink("Volver a la lista", "Index")
     </div>
-}
-
-<div>
-    @Html.ActionLink("Volver al Menú", "Index")
+    <br/>
 </div>

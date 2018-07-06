@@ -8,6 +8,16 @@ div.navbar-fixed.general {
     border: #f4f4f4 3px solid !important;
 }
 
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
 .section-follow .fa-4x {
     margin: 5px 10px;
 }

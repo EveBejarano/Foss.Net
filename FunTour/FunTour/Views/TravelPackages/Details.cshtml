@@ -1,18 +1,21 @@
 ﻿@model FunTourDataLayer.Reservation.TravelPackage
-
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="container">
+    <h3>Detalles</h3>
 
-<div>
-    <h4>TravelPackage</h4>
-    <hr />
-    <dl class="dl-horizontal">
-    </dl>
+    <div>
+        <h4>TravelPackage</h4>
+        <hr />
+        <dl class="dl-horizontal"></dl>
+    </div>
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Id_TravelPackage }) |
+        @Html.ActionLink("Volver a la lista", "Index")
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id_Package }) |
-    @Html.ActionLink("Volver al Menú", "Index")
-</p>
