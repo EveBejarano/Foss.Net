@@ -21,12 +21,12 @@ namespace Flights.Models
             this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
-        public System.Data.Entity.DbSet<Flights.Models.Destination> Destinations { get; set; }
+        public DbSet<Destination> Destinations { get; set; }
 
-        public System.Data.Entity.DbSet<Flights.Models.FlightPlace> FlightPlaces { get; set; }
+        public DbSet<FlightPlace> FlightPlaces { get; set; }
 
-        public System.Data.Entity.DbSet<Flights.Models.CommercialFlight> CommercialFlights { get; set; }
+        public DbSet<CommercialFlight> CommercialFlights { get; set; }
 
-        public System.Data.Entity.DbSet<Flights.Models.Plane> Planes { get; set; }
+        public DbSet<Plane> Planes { get; set; }
     }
 }

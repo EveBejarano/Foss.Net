@@ -11,11 +11,10 @@
             $.ajax({
                 url: "/TravelPackages/AddPlacesReturn",
                 type: "GET",
-                data: _parameters
-                //    success:
-                //        //function (data, textStatus, jqXHR) {
-                //        //$('#PermissionsTable').html(data);
-                //        //$('#PermissionId').val("");
-                //    //}
+                data: _parameters,
+                    success:
+                    function redirect(){
+                        location.href = "http://localhost:60195/TravelPackages/AddServicesToTravel/?idTravelPackage="+ _packageId;
+                        }
             });
         };

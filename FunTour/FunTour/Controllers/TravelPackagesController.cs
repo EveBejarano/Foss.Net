@@ -122,7 +122,7 @@ namespace PruebaUsers.Controllers
             return View();
         }
 
-        public ActionResult AddPlacesReturn(int ToCityId, int FromCityId, int TravelPackageId)
+        public void AddPlacesReturn(int ToCityId, int FromCityId, int TravelPackageId)
         {
 
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPlace, ToPlace").FirstOrDefault();
@@ -145,18 +145,19 @@ namespace PruebaUsers.Controllers
             };
 
 
-            if (travelPackage.FromPlace != null && travelPackage.ToPlace != null && travelPackage.ToPlace != travelPackage.FromPlace)
-            {
-                return RedirectToAction(AddServicesToTravelString, routeValues: new{ idTravelPackage= travelPackage.Id_TravelPackage});
-            }
-            return RedirectToAction(AddPlacesString, routeValues: travelPackageViewModel); ;
+            //if (travelPackage.FromPlace != null && travelPackage.ToPlace != null && travelPackage.ToPlace != travelPackage.FromPlace)
+            //{
+            //    return RedirectToAction(AddServicesToTravelString, routeValues: travelPackageViewModel);
+            ////}
+            //return RedirectToAction(AddPlacesString, routeValues: travelPackageViewModel); ;
         }
 
 
         #endregion
 
         #region Bus&Flights
-
+        //[HttpGet]
+        //[ValidateAntiForgeryToken]
         public ActionResult AddServicesToTravel(int idTravelPackage)
         {
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == idTravelPackage, includeProperties: "FromPlace, ToPlace").FirstOrDefault();
@@ -194,6 +195,7 @@ namespace PruebaUsers.Controllers
             }
 
             return View(travelPackageViewModel);
+            
         }
 
         public ActionResult AddServicesToTravelReturn(int TravelPackageId)

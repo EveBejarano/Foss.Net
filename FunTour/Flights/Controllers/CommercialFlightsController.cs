@@ -22,7 +22,7 @@ namespace Flights.Controllers
         // GET: api/CommercialFlights
         public IQueryable<CommercialFlight> GetCommercialFlights()
         {
-            db.CommercialFlights.Include(b => b.From).Include(b => b.To).Include(b => b.Plane);
+            db.CommercialFlights.Include("From").Include("To").Include("Plane");
             return db.CommercialFlights;
             
         }
