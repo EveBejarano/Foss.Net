@@ -1,5 +1,8 @@
 ﻿
-@model IEnumerable<FunTour.ActualModels.UserModel>
+@model IEnumerable<FunTour.Models.UserModel>
+@{ 
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 @{
     ViewBag.Title = "RBAC Administration";
 
@@ -29,43 +32,32 @@
 </script>
 
 
-<fieldset>
-    <legend>
-        <h3>
-            System FunTour
-        </h3>
-    </legend>
-    <fieldset style="font: 100%; border: Black; border-style: solid; border-width: thin; width: 30%">
-        <legend><strong>Search Filter</strong></legend>
-        <br />
-        <div>
-            <table>
-                <tr>
-                    <td>
-                        <h3>
-                            Last Name:
-                        </h3>
-                    </td>
-                    <td>
-                        @Html.TextBox("SurnameId", string.Empty, new { style = "width:200px", maxlength = 30 })
+<div class="container">
 
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="button" value="Apply Filter" id="pbFilter" name="pbFilter" />
-                        <input type="button" value="Reset" id="pbReset" />
-                    </td>
-                </tr>
-            </table>
+
+        <h5>Filtro de Búsqueda</h5>
+
+        @Html.TextBox("SurnameId", string.Empty, new { style = "width:200px", maxlength = 30, placeholder = "Apellido" })
+
+
+        <br /><br />
+        <div class="row">
+            <div class="col s2">
+                <button class="waves-effect waves-light btn blue lighten-1" id="pbFilter" name="pbFilter">Filtrar</button>
+            </div><div class="col s2">
+                <button class="waves-effect waves-light btn red darken-1" id="pbReset">Reset</button>
+            </div>
         </div>
-    </fieldset>
+
+
+
     <br />
     <br />
     @Html.Partial("_ListUserTable", Model)
-    <br />    
+    <br />
     <div>
-        <input type="button" value="Create User" onclick="location.href='@Url.Action("UserCreate", "Admin")'" />
+        <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='@Url.Action("UserCreate","Admin")'">Crear Usuario</button>
         <br />
     </div>
-</fieldset>
+    <br /><br />
+</div>

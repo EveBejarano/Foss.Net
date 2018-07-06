@@ -1,4 +1,7 @@
-﻿@model FunTourDataLayer.Models.RoleDetails
+﻿@model FunTourDataLayer.AccountManagement.RoleDetails
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 @{
     ViewBag.Title = "Create Role";
 }
@@ -11,11 +14,12 @@
 <div class="panel">
     @using (Html.BeginForm())
     {
-        @Html.ValidationSummary(true)    
+        @Html.ValidationSummary(true)
         <fieldset>
             <legend>
                 <h3>
-                    Create Role</h3>
+                    Create Role
+                </h3>
             </legend>
             <table style='width: 100%'>
                 <tr>
@@ -32,7 +36,7 @@
                         @Html.EditorFor(model => model.IsSysAdmin)
                         @Html.ValidationMessageFor(model => model.IsSysAdmin)
                     </td>
-                </tr>           
+                </tr>
                 <tr>
                     <td style='width: 10%; font-weight: bold' class='userTable'>
                         @Html.LabelFor(model => model.RoleDescription)
@@ -40,8 +44,8 @@
                     <td style='width: 28%' class='userTable'>
                         @Html.TextBoxFor(model => model.RoleDescription, new { style = "width:450px" })
                         @Html.ValidationMessageFor(model => model.RoleDescription)
-                    </td>                    
-                </tr>        
+                    </td>
+                </tr>
             </table>
             <br />
             <input type="submit" value="Create Role" />

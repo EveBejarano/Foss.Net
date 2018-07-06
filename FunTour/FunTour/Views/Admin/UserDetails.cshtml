@@ -1,4 +1,7 @@
 ﻿@model FunTour.ActualModels.UserModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 <script type="text/javascript">
     $(document).ready(function () {
         $(":input[type='button']").button();
@@ -27,7 +30,7 @@
         </legend>
         <div class="panel" id="RolesTable">
             @Html.Partial("_ListUserRoleTable", Model)
-        </div>        
+        </div>
     </fieldset>
 }
 <div>

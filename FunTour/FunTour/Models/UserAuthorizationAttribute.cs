@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using FunTourBusinessLayer.UnitOfWorks;
 
-namespace FunTour.ActualModels
+namespace FunTour.Models
 {
     public class UserAuthorizationAttribute: AuthorizeAttribute
     {

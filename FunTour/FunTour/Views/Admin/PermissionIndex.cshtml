@@ -1,4 +1,7 @@
-﻿@model IEnumerable<FunTourDataLayer.Models.Permission>
+﻿@model IEnumerable<FunTourDataLayer.AccountManagement.Permission>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 @{
     ViewBag.Title = "Rights";
 }
@@ -9,12 +12,11 @@
 </script>
 
 
-<fieldset>
-    <legend>
-        <h3>
-            Permissions
-        </h3>
-    </legend>
+<div class="container">
+    <h3>
+        Permisos
+    </h3>
+
     <table id="PermissionTable" style="width: 90%">
         <thead>
         <th>
@@ -24,7 +26,7 @@
             Action
         </th>
         </thead>
-        @foreach (FunTourDataLayer.Models.Permission item in Model)
+        @foreach (FunTourDataLayer.AccountManagement.Permission item in Model)
         {
             <tr>
                 <td>
@@ -46,10 +48,10 @@
     </table>
     <br />
     <div>
-        <input type="button" value="Create Permission" onclick="location.href='@Url.Action("PermissionCreate", "Admin")'" />
-        <input type="button" id="importPermissions2" name="importPermissions2" value="Import Permissions" onclick="location.href='@Url.Action("PermissionsImport", "Admin")'" />
+        <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='@Url.Action("PermissionCreate", "Admin")'">Crear</button>
+        <button class="waves-effect waves-light btn blue lighten-1" id="importPermissions2" name="importPermissions2" onclick="location.href='@Url.Action("PermissionsImport", "Admin")'">Importar permisos</button>
         <br />
     </div>
-</fieldset>
-<br />
-@Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+
+    <br />
+</div>

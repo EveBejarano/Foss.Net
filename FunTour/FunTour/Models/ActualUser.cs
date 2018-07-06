@@ -4,7 +4,7 @@ using System.Linq;
 using FunTourBusinessLayer.UnitOfWorks;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace FunTour.ActualModels
+namespace FunTour.Models
 {
     public class ActualUser
     {

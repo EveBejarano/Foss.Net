@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using FunTour.ActualModels;
+using FunTour.Models;
 using FunTourBusinessLayer.UnitOfWorks;
 using FunTourDataLayer;
 using FunTourDataLayer.AccountManagement;

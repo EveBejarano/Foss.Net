@@ -7,7 +7,7 @@ using FunTourBusinessLayer.UnitOfWorks;
 using FunTourDataLayer;
 using FunTourDataLayer.AccountManagement;
 
-namespace FunTour.ActualModels
+namespace FunTour.Models
 {
     public class UserModel
     {

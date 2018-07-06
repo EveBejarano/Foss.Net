@@ -1,58 +1,63 @@
 ﻿
 @model FunTour.Models.TravelPackageViewModel
-
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 @{
     ViewBag.Title = "AddPlaces";
 }
 
 
 
+<div class="container">
+    <h3>Lugares:</h3>
 
-<h2>Lugares:</h2>
+    <fieldset>
+        <div id="FromCity">
+        </div>
+        <div>
+            <legend><strong>Agregar Ciudad de Origen</strong></legend>
 
-<fieldset>
-    <div id="FromCity">
-    </div>
-    <div>
-        <legend><strong>Agregar Ciudad de Origen</strong></legend>
-
-        @Html.HiddenFor(model => model.Id_TravelPackage)
-        <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+            @Html.HiddenFor(model => model.Id_TravelPackage)
+            <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
                                       border-width: thin; border-color: Silver; width: 740px">
-            <div class="col-md-5">
-                @Html.DropDownList("FromCities", null, string.Empty, new { style = "display:initial" })
+                <div class="col-md-5">
+                    @Html.DropDownList("FromCities", null, string.Empty, new { style = "display:initial" })
 
-            </div>
-        </fieldset>
-    </div>
-    <br />
+                </div>
+            </fieldset>
+        </div>
+        <br />
 
-    <div id="ToCity">
-    </div>
-    <div>
+        <div id="ToCity">
+        </div>
+        <div>
 
-        <legend><strong>Agregar Ciudad de Destino</strong></legend>
+            <legend><strong>Agregar Ciudad de Destino</strong></legend>
 
 
-        @Html.HiddenFor(model => model.Id_TravelPackage)
-        <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+            @Html.HiddenFor(model => model.Id_TravelPackage)
+            <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
                                       border-width: thin; border-color: Silver; width: 740px">
 
-            @Html.DropDownList("ToCities", null, string.Empty, new { style = "display:initial" })
+                @Html.DropDownList("ToCities", null, string.Empty, new { style = "display:initial" })
 
 
-        </fieldset>
+            </fieldset>
 
+        </div>
+        <br />
+
+
+    </fieldset>
+
+
+    <br/>
+    <button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddCities()">Guardar y Continuar</button>
+    <br/>
+    @Html.ActionLink("Volver Atrás", "Create", new { id = ViewBag.TravelPackage.Id_TravelPackage })
+    <br/>
+    <div>
+        @Html.ActionLink("Volver a la lista", "Index")
     </div>
-    <br />
-
-
-</fieldset>
-
-
-<button type="submit" onclick="AddCities()"> "Guardar y Continuar"</button>
-@Html.ActionLink("Volver Atrás", "Create", new { id = ViewBag.TravelPackage.Id_TravelPackage })
-
-<div>
-    @Html.ActionLink("Volver al Inicio...", "Index")
 </div>

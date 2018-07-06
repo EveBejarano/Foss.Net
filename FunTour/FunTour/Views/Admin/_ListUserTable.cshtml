@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FunTour.ActualModels.UserModel>
+﻿@model IEnumerable<FunTour.Models.UserModel>
 <script type="text/javascript">
 	$(document).ready(function () {
 		//Unbind the original image 'href' set by the controller...
@@ -79,9 +79,13 @@
                 <td>
                     <center>
                         <a href="@Url.Action("UserEdit", "Admin", new { UserName = item.UserModelName })" id=@item.UserModelName>
-                            <img src="@Url.Content("~/Content/images/pen.png")" style="float: centre" />
+                            <i class="material-icons">create</i>
+
                         </a>
-                        <img class="deleteUser" src="@Url.Content("~/Content/images/bin.png")" style="float: centre" />
+                        <i class="material-icons">
+                            delete_forever
+                        </i>
+
                     </center>
                 </td>
             </tr>
