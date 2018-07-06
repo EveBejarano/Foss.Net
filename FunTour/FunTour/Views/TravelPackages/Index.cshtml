@@ -14,18 +14,47 @@
     </p>
     <table class="table">
         <tr>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.PackageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FromDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FromPlace)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ToPlace)
+            </th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.Id_TravelPackage }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.Id_TravelPackage }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id_TravelPackage })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PackageName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FromPlace.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToPlace.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.Id_TravelPackage }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.Id_TravelPackage }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id_TravelPackage })
+            </td>
+        </tr>
         }
 
     </table>
