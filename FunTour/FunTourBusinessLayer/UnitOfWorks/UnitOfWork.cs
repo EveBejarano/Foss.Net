@@ -23,6 +23,7 @@ namespace FunTourBusinessLayer.UnitOfWorks
         private GenericRepository<Flight> flightRepository;
         private GenericRepository<Bus> busRepository;
         private GenericRepository<Event> eventRepository;
+        private GenericRepository<Reservation> reservationRepository;
 
         private GenericRepository<City> cityRepository;
         private GenericRepository<FlightCompany> flightCompanyRepository;
@@ -245,6 +246,18 @@ namespace FunTourBusinessLayer.UnitOfWorks
                     this.busReservedSeatRepository = new GenericRepository<BusReservedSeat>(context);
                 }
                 return busReservedSeatRepository;
+            }
+        }
+
+        public GenericRepository<Reservation> ReservationRepository
+        {
+            get
+            {
+                if (this.reservationRepository == null)
+                {
+                    this.reservationRepository = new GenericRepository<Reservation>(context);
+                }
+                return reservationRepository;
             }
         }
 

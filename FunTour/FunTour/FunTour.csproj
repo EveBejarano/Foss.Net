@@ -383,6 +383,10 @@
     </Content>
     <Content Include="Views\TravelPackages\AddServicesToTravel.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Details.cshtml" />
+    <Content Include="Views\index.cshtlm" />
+    <Content Include="Views\Reservaton\Details.cshtml" />
+    <None Include="Views\Reservaton\index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -403,6 +407,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotAuthorizedUserController.cs" />
+    <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\RoleDetailsController.cs" />
     <Compile Include="Controllers\TravelPackagesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -411,6 +416,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ActualUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\reservationViewModel.cs" />
     <Compile Include="Models\TravelPackageViewModel.cs" />
     <Compile Include="Models\UserAuthorizationAttribute.cs" />
     <Compile Include="Models\UserHttpContext.cs" />
