@@ -1,0 +1,37 @@
+@model IEnumerable<FunTourDataLayer.Reservation.Reservation>
+
+@{
+	ViewBag.Title="Index";
+}
+
+<div class="container">
+    <h2> Reservas </h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TravelPackage.PackageName)
+            </th>
+            <th>
+                <p>¿Pagado?</p>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TravelPackage.PackageName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paid)
+                </td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { id = item.Id_Reservation }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.Id_Reservation }) |
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
