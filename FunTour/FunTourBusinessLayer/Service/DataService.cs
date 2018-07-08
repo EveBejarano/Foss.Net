@@ -10,6 +10,7 @@ using FunTourDataLayer.Hotel;
 using FunTourDataLayer.Locality;
 using FunTourDataLayer.Reservation;
 using FunTourDataLayer.Services;
+using FunTourDataLayer.Payment;
 
 namespace FunTourBusinessLayer.Service
 {
@@ -119,6 +120,31 @@ namespace FunTourBusinessLayer.Service
         }
 
         #endregion
+
+	#region Payments
+	public bool doPayment( string creditCard, string date, string code, string name) 
+	{
+		var GetPaymentRequest = new GetPaymentRequest
+		{
+			Name = name,
+			creditCardNumber = creditCard,
+			expirationDate = date,
+			securityNumber = code
+		};
+
+		PaymentService PaymentService = new PaymentService
+		{
+			Name = "Payments",
+			APIURLToPay = "http://localhost:3040/payments"
+		};
+
+		var consumerPayment = new Consumer<PaymentResponse>();
+
+		GetPaymentResponse getPaymentRespons = consumerPayment.ReLoadEntities(PaymentService.APIURLToPay, "POST", GetPaymentRequest).Result; 
+		
+		return getPaymentRespons.stateOfPayment;
+	}
+	#endregion
 
         #region Buses
         public IEnumerable<Bus> GetBuses(DateTime toDay, City fromPlace, City toPlace)
