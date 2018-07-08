@@ -61,14 +61,14 @@ namespace PruebaUsers.Controllers
 					EventName = travelpackage.Event.ReservedTicket.FirstOrDefault() 
 				};
 			};
-
 			return View(reservationViewModel);
 		}
 		
 		public ActionResult PayReservation(int ReservationID)
 		{
+			bool state;
 			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationID).FirstOrDefault();
-			reservation.Paid = true;
+			reservation.Paid = state;
 			Service.UnitOfWork.ReservationRepository.Update(reservation);
 			Service.UnitOfWork.Save();
             return View(reservation);
@@ -89,7 +89,6 @@ namespace PruebaUsers.Controllers
 				Client = reservationViewModel.client,
 				ReservedRoom = reservationViewModel.reservedRoom,
 				ReservedSeat = reservationViewModel.reservedSeat,
-				//BusReservedSeat = reservationViewModel.reservedSeat,
 				ReservedTicket = reservationViewModel.ticket,
 				Paid = reservationViewModel.Pagado,
 
@@ -99,7 +98,6 @@ namespace PruebaUsers.Controllers
 			{
 				Service.UnitOfWork.ReservationRepository.Insert(reservation);
 				Service.UnitOfWork.Save();
-
 			}
 
 			return View(reservation);
