@@ -44,6 +44,7 @@ namespace PruebaUsers.Controllers
 				var reservationViewModel = new ReservationViewModel
 				{
 					Id_Reservation = travelpackage.Id_TravelPackage,
+					UserName = User.Identity.Name,
 					HotelName = travelpackage.Hotel.Name,
 					RoomNumber = travelpackage.Hotel.ReservedRoom.FirstOrDefault().Id_ReservedRoom,
 					SeatNumber = travelpackage.ToGoFlight.ReservedSeat.FirstOrDefault().Id_ReservedSeat,
@@ -53,9 +54,10 @@ namespace PruebaUsers.Controllers
 				var reservationViewModel = new ReservationViewModel
 				{
 					Id_Reservation = travelpackage.Id_TravelPackage,
+					UserName = User.Identity.Name,
 					HotelName = travelpackage.Hotel.Name,
 					RoomNumber = travelpackage.Hotel.ReservedRoom.FirstOrDefault().Id_ReservedRoom,
-					SeatNumber = travelpackage.ToGoBus.ReservedSeat.FirstOrDefault().Id_ReservedSeat,
+					SeatNumber = travelpackage.ToGoBus.BusReservedSeat.FirstOrDefault().Id_BusReservedSeat,
 					EventName = travelpackage.Event.ReservedTicket.FirstOrDefault() 
 				};
 			};
