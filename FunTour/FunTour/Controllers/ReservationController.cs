@@ -44,21 +44,13 @@ namespace PruebaUsers.Controllers
 				var reservationViewModel = new ReservationViewModel
 				{
 					Id_Reservation = travelpackage.Id_TravelPackage,
-					UserName = User.Identity.Name,
-					HotelName = travelpackage.Hotel.Name,
-					RoomNumber = travelpackage.Hotel.ReservedRoom.FirstOrDefault().Id_ReservedRoom,
-					SeatNumber = travelpackage.ToGoFlight.ReservedSeat.FirstOrDefault().Id_ReservedSeat,
-					EventName = travelpackage.Event.ReservedTicket.FirstOrDefault() 
+					UserName = User.Identity.Name
 				};
 			} else {
 				var reservationViewModel = new ReservationViewModel
 				{
 					Id_Reservation = travelpackage.Id_TravelPackage,
 					UserName = User.Identity.Name,
-					HotelName = travelpackage.Hotel.Name,
-					RoomNumber = travelpackage.Hotel.ReservedRoom.FirstOrDefault().Id_ReservedRoom,
-					SeatNumber = travelpackage.ToGoBus.BusReservedSeat.FirstOrDefault().Id_BusReservedSeat,
-					EventName = travelpackage.Event.ReservedTicket.FirstOrDefault() 
 				};
 			};
 			return View(reservationViewModel);
@@ -71,9 +63,9 @@ namespace PruebaUsers.Controllers
 			reservation.Paid = state;
 			Service.UnitOfWork.ReservationRepository.Update(reservation);
 			Service.UnitOfWork.Save();
-            return View(reservation);
-            // No tengo idea como se Pagaria
-        }
+        		return View(reservation);
+        		// No tengo idea como se Pagaria
+        		}
 
 
 		// POST: Reservation/Create
@@ -83,13 +75,9 @@ namespace PruebaUsers.Controllers
 		{
 			var reservation = new Reservation
 			{
-				Id_Reservation = reservationViewModel.Id_Reservation,
 				Id_TravelPackage = reservationViewModel.travelPackage.Id_TravelPackage,
 				TravelPackage = reservationViewModel.travelPackage,
 				Client = reservationViewModel.client,
-				ReservedRoom = reservationViewModel.reservedRoom,
-				ReservedSeat = reservationViewModel.reservedSeat,
-				ReservedTicket = reservationViewModel.ticket,
 				Paid = reservationViewModel.Pagado,
 
 			};

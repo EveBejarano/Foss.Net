@@ -14,10 +14,6 @@ namespace FunTourDataLayer.Reservation
         public int Id_TravelPackage { get; set; }
         public virtual TravelPackage TravelPackage { get; set; }
         public virtual UserDetails Client { get; set; }
-        public virtual ReservedRoom ReservedRoom { get; set; }
-        public virtual ReservedSeat ReservedSeat { get; set; }
-        public virtual BusReservedSeat BusReservedSeat { get; set; }
-        public virtual ReservedTicket ReservedTicket { get; set; }
         public bool Paid { get; set; }
     }
 }
