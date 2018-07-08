@@ -38,16 +38,26 @@ namespace PruebaUsers.Controllers
 		[HttpGet]
 		public ActionResult Create(int id)
 		{
-			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == id).FirstOrDefault();
-			var reservationViewModel = new ReservationViewModel
+			var travelpackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id).FirstOrDefault();
+			if (travelpackage.FlightOrBus)
 			{
-				Id_Reservation = reservation.Id_Reservation,
-				UserName = reservation.Client.UserName,
-				HotelName = reservation.ReservedRoom.Hotel.Name,
-				RoomNumber = reservation.ReservedRoom.Id_ReservedRoom,
-				SeatNumber = reservation.ReservedSeat.Id_ReservedSeat,
-				EventName = reservation.ReservedTicket.Event.Name,
-				
+				var reservationViewModel = new ReservationViewModel
+				{
+					Id_Reservation = travelpackage.Id_TravelPackage,
+					HotelName = travelpackage.Hotel.Name,
+					RoomNumber = travelpackage.Hotel.ReservedRoom.FirstOrDefault().Id_ReservedRoom,
+					SeatNumber = travelpackage.ToGoFlight.ReservedSeat.FirstOrDefault().Id_ReservedSeat,
+					EventName = travelpackage.Event.ReservedTicket.FirstOrDefault() 
+				};
+			} else {
+				var reservationViewModel = new ReservationViewModel
+				{
+					Id_Reservation = travelpackage.Id_TravelPackage,
+					HotelName = travelpackage.Hotel.Name,
+					RoomNumber = travelpackage.Hotel.ReservedRoom.FirstOrDefault().Id_ReservedRoom,
+					SeatNumber = travelpackage.ToGoBus.ReservedSeat.FirstOrDefault().Id_ReservedSeat,
+					EventName = travelpackage.Event.ReservedTicket.FirstOrDefault() 
+				};
 			};
 
 			return View(reservationViewModel);
