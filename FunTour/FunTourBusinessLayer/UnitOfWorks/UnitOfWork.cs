@@ -43,7 +43,8 @@ namespace FunTourBusinessLayer.UnitOfWorks
         private GenericRepository<ReservedTicket> reservedTicketRepository { get; set; }
         private GenericRepository<ReservedRoom> reservedRoomRepository { get; set; }
         private GenericRepository<BusReservedSeat> busReservedSeatRepository { get; set; }
-        private GenericRepository<ReservedSeat> reservedSeatRepository { get; set; }
+        private GenericRepository<FlightReservedSeat> flightreservedSeatRepository { get; set; }
+
 
         public RolesRepository<IdentityRole,RoleDetails> RolesRepository
         {
@@ -335,16 +336,16 @@ namespace FunTourBusinessLayer.UnitOfWorks
             }
         }
 
-        public GenericRepository<ReservedSeat> ReservedSeatRepository
+        public GenericRepository<FlightReservedSeat> ReservedSeatRepository
         {
             get
             {
 
-                if (this.reservedSeatRepository == null)
+                if (this.flightreservedSeatRepository == null)
                 {
-                    this.reservedSeatRepository = new GenericRepository<ReservedSeat>(context);
+                    this.flightreservedSeatRepository = new GenericRepository<FlightReservedSeat>(context);
                 }
-                return reservedSeatRepository;
+                return flightreservedSeatRepository;
             }
         }
 

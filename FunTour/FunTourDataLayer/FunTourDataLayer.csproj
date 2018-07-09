@@ -75,14 +75,15 @@
     <Compile Include="Locality\City.cs" />
     <Compile Include="Locality\Country.cs" />
     <Compile Include="Locality\Province.cs" />
-    <Compile Include="Migrations\201807091840120_Funtour.cs" />
-    <Compile Include="Migrations\201807091840120_Funtour.Designer.cs">
-      <DependentUpon>201807091840120_Funtour.cs</DependentUpon>
+    <Compile Include="Migrations\201807092107149_Migration1.cs" />
+    <Compile Include="Migrations\201807092107149_Migration1.Designer.cs">
+      <DependentUpon>201807092107149_Migration1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation\BusReservedSeat.cs" />
+    <Compile Include="Reservation\FlightReservedSeat.cs" />
     <Compile Include="Reservation\Reservation.cs" />
     <Compile Include="Reservation\ReservedRoom.cs" />
     <Compile Include="Reservation\ReservedSeat.cs" />
@@ -95,8 +96,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807091840120_Funtour.resx">
-      <DependentUpon>201807091840120_Funtour.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807092107149_Migration1.resx">
+      <DependentUpon>201807092107149_Migration1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

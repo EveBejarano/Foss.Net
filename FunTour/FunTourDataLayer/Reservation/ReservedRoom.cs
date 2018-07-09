@@ -9,8 +9,10 @@ namespace FunTourDataLayer.Reservation
         public int Id_ReservedRoom { get; set; }
         public int HotelID { get; set; }
         public int BookingID { get; set; }
-
+        public bool Available { get; set; }
         public virtual Hotel.Hotel Hotel { get; set; }
         public virtual Reservation Reservation { get; set; }
+
+        public virtual TravelPackage TravelPackage { get; set; }
     }
 }

@@ -49,6 +49,10 @@ namespace FunTourDataLayer.Reservation
         public virtual Bus ToBackBus { get; set; }
         public virtual Event Event { get; set; }
 
+        public IList<ReservedSeat> ReservedSeats { get; set; }
+        public IList<ReservedRoom> ReservedRooms { get; set; }
+        public IList<ReservedTicket> ReservedTickets { get; set; }
+
         public void SetReservationAmount()
         {
             this.ReservationAmount = this.Hotel.NotReservedRooms;

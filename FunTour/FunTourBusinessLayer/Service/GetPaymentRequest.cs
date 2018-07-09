@@ -2,7 +2,7 @@ using System;
 
 namespace FunTourBusinessLayer.Service 
 {
-	internal class GetPaymentRequest
+	public class GetPaymentRequest
 	{
 		public string Name {get; set; }
 		public string CreditCardNumber { get; set; }

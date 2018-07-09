@@ -332,6 +332,7 @@ namespace PruebaUsers.Controllers
                 Service.SetToGoBusReservationToNewTravelPackage(travelPackage);
                 Service.SetToBackBusReservationToNewTravelPackage(travelPackage);
             }
+            
             return RedirectToAction("Index");
         }
 

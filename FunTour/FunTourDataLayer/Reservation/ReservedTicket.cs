@@ -10,8 +10,10 @@ namespace FunTourDataLayer.Reservation
         public int Id_ReservedTicket { get; set; }
 
         public int Id_Event { get; set; }
-
+        public bool Available { get; set; }
         public virtual Reservation Reservation { get; set; }
         public virtual Event Event { get; set; }
+
+        public virtual TravelPackage TravelPackage { get; set; }
     }
 }
