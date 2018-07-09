@@ -39,19 +39,11 @@ namespace PruebaUsers.Controllers
 		public ActionResult Create(int id)
 		{
 			var travelpackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id).FirstOrDefault();
-			if (travelpackage.FlightOrBus)
+			ReservationViewModel reservationViewModel;
+			reservationViewModel = new ReservationViewModel
 			{
-				var reservationViewModel = new ReservationViewModel
-				{
 					Id_Reservation = travelpackage.Id_TravelPackage,
 					UserName = User.Identity.Name
-				};
-			} else {
-				var reservationViewModel = new ReservationViewModel
-				{
-					Id_Reservation = travelpackage.Id_TravelPackage,
-					UserName = User.Identity.Name,
-				};
 			};
 			return View(reservationViewModel);
 		}
