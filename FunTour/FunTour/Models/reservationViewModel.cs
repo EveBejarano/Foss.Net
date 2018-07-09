@@ -38,10 +38,6 @@ namespace FunTour.Models {
 		public virtual TravelPackage travelPackage { get; set; }
 		
 		public virtual UserDetails client { get; set; } 
-		public virtual ReservedRoom reservedRoom { get; set; }
-		public virtual ReservedSeat reservedSeat { get; set; } 
-		public virtual BusReservedSeat busReservedSeat { get; set; }
-		public virtual ReservedTicket ticket { get; set; }
 		
 
 	}

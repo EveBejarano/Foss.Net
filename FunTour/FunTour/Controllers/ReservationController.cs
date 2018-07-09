@@ -38,30 +38,34 @@ namespace PruebaUsers.Controllers
 		[HttpGet]
 		public ActionResult Create(int id)
 		{
-			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == id).FirstOrDefault();
-			var reservationViewModel = new ReservationViewModel
+			var travelpackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id).FirstOrDefault();
+			if (travelpackage.FlightOrBus)
 			{
-				Id_Reservation = reservation.Id_Reservation,
-				UserName = reservation.Client.UserName,
-				HotelName = reservation.ReservedRoom.Hotel.Name,
-				RoomNumber = reservation.ReservedRoom.Id_ReservedRoom,
-				SeatNumber = reservation.ReservedSeat.Id_ReservedSeat,
-				EventName = reservation.ReservedTicket.Event.Name,
-				
+				var reservationViewModel = new ReservationViewModel
+				{
+					Id_Reservation = travelpackage.Id_TravelPackage,
+					UserName = User.Identity.Name
+				};
+			} else {
+				var reservationViewModel = new ReservationViewModel
+				{
+					Id_Reservation = travelpackage.Id_TravelPackage,
+					UserName = User.Identity.Name,
+				};
 			};
-
 			return View(reservationViewModel);
 		}
 		
 		public ActionResult PayReservation(int ReservationID)
 		{
+			bool state;
 			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationID).FirstOrDefault();
-			reservation.Paid = true;
+			reservation.Paid = state;
 			Service.UnitOfWork.ReservationRepository.Update(reservation);
 			Service.UnitOfWork.Save();
-            return View(reservation);
-            // No tengo idea como se Pagaria
-        }
+        		return View(reservation);
+        		// No tengo idea como se Pagaria
+        		}
 
 
 		// POST: Reservation/Create
@@ -71,14 +75,9 @@ namespace PruebaUsers.Controllers
 		{
 			var reservation = new Reservation
 			{
-				Id_Reservation = reservationViewModel.Id_Reservation,
 				Id_TravelPackage = reservationViewModel.travelPackage.Id_TravelPackage,
 				TravelPackage = reservationViewModel.travelPackage,
 				Client = reservationViewModel.client,
-				ReservedRoom = reservationViewModel.reservedRoom,
-				ReservedSeat = reservationViewModel.reservedSeat,
-				//BusReservedSeat = reservationViewModel.reservedSeat,
-				ReservedTicket = reservationViewModel.ticket,
 				Paid = reservationViewModel.Pagado,
 
 			};
@@ -87,7 +86,6 @@ namespace PruebaUsers.Controllers
 			{
 				Service.UnitOfWork.ReservationRepository.Insert(reservation);
 				Service.UnitOfWork.Save();
-
 			}
 
 			return View(reservation);

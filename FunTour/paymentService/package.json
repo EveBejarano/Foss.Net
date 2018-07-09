@@ -1,0 +1,24 @@
+{
+  "name": "paymentservice",
+  "version": "1.0.0",
+  "description": "PaymentService for Fantastic Tour Project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "Payment",
+    "Credit",
+    "Card",
+    "Fantastic",
+    "Tour"
+  ],
+  "author": "Wenceslao1207",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.1",
+    "nodemon": "^1.17.5"
+  }
+}

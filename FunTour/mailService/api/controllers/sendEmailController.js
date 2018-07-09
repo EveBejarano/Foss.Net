@@ -29,7 +29,7 @@ exports.sendPublicity = function(req) {
 			require('deasync').runLoopOnce();
 		}
 		
-		var text = fs.readFileSync('../FunTour/Publicity/publicidad.html').toString('utf-8');
+		var text = fs.readFileSync('../FunTour/Newsletter/publicidad.html').toString('utf-8');
 		
 		var mailOptions = {
 			from: userAccount,

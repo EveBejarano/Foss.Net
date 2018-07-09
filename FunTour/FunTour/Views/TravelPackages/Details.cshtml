@@ -13,6 +13,42 @@
         <h4>TravelPackage</h4>
         <hr />
         <dl class="dl-horizontal"></dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.PackageName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PackageName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FromDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FromDay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ToDay)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ToDay)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FromPlace)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FromPlace.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ToPlace)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ToPlace.Name)
+        </dd>
     </div>
     <p>
         @Html.ActionLink("Editar", "Edit", new { id = Model.Id_TravelPackage }) |
