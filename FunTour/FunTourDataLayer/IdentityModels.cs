@@ -78,23 +78,22 @@ namespace FunTourDataLayer
                    .MapLeftKey("Id_Permission")
                    .MapRightKey("Id_Role")
                 );
-            modelBuilder.Entity<Reservation.Reservation>()
-                .HasOptional(s => s.BusReservedSeat)
-                .WithRequired(a => a.Reservation);
+            modelBuilder.Entity<Reservation.BusReservedSeat>()
+                .HasOptional(a => a.Reservation)
+                .WithRequired(a=> a.BusReservedSeat);
+
+            modelBuilder.Entity<Reservation.ReservedRoom>()
+                .HasOptional(a => a.Reservation)
+                .WithRequired(a => a.ReservedRoom);
 
 
-            modelBuilder.Entity<Reservation.Reservation>()
-                .HasOptional(s => s.ReservedSeat)
-                .WithRequired(a => a.Reservation);
+            modelBuilder.Entity<Reservation.ReservedSeat>()
+                .HasOptional(a => a.Reservation)
+                .WithRequired(a => a.ReservedSeat);
 
-
-            modelBuilder.Entity<Reservation.Reservation>()
-                .HasOptional(s => s.ReservedRoom)
-                .WithRequired(a => a.Reservation);
-
-            modelBuilder.Entity<Reservation.Reservation>()
-                .HasOptional(s => s.ReservedTicket)
-                .WithRequired(a => a.Reservation);
+            modelBuilder.Entity<Reservation.ReservedTicket>()
+                .HasOptional(a => a.Reservation)
+                .WithRequired(a => a.ReservedTicket);
 
 
         }

@@ -10,7 +10,7 @@ using FunTourDataLayer.Hotel;
 using FunTourDataLayer.Locality;
 using FunTourDataLayer.Reservation;
 using FunTourDataLayer.Services;
-using FunTourDataLayer.Payment;
+
 
 namespace FunTourBusinessLayer.Service
 {
@@ -46,7 +46,7 @@ namespace FunTourBusinessLayer.Service
 
             var consumerFlights = new Consumer<List<GetFlightResponse>>();
 
-            List<GetFlightResponse> getFlightResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToGetFlights, "POST", getFlightRequest).Result;
+            List<GetFlightResponse> getFlightResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToGetFlights, "GET", getFlightRequest).Result;
             
 
             foreach (var item in getFlightResponse)
@@ -119,11 +119,16 @@ namespace FunTourBusinessLayer.Service
                 SeatCount = travelPackage.ReservationAmount
             };
 
-            FlightCompany FlightCompany = UnitOfWork.FlightCompanyRepository.GetByID(travelPackage.ToGoFlight.Id_Flight);
+            //FlightCompany FlightCompany = UnitOfWork.FlightCompanyRepository.GetByID(travelPackage.ToGoFlight.Id_Flight);
+
+            FlightCompany FlightCompany = new FlightCompany
+            {
+                APIURLToReserveSeatsToTravelPackage = "http://demo4736431.mockable.io/ReserveFlightSeat"
+            };
 
             var consumerFlights = new Consumer<List<FlightReservationsToTravelPackageResponse>>();
 
-            List<FlightReservationsToTravelPackageResponse> getSeatsResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToReserveSeatsToTravelPackage, "POST", reservationFlightRequest).Result;
+            List<FlightReservationsToTravelPackageResponse> getSeatsResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToReserveSeatsToTravelPackage, "GET", reservationFlightRequest).Result;
 
             foreach (var item in getSeatsResponse)
             {
@@ -153,7 +158,7 @@ namespace FunTourBusinessLayer.Service
 
             var consumerFlights = new Consumer<List<FlightReservationsToTravelPackageResponse>>();
 
-            List<FlightReservationsToTravelPackageResponse> getSeatsResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToReserveSeatsToTravelPackage, "POST", reservationFlightRequest).Result;
+            List<FlightReservationsToTravelPackageResponse> getSeatsResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToReserveSeatsToTravelPackage, "GET", reservationFlightRequest).Result;
 
             foreach (var item in getSeatsResponse)
             {
@@ -172,30 +177,37 @@ namespace FunTourBusinessLayer.Service
 
         #endregion
 
-	#region Payments
-	public bool doPayment( string creditCard, string date, string code, string name) 
-	{
-		var GetPaymentRequest = new GetPaymentRequest
-		{
-			Name = name,
-			creditCardNumber = creditCard,
-			expirationDate = date,
-			securityNumber = code
-		};
+        #region Payments
+        public bool doPayment(string creditCard, string date, string code, string name)
+        {
+            var GetPaymentRequest = new GetPaymentRequest
+            {
+                Name = name,
+                creditCardNumber = creditCard,
+                expirationDate = date,
+                securityNumber = code
+            };
 
-		PaymentService PaymentService = new PaymentService
-		{
-			Name = "Payments",
-			APIURLToPay = "http://localhost:3040/payments"
-		};
+            PaymentService PaymentService = new PaymentService
+            {
+                Name = "Payments",
+                APIURLToPay = "http://localhost:3040/payments"
+            };
 
-		var consumerPayment = new Consumer<PaymentResponse>();
+            var consumerPayment = new Consumer<GetPaymentResponse>();
 
-		GetPaymentResponse getPaymentRespons = consumerPayment.ReLoadEntities(PaymentService.APIURLToPay, "POST", GetPaymentRequest).Result; 
-		
-		return getPaymentRespons.stateOfPayment;
-	}
-	#endregion
+            GetPaymentResponse getPaymentRespons = consumerPayment.ReLoadEntities(PaymentService.APIURLToPay, "GET", GetPaymentRequest).Result;
+
+            return getPaymentRespons.stateOfPayment;
+        }
+
+        public class PaymentService
+        {
+            public string Name { get; set; }
+            public string APIURLToPay { get; set; }
+        }
+
+        #endregion
 
         #region Buses
         public IEnumerable<AuxBus> GetBuses(DateTime toDay, City fromPlace, City toPlace)
@@ -297,11 +309,16 @@ namespace FunTourBusinessLayer.Service
                 SeatCount = travelPackage.ReservationAmount
             };
 
-            BusCompany BusCompany = UnitOfWork.BusCompanyRepository.GetByID(travelPackage.ToGoBus.IdAPI_Bus);
+            //BusCompany BusCompany = UnitOfWork.BusCompanyRepository.GetByID(travelPackage.ToGoBus.IdAPI_Bus);
+
+            BusCompany BusCompany = new BusCompany
+            {
+                APIURLToReserveSeatToTravelPackage = "http://demo4736431.mockable.io/ReserverBusSeat"
+            };
 
             var consumerBuss = new Consumer<List<BusReservationsToTravelPackageResponse>>();
 
-            List<BusReservationsToTravelPackageResponse> getSeatsResponse = consumerBuss.ReLoadEntities(BusCompany.APIURLToReserveSeatToTravelPackage, "POST", reservationBusRequest).Result;
+            List<BusReservationsToTravelPackageResponse> getSeatsResponse = consumerBuss.ReLoadEntities(BusCompany.APIURLToReserveSeatToTravelPackage, "GET", reservationBusRequest).Result;
 
             foreach (var item in getSeatsResponse)
             {
@@ -332,7 +349,7 @@ namespace FunTourBusinessLayer.Service
 
             var consumerBuss = new Consumer<List<BusReservationsToTravelPackageResponse>>();
 
-            List<BusReservationsToTravelPackageResponse> getSeatsResponse = consumerBuss.ReLoadEntities(BusCompany.APIURLToReserveSeatToTravelPackage, "POST", reservationBusRequest).Result;
+            List<BusReservationsToTravelPackageResponse> getSeatsResponse = consumerBuss.ReLoadEntities(BusCompany.APIURLToReserveSeatToTravelPackage, "GET", reservationBusRequest).Result;
 
             foreach (var item in getSeatsResponse)
             {
@@ -443,11 +460,14 @@ namespace FunTourBusinessLayer.Service
 
             };
 
-            HotelCompany HotelsCompany = UnitOfWork.HotelCompanyRepository.GetByID(travelPackage.Hotel.Id_Hotel);
-
+            //HotelCompany HotelsCompany = UnitOfWork.HotelCompanyRepository.GetByID(travelPackage.Hotel.Id_Hotel);
+            HotelCompany HotelsCompany = new HotelCompany
+            {
+                APIURLToReserveRoomsToTravelPackage = "http://demo4736431.mockable.io/ReserveRoom"
+            };
             var consumerHotels = new Consumer<List<SetReservationsToTravelPackageResponse>>();
 
-            List<SetReservationsToTravelPackageResponse> getBookingsResponse = consumerHotels.ReLoadEntities(HotelsCompany.APIURLToReserveRoomsToTravelPackage, "POST", SetReservationRequest).Result;
+            List<SetReservationsToTravelPackageResponse> getBookingsResponse = consumerHotels.ReLoadEntities(HotelsCompany.APIURLToReserveRoomsToTravelPackage, "GET", SetReservationRequest).Result;
 
             foreach (var item in getBookingsResponse)
             {
@@ -457,9 +477,8 @@ namespace FunTourBusinessLayer.Service
                     BookingID = item.BookingID,
                     Hotel = UnitOfWork.HotelRepository.GetByID(item.HotelID)
                 };
-                auxHotels.Hotel.ReservedRoom.Add(auxHotels);
-                UnitOfWork.ReservedRoomRepository.Insert(auxHotels);
-                UnitOfWork.HotelRepository.Update(auxHotels.Hotel);
+                
+               UnitOfWork.ReservedRoomRepository.Insert(auxHotels);
             }
             UnitOfWork.Save();
 
@@ -545,11 +564,16 @@ namespace FunTourBusinessLayer.Service
                 TicketsAmount = travelPackage.ReservationAmount
             };
 
-            EventCompany EventsCompany = UnitOfWork.EventCompanyRepository.GetByID(travelPackage.Event.Id_Event);
+            //EventCompany EventsCompany = UnitOfWork.EventCompanyRepository.GetByID(travelPackage.Event.Id_Event);
+
+            EventCompany EventsCompany = new EventCompany
+            {
+                APIURLToReserveTickets = "http://demo4736431.mockable.io/ReserveEvent"
+            };
 
             var consumerEvents = new Consumer<List<EventReservationsToTravelPackageResponse>>();
 
-            List<EventReservationsToTravelPackageResponse> getTicketsResponse = consumerEvents.ReLoadEntities(EventsCompany.APIURLToReserveTickets, "POST", reservationEventRequest).Result;
+            List<EventReservationsToTravelPackageResponse> getTicketsResponse = consumerEvents.ReLoadEntities(EventsCompany.APIURLToReserveTickets, "GET", reservationEventRequest).Result;
 
             foreach (var item in getTicketsResponse)
             {
@@ -594,5 +618,21 @@ namespace FunTourBusinessLayer.Service
         //}
     
     }
-    
+
+    public class GetPaymentResponse
+    {
+        public bool stateOfPayment;
+    }
+
+    public class PaymentResponse
+    {
+    }
+
+    public class GetPaymentRequest
+    {
+        public string Name { get; set; }
+        public string creditCardNumber { get; set; }
+        public string expirationDate { get; set; }
+        public string securityNumber { get; set; }
+    }
 }

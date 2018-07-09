@@ -75,13 +75,9 @@
     <Compile Include="Locality\City.cs" />
     <Compile Include="Locality\Country.cs" />
     <Compile Include="Locality\Province.cs" />
-    <Compile Include="Migrations\201807090424271_InitialCreate.cs" />
-    <Compile Include="Migrations\201807090424271_InitialCreate.Designer.cs">
-      <DependentUpon>201807090424271_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201807090435283_FunTour.cs" />
-    <Compile Include="Migrations\201807090435283_FunTour.Designer.cs">
-      <DependentUpon>201807090435283_FunTour.cs</DependentUpon>
+    <Compile Include="Migrations\201807091840120_Funtour.cs" />
+    <Compile Include="Migrations\201807091840120_Funtour.Designer.cs">
+      <DependentUpon>201807091840120_Funtour.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,11 +94,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807090424271_InitialCreate.resx">
-      <DependentUpon>201807090424271_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201807090435283_FunTour.resx">
-      <DependentUpon>201807090435283_FunTour.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807091840120_Funtour.resx">
+      <DependentUpon>201807091840120_Funtour.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

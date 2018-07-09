@@ -202,8 +202,8 @@
     </table>
 </div>
 <p>
-    @Html.ActionLink("Volver Atrás", "AddServicesInPlace", new { TravelPackageId = Model.Id_TravelPackage })
-    @Html.ActionLink("Guardar Paquete", "ConfirmCreation", new { TravelPackageId = Model.Id_TravelPackage }) |
-    @Html.ActionLink("Cancelar Creación", "CancelCreation", new { TravelPackageId = Model.Id_TravelPackage })
+    @Html.ActionLink("Volver Atrás", "AddServicesInPlace", new { TravelPackageId = Model.Id_TravelPackage }, new { @class ="waves-effect waves-light btn blue lighten-1"})
+    @Html.ActionLink("Guardar Paquete", "ConfirmCreation", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+    @Html.ActionLink("Cancelar Creación", "CancelCreation", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
     @Html.ActionLink("Back to List", "Index")
 </p>
