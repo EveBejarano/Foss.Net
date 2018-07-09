@@ -1,31 +1,5 @@
 ﻿@model FunTour.Models.TravelPackageViewModel
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('AddFlight').click(function () {
-            var _toGoFlightId = $('#FlightsToGo').val();
-            var _toBackFlightId = $('#FlightsToBack').val();
-            var _packageId = $('#Id_TravelPackage').val();
-
-            if (_toGoFlightId == '' || _toBackFlightId == '') {
-                return false;
-            }
-
-            var _parameters = { ToGoFlightId: _toGoFlightId, ToBackFlightId: _toBackFlightId, TravelPackageId: _packageId };
-            $.ajax({
-                url: "/TravelPackages/AddFlightToTravelPackagePartialView",
-                type: "GET",
-                data: _parameters,
-                success:
-                    //function (data, textStatus, jqXHR) {
-                    //$('#PermissionsTable').html(data);
-                    //$('#PermissionId').val("");
-                //}
-            });
-        });
-    });
-</script>
-
 <h1>Vuelo de Ida</h1>>
 <table style="width:100%">
     <tr>
@@ -35,7 +9,7 @@
         <th>Cantidad de Asientos Libres</th>
         <th>Precio</th>
     </tr>
-    @foreach (FunTourDataLayer.Models.Flight item in ViewBag.FlightsToGoToShow)
+    @foreach (var item in ViewBag.FlightsToGoToShow)
     {
 
         <tr>
@@ -66,8 +40,10 @@
         </a>
         <legend><strong>Cambiar Vuelo Asociado al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
     }
+    
+    
 
-    @Html.DropDownList("FlightsToGo", null, string.Empty, new { style = "width:350px" })
+    @Html.DropDownList("FlightsToGo", null, string.Empty, new { style = "display:initial" })
 
 
     <h1>Vuelo de Vuelta</h1>>
@@ -79,7 +55,7 @@
             <th>Cantidad de Asientos Libres</th>
             <th>Precio</th>
         </tr>
-        @foreach (FunTourDataLayer.Models.Flight item in ViewBag.FlightsToBackToShow)
+        @foreach (var item in ViewBag.FlightsToBackToShow)
         {
 
             <tr>
@@ -107,8 +83,8 @@
         <legend><strong>Cambiar Vuelo Asociado al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
     }
 
-    @Html.DropDownList("FlightsToBack", null, string.Empty, new { style = "width:350px" })
+    @Html.DropDownList("FlightsToBack", null, string.Empty, new { style = "display:initial" })
 
 
-    <input type="button" id="AddFlight" value="Agregar Vuelos" />
+        <button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddFlight()">Guardar y Continuar</button>
 </fieldset>

@@ -66,7 +66,7 @@
         </dt>
 
         <dd>
-            @Model.FromPlace.Name - @Model.FromPlace.Province.Name  - @Model.FromPlace.Province.Country.Name
+            @Model.FromPlace.Name 
         </dd>
 
         <dt>
@@ -74,7 +74,7 @@
         </dt>
 
         <dd>
-            @Model.ToPlace.Name - @Model.ToPlace.Province.Name  - @Model.ToPlace.Province.Country.Name
+            @Model.ToPlace.Name 
         </dd>
 
     </dl>
@@ -132,9 +132,9 @@
             </tr>
 
             <tr>
-                <td>@Model.ToGoBus.Id_Bus</td>
-                <td>@Model.ToGoBus.DepartureDate</td>
-                <td>@Model.ToGoBus.ArrivedDate</td>
+                <td>@Model.ToGoBus.IdAPI_Bus</td>
+                <td>@Model.ToGoBus.DateTimeDeparture</td>
+                <td>@Model.ToGoBus.DateTimeArrival</td>
                 <td>@Model.ToGoBus.NotReservedSeats</td>
                 <td>@Model.ToGoBus.Price</td>
             </tr>
@@ -151,9 +151,9 @@
             </tr>
 
             <tr>
-                <td>@Model.ToBackBus.Id_Bus</td>
-                <td>@Model.ToBackBus.DepartureDate</td>
-                <td>@Model.ToBackBus.ArrivedDate</td>
+                <td>@Model.ToBackBus.IdAPI_Bus</td>
+                <td>@Model.ToBackBus.DateTimeDeparture</td>
+                <td>@Model.ToBackBus.DateTimeArrival</td>
                 <td>@Model.ToBackBus.NotReservedSeats</td>
                 <td>@Model.ToBackBus.Price</td>
             </tr>
@@ -202,8 +202,8 @@
     </table>
 </div>
 <p>
-    @Html.ActionLink("Volver Atrás", "AddDataServicesInPlace", new { travelPackageViewModel = Model }) |
-    @Html.ActionLink("Guardar Paquete", "ConfirmCreation", new { id = Model.Id_TravelPackage }) |
-    @Html.ActionLink("Cancelar Creación", "CancelCreation", new { id = Model.Id_TravelPackage })
+    @Html.ActionLink("Volver Atrás", "AddServicesInPlace", new { TravelPackageId = Model.Id_TravelPackage })
+    @Html.ActionLink("Guardar Paquete", "ConfirmCreation", new { TravelPackageId = Model.Id_TravelPackage }) |
+    @Html.ActionLink("Cancelar Creación", "CancelCreation", new { TravelPackageId = Model.Id_TravelPackage })
     @Html.ActionLink("Back to List", "Index")
 </p>

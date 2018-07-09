@@ -16,6 +16,9 @@ namespace FunTourBusinessLayer.Service
     public class DataService
     {
         public UnitOfWork UnitOfWork { get; set; }
+        public static List<Flight> AuxFlights { get; set; }
+        public static List<Bus> AuxBus { get; set; }
+        public static List<Event> AuxEvents { get; set; }
 
         public DataService()
         {
@@ -23,7 +26,7 @@ namespace FunTourBusinessLayer.Service
         }
 
         #region Flights
-        public IEnumerable<Flight> GetFlights(DateTime toDay, City fromPlace, City toPlace)
+        public IEnumerable<AuxFlight> GetFlights(DateTime toDay, City fromPlace, City toPlace)
         {
             var getFlightRequest = new GetFlightRequest
             {
@@ -38,27 +41,75 @@ namespace FunTourBusinessLayer.Service
             {
                 APIURLToGetFlights = "http://demo4736431.mockable.io/GetFlights"
             };
-            List<Flight> ListOfFlights = new List<Flight>();
+            List<AuxFlight> ListOfFlights = new List<AuxFlight>();
 
-            var consumerFlights = new Consumer<GetFlightResponse>();
+            var consumerFlights = new Consumer<List<GetFlightResponse>>();
 
-            GetFlightResponse getFlightResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToGetFlights, "POST", getFlightRequest).Result;
+            List<GetFlightResponse> getFlightResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToGetFlights, "POST", getFlightRequest).Result;
+            
 
-            foreach (var item in getFlightResponse.CommercialFlights)
+            foreach (var item in getFlightResponse)
             {
-                var auxFlight = new Flight
+                var auxFlight = new AuxFlight
                 {
                     Id_Flight = item.idFlight,
                     DepartureDate = item.Deport,
                     ArrivedDate = item.Arrive,
                     Price = item.Price,
                     NotReservedSeats = item.Disponible_Places,
-
+                    FlightCompany = FlightCompany
                 };
+
+                UnitOfWork.AuxFlightRepository.Insert(auxFlight);
                 ListOfFlights.Add(auxFlight);
             }
+            UnitOfWork.Save();
+
             return ListOfFlights;
         }
+
+        public void SetAuxFlightToPackage(int travelPackageId, int toGoId, int toBackId)
+        {
+            var travelpackage = UnitOfWork.TravelPackageRepository.GetByID(travelPackageId);
+
+            var auxflight = UnitOfWork.AuxFlightRepository.GetByID(toGoId);
+            var Flight = new Flight
+            {
+                Id_Flight = auxflight.Id_Flight,
+                DepartureDate = auxflight.DepartureDate,
+                ArrivedDate = auxflight.ArrivedDate,
+                Price = auxflight.Price,
+                NotReservedSeats = auxflight.NotReservedSeats,
+                FlightCompany = auxflight.FlightCompany
+
+            };
+
+            UnitOfWork.FlightRepository.Insert(Flight);
+            travelpackage.ToGoFlight = Flight;
+
+            auxflight = UnitOfWork.AuxFlightRepository.GetByID(toGoId);
+            var ToBackFlight = new Flight
+            {
+                Id_Flight = auxflight.Id_Flight,
+                DepartureDate = auxflight.DepartureDate,
+                ArrivedDate = auxflight.ArrivedDate,
+                Price = auxflight.Price,
+                NotReservedSeats = auxflight.NotReservedSeats,
+                FlightCompany = auxflight.FlightCompany
+
+            };
+
+            UnitOfWork.FlightRepository.Insert(ToBackFlight);
+
+            travelpackage.ToBackFlight = ToBackFlight;
+
+            UnitOfWork.AuxFlightRepository.DeleteAllEntities();
+            UnitOfWork.TravelPackageRepository.Update(travelpackage);
+            UnitOfWork.Save();
+        }
+
+
+
         public void SetToGoFlightReservationToNewTravelPackage(TravelPackage travelPackage)
         {
             var reservationFlightRequest = new FlightReservationsToTravelPackageRequest
@@ -121,7 +172,7 @@ namespace FunTourBusinessLayer.Service
         #endregion
 
         #region Buses
-        public IEnumerable<Bus> GetBuses(DateTime toDay, City fromPlace, City toPlace)
+        public IEnumerable<AuxBus> GetBuses(DateTime toDay, City fromPlace, City toPlace)
         {
             var getBusRequest = new GetBusRequest
             {
@@ -143,11 +194,11 @@ namespace FunTourBusinessLayer.Service
 
             List<BusResponse> getBusResponse = consumerBuss.ReLoadEntities(BusCompany.APIURLToGetBuses, "GET", getBusRequest).Result;
 
-            List<Bus> listOfBus = new List<Bus>();
+            List<AuxBus> listOfBus = new List<AuxBus>();
 
             foreach (var item in getBusResponse)
             {
-                var auxBus = new Bus
+                var auxBus = new AuxBus
                 {
                     IdAPI_Bus = item.TripID,
                     TripID = item.TripID,
@@ -162,10 +213,55 @@ namespace FunTourBusinessLayer.Service
                     Price = (float)item.Price,
                     NotReservedSeats = item.AvailableSeats
                 };
+
+                UnitOfWork.AuxBusRepository.Insert(auxBus);
+
                 listOfBus.Add(auxBus);
             }
+            UnitOfWork.Save();
             return listOfBus;
         }
+
+        public void SetAuxBusToPackage(int travelPackageId, int toGoId, int toBackId)
+        {
+            var travelpackage = UnitOfWork.TravelPackageRepository.GetByID(travelPackageId);
+
+            var auxbus = UnitOfWork.AuxBusRepository.GetByID(toGoId);
+            var Bus = new Bus
+            {
+                IdAPI_Bus = auxbus.IdAPI_Bus,
+                DateTimeDeparture = auxbus.DateTimeDeparture,
+                DateTimeArrival = auxbus.DateTimeArrival,
+                Price = auxbus.Price,
+                NotReservedSeats = auxbus.NotReservedSeats,
+                BusCompany = auxbus.BusCompany
+
+            };
+
+            UnitOfWork.BusRepository.Insert(Bus);
+            travelpackage.ToGoBus = Bus;
+
+            auxbus = UnitOfWork.AuxBusRepository.GetByID(toGoId);
+            var ToBackBus = new Bus
+            {
+                IdAPI_Bus = auxbus.IdAPI_Bus,
+                DateTimeDeparture = auxbus.DateTimeDeparture,
+                DateTimeArrival = auxbus.DateTimeArrival,
+                Price = auxbus.Price,
+                NotReservedSeats = auxbus.NotReservedSeats,
+                BusCompany = auxbus.BusCompany
+
+            };
+
+            UnitOfWork.BusRepository.Insert(ToBackBus);
+
+            travelpackage.ToBackBus = ToBackBus;
+
+            UnitOfWork.AuxBusRepository.DeleteAllEntities();
+            UnitOfWork.TravelPackageRepository.Update(travelpackage);
+            UnitOfWork.Save();
+        }
+
 
         public void SetToGoBusReservationToNewTravelPackage(TravelPackage travelPackage)
         {
@@ -231,13 +327,16 @@ namespace FunTourBusinessLayer.Service
         #endregion
 
         #region Hotels
-        public IEnumerable<Hotel> GetHotels(City Place, DateTime fromDay, DateTime toDay)
+        public IEnumerable<AuxHotel> GetHotels(City Place, DateTime fromDay, DateTime toDay)
         {
+            var city = UnitOfWork.CityRepository.Get(filter: p => p.Id_City == Place.Id_City,
+                includeProperties: "Province").FirstOrDefault();
+            var province = UnitOfWork.ProvinceRepository.Get(filter: p=> p.Id_Province == Place.Province.Id_Province, includeProperties: "Country").FirstOrDefault();
             var getHotelsRequest = new GetHotelsRequest
             {
                 City = Place.Name,
                 Region = Place.Province.Name,
-                Country = Place.Province.Country.Name,
+                Country = province.Country.Name,
                 Date_start = fromDay,
                 Date_end = toDay
             };
@@ -248,24 +347,50 @@ namespace FunTourBusinessLayer.Service
                 APIURLToGetHotels = "http://demo4736431.mockable.io/GetHotels"
             };
 
-            List<Hotel> ListOfHotels = new List<Hotel>();
+            List<AuxHotel> ListOfHotels = new List<AuxHotel>();
 
             var consumerHotelss = new Consumer<List<GetHotelsResponse>>();
 
-            List<GetHotelsResponse> getHotelsResponse = consumerHotelss.ReLoadEntities(HotelsCompany.APIURLToGetHotels, "POST", getHotelsRequest).Result;
+            List<GetHotelsResponse> getHotelsResponse = consumerHotelss.ReLoadEntities(HotelsCompany.APIURLToGetHotels, "GET", getHotelsRequest).Result;
 
             foreach (var item in getHotelsResponse)
             {
-                var auxHotels = new Hotel
+                var auxHotels = new AuxHotel
                 {
                     Id_Hotel = item.HotelID,
                     Name = item.HotelName,
                     Price = item.StandardRate,
-                    NotReservedRooms = item.FreeRoomCount
+                    NotReservedRooms = item.FreeRoomCount,
+                    HotelCompany = HotelsCompany
                 };
+                UnitOfWork.AuxHotelRepository.Insert(auxHotels);
                 ListOfHotels.Add(auxHotels);
             }
+            UnitOfWork.Save();
             return ListOfHotels;
+        }
+
+        public void SetAuxHotelToPackage(int travelPackageId, int hotelId)
+        {
+            var travelpackage = UnitOfWork.TravelPackageRepository.GetByID(travelPackageId);
+
+            var auxhotel = UnitOfWork.AuxHotelRepository.GetByID(hotelId);
+            var Hotel = new Hotel
+            {
+                Id_Hotel = auxhotel.Id_Hotel,
+                Name = auxhotel.Name,
+                Description = auxhotel.Description,
+                Price = auxhotel.Price,
+                NotReservedRooms = auxhotel.NotReservedRooms,
+                HotelCompany = auxhotel.HotelCompany
+
+            };
+
+            UnitOfWork.HotelRepository.Insert(Hotel);
+            travelpackage.Hotel = Hotel;
+            UnitOfWork.AuxHotelRepository.DeleteAllEntities();
+            UnitOfWork.TravelPackageRepository.Update(travelpackage);
+            UnitOfWork.Save();
         }
 
         public void SetHotelReservationToNewTravelPackage(TravelPackage travelPackage)
@@ -318,7 +443,7 @@ namespace FunTourBusinessLayer.Service
 
         #region Events
 
-        public IEnumerable<Event> GetEvents(City Place, DateTime fromDay, DateTime toDay)
+        public IEnumerable<AuxEvent> GetEvents(City Place, DateTime fromDay, DateTime toDay)
         {
             var getEventRequest = new GetEventRequest
             {
@@ -328,17 +453,22 @@ namespace FunTourBusinessLayer.Service
 
             };
 
-            EventCompany EventCompany = UnitOfWork.EventCompanyRepository.Get().FirstOrDefault();
+            //EventCompany EventCompany = UnitOfWork.EventCompanyRepository.Get().FirstOrDefault();
 
-            List<Event> ListOfEvents = new List<Event>();
+            var EventCompany = new EventCompany
+            {
+                APIURLToGetEvents = "http://demo4736431.mockable.io/GetEvents"
+            };
+
+            List<AuxEvent> ListOfEvents = new List<AuxEvent>();
 
             var consumerEvents = new Consumer<List<GetEventResponse>>();
 
-            List<GetEventResponse> getEventResponse = consumerEvents.ReLoadEntities(EventCompany.APIURLToGetEvents, "POST", getEventRequest).Result;
+            List<GetEventResponse> getEventResponse = consumerEvents.ReLoadEntities(EventCompany.APIURLToGetEvents, "GET", getEventRequest).Result;
 
             foreach (var item in getEventResponse)
             {
-                var auxEvent = new Event
+                var auxEvent = new AuxEvent
                 {
                     Id_Event = item.EventWithTicketID,
                     Name = item.Name,
@@ -347,10 +477,37 @@ namespace FunTourBusinessLayer.Service
                     AvailableTickets = item.MaxTicket,
 
                 };
+                UnitOfWork.AuxEventRepository.Insert(auxEvent);
                 ListOfEvents.Add(auxEvent);
             }
+
+            UnitOfWork.Save();
             return ListOfEvents;
 
+        }
+
+
+        public void SetAuxEventToPackage(int travelPackageId, int? eventId)
+        {
+            var travelpackage = UnitOfWork.TravelPackageRepository.GetByID(travelPackageId);
+
+            var auxevent = UnitOfWork.AuxEventRepository.GetByID(eventId);
+            var Event = new Event
+            {
+                Id_Event = auxevent.Id_Event,
+                Name = auxevent.Name,
+                Description = auxevent.Description,
+                Price = auxevent.Price,
+                AvailableTickets = auxevent.AvailableTickets,
+                EventCompany = auxevent.EventCompany
+
+            };
+            UnitOfWork.AuxEventRepository.DeleteAllEntities();
+            UnitOfWork.EventRepository.Insert(Event);
+            travelpackage.Event = Event;
+
+            UnitOfWork.TravelPackageRepository.Update(travelpackage);
+            UnitOfWork.Save();
         }
 
 
@@ -386,9 +543,30 @@ namespace FunTourBusinessLayer.Service
         #endregion
 
 
+        //public void CargarTablasDeLectura()
+        //{
+        //    if (!(UnitOfWork.CRepository.Any()))
+        //    {
+        //        InicializarCountry();
+        //    }
 
+        //    if (!UnitOfWork.ProvinceRepository.Any())
+        //    {
+        //        InicializarProvince();
+        //    }
+        //    if (!UnitOfWork.CityRepository.Any())
+        //    {
+        //        InicializarCity();
+        //    }
 
+        //    if (!UnitOfWork.TituloProfesionalRepository.Any())
+        //    {
+        //        InicializarTituloProfesional();
+        //    }
 
+        //    UnitOfWork.Save();
+        //}
+    
     }
     
 }

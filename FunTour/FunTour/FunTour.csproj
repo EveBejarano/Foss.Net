@@ -496,9 +496,7 @@
     <Content Include="Views\TravelPackages\_AddBusToTravelPackagePartialView.cshtml" />
     <Content Include="Views\TravelPackages\_AddEventToTravelPackagePartialView.cshtml" />
     <Content Include="Views\TravelPackages\_AddFlightToTravelPackagePartialView.cshtml" />
-    <Content Include="Views\TravelPackages\_AddFromPlaceReturnPartialView.cshtml" />
     <Content Include="Views\TravelPackages\_AddHotelToTravelPackagePartialView.cshtml" />
-    <Content Include="Views\TravelPackages\_AddToPlaceReturnPartialView.cshtml" />
     <Content Include="Views\Unauthorised\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>

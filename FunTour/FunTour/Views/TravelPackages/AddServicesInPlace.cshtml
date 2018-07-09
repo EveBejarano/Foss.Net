@@ -6,25 +6,6 @@
     ViewBag.Title = "AddServicesInPlace";
 }
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('AddServicesInPlaceReturn').click(function () {
-            var _packageId = $('#Id_TravelPackage').val();
-
-            var _parameters = { TravelPackageId: _packageId };
-            $.ajax({
-                url: "/TravelPackages/AddServicesInPlaceReturn",
-                type: "GET",
-                data: _parameters,
-                success:
-                    //function (data, textStatus, jqXHR) {
-                    //$('#PermissionsTable').html(data);
-                    //$('#PermissionId').val("");
-                //}
-            });
-        });
-    });
-</script>
 
 <h2>Agregar Servicios en @Model.ToPlace.Name:</h2>
 
@@ -42,7 +23,7 @@
 
 
 @*<input type="button" id="AddServicesInPlaceReturn" value="Guardar y Continuar..." />*@
-@Html.ActionLink("Guardar y Continuar", "AddServicesInPlaceReturn", new { TravelPackageId = Model.Id_TravelPackage }) |
+<button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddServicesInPlace()">Guardar y Continuar</button>
 @Html.ActionLink("Volver Atrás", "AddServicesToTravel", new { travelPackageViewModel = Model })
 
 <div>

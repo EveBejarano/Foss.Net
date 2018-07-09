@@ -1,30 +1,5 @@
 ﻿@model FunTour.Models.TravelPackageViewModel
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('AddEvent').click(function () {
-            var _eventId = $('#Events').val();
-            var _packageId = $('#Id_TravelPackage').val();
-
-            if (_eventId == '') {
-                return false;
-            }
-
-            var _parameters = { EventId: _eventId, TravelPackageId: _packageId};
-            $.ajax({
-                url: "/TravelPackages/AddEventToTravelPackagePartialView",
-                type: "GET",
-                data: _parameters,
-                success:
-                    //function (data, textStatus, jqXHR) {
-                    //$('#PermissionsTable').html(data);
-                    //$('#PermissionId').val("");
-                //}
-            });
-        });
-    });
-</script>
-
 
 @Html.HiddenFor(model => model.Id_TravelPackage)
 <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
@@ -40,7 +15,7 @@
             <th>Cantidad de Tickets Disponibles</th>
             <th>Precio</th>
         </tr>
-        @foreach (FunTourDataLayer.Models.Event item in ViewBag.EventsToShow)
+        @foreach (var  item in ViewBag.EventsToShow)
         {
 
         <tr>
@@ -67,7 +42,7 @@
         <legend><strong>Cambiar Evento Asociado al Paquete:</strong></legend>
     }
 
-    @Html.DropDownList("Events", null, string.Empty, new { style = "width:350px" })
+    @Html.DropDownList("Events", null, string.Empty, new { style = "display:initial" })
 
-    <input type="button" id="AddEvent" value="Agregar Evento" />
+    
 </fieldset>

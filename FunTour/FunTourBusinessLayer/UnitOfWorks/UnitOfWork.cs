@@ -1,5 +1,6 @@
 ﻿using System;
 using FunTourBusinessLayer.Repositories;
+using FunTourBusinessLayer.Service;
 using FunTourDataLayer;
 using FunTourDataLayer.AccountManagement;
 using FunTourDataLayer.BusCompany;
@@ -23,9 +24,17 @@ namespace FunTourBusinessLayer.UnitOfWorks
         private GenericRepository<Flight> flightRepository;
         private GenericRepository<Bus> busRepository;
         private GenericRepository<Event> eventRepository;
+
+        private GenericRepository<AuxHotel> auxhotelRepository;
+        private GenericRepository<AuxFlight> auxflightRepository;
+        private GenericRepository<AuxBus> auxbusRepository;
+        private GenericRepository<AuxEvent> auxeventRepository;
+
+
         private GenericRepository<Reservation> reservationRepository;
 
         private GenericRepository<City> cityRepository;
+        private GenericRepository<Province> provinceRepository;
         private GenericRepository<FlightCompany> flightCompanyRepository;
         private GenericRepository<BusCompany> busCompanyRepository;
         private GenericRepository<HotelCompany> hotelCompanyRepository;
@@ -90,6 +99,58 @@ namespace FunTourBusinessLayer.UnitOfWorks
 
 
 
+        public GenericRepository<AuxHotel> AuxHotelRepository
+        {
+            get
+            {
+
+                if (this.auxhotelRepository == null)
+                {
+                    this.auxhotelRepository = new GenericRepository<AuxHotel>(context);
+                }
+                return auxhotelRepository;
+            }
+        }
+
+        public GenericRepository<AuxFlight> AuxFlightRepository
+        {
+            get
+            {
+
+                if (this.auxflightRepository == null)
+                {
+                    this.auxflightRepository = new GenericRepository<AuxFlight>(context);
+                }
+                return auxflightRepository;
+            }
+        }
+
+        public GenericRepository<AuxBus> AuxBusRepository
+        {
+            get
+            {
+
+                if (this.auxbusRepository == null)
+                {
+                    this.auxbusRepository = new GenericRepository<AuxBus>(context);
+                }
+                return auxbusRepository;
+            }
+        }
+
+        public GenericRepository<AuxEvent> AuxEventRepository
+        {
+            get
+            {
+
+                if (this.auxeventRepository == null)
+                {
+                    this.auxeventRepository = new GenericRepository<AuxEvent>(context);
+                }
+                return auxeventRepository;
+            }
+        }
+
         public GenericRepository<Hotel> HotelRepository
         {
             get
@@ -152,6 +213,19 @@ namespace FunTourBusinessLayer.UnitOfWorks
                     this.cityRepository = new GenericRepository<City>(context);
                 }
                 return cityRepository;
+            }
+        }
+
+        public GenericRepository<Province> ProvinceRepository
+        {
+            get
+            {
+
+                if (this.provinceRepository == null)
+                {
+                    this.provinceRepository = new GenericRepository<Province>(context);
+                }
+                return provinceRepository;
             }
         }
 

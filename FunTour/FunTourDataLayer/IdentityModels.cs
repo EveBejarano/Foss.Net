@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FunTourBusinessLayer.Service;
 using FunTourDataLayer.AccountManagement;
 using FunTourDataLayer.BusCompany;
 using FunTourDataLayer.EventCompany;
@@ -55,9 +56,14 @@ namespace FunTourDataLayer
         public DbSet<ReservedSeat> ReservedSeats { get; set; }
         public DbSet<ReservedTicket> ReservedTickets { get; set; }
         public DbSet<TravelPackage> TravelPackages { get; set; }
-
-        public DbSet<Destination> Destinations { get; set; }
         
+
+        public DbSet<AuxBus> AuxBusses { get; set; }
+        public DbSet<AuxEvent> AuxEvents { get; set; }
+        public DbSet<AuxFlight> AuxFlights { get; set; }
+        public DbSet<AuxHotel> AuxHotels { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

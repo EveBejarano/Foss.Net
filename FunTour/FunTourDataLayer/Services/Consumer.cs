@@ -49,7 +49,6 @@ namespace FunTourDataLayer.Services
                     var resPost = client.PostAsync(Url, request).Result;
                     data = await resPost.Content.ReadAsStringAsync();
 
-
                     break;
                 default:
                     data = "";
