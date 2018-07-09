@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FunTourBusinessLayer.UnitOfWorks;
-using FunTourDataLayer.Payment;
 using FunTourDataLayer.BusCompany;
 using FunTourDataLayer.EventCompany;
 using FunTourDataLayer.FlightCompany;
@@ -10,7 +9,7 @@ using FunTourDataLayer.Hotel;
 using FunTourDataLayer.Locality;
 using FunTourDataLayer.Reservation;
 using FunTourDataLayer.Services;
-using FunTourDataLayer;
+using FunTourDataLayer.Payment;
 
 
 namespace FunTourBusinessLayer.Service
@@ -179,14 +178,14 @@ namespace FunTourBusinessLayer.Service
         #endregion
 
         #region Payments
-        public bool doPayment(string creditCard, string date, string code, string name)
+        public bool DoPayment(string creditCard, string date, string code, string name)
         {
             var GetPaymentRequest = new GetPaymentRequest
             {
                 Name = name,
-                creditCardNumber = creditCard,
-                expirationDate = date,
-                securityNumber = code
+                CreditCardNumber = creditCard,
+                ExpirationDate = date,
+                SecurityNumber = code
             };
 
             PaymentService PaymentService = new PaymentService
@@ -622,11 +621,4 @@ namespace FunTourBusinessLayer.Service
     {
     }
 
-    public class GetPaymentRequest
-    {
-        public string Name { get; set; }
-        public string creditCardNumber { get; set; }
-        public string expirationDate { get; set; }
-        public string securityNumber { get; set; }
-    }
 }

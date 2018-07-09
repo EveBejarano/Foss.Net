@@ -14,6 +14,8 @@ namespace FunTour.Models {
 		//}
 
 		public int Id_Reservation { get; set; }
+
+        public int Id_TravelPackage { get; set; }
 		
 		[Display(Name = "Nombre del cliente")]
 		public string UserName { get; set; }
@@ -27,7 +29,7 @@ namespace FunTour.Models {
 		[Display(Name = "Habitacion numero")]
 		public int RoomNumber { get; set; }
 		
-		[Display(Name = "Asiento nuemro")]
+		[Display(Name = "Asiento numero")]
 		public int SeatNumber { get; set; }
 		
 		[Display(Name = "Ticket reservado")]
@@ -35,9 +37,10 @@ namespace FunTour.Models {
 		
 		[Display(Name = "Pagado")]
 		public bool Pagado { get; set; }	
-		public virtual TravelPackage travelPackage { get; set; }
+
+		public virtual TravelPackage TravelPackage { get; set; }
 		
-		public virtual UserDetails client { get; set; } 
+		public virtual UserDetails Client { get; set; } 
 		
 
 	}

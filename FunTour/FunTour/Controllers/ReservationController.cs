@@ -56,9 +56,9 @@ namespace PruebaUsers.Controllers
 			return View(reservationViewModel);
 		}
 		
-		public ActionResult createPayment(int ReservationId, PaymentModel pay)
+		public ActionResult CreatePayment(int ReservationId, PaymentModel pay)
 		{
-			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationID).FirstOrDefault();
+			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationId).FirstOrDefault();
 			PaymentModel payment = new PaymentModel 
 			{
 				Name = pay.Name,
@@ -67,7 +67,7 @@ namespace PruebaUsers.Controllers
 				securityNumber = pay.securityNumber
 			};
 		
-			var AuxPayment = Service.doPayment( payment.Name, payment.creditCardNumber, payment.creditCardNumber, payment.securityNumber );
+			var AuxPayment = Service.DoPayment( payment.Name, payment.creditCardNumber, payment.creditCardNumber, payment.securityNumber );
 
 			if (AuxPayment.state)
 			{
@@ -86,8 +86,8 @@ namespace PruebaUsers.Controllers
 		{
 			var reservation = new Reservation
 			{
-				Id_TravelPackage = reservationViewModel.travelPackage.Id_TravelPackage,
-				TravelPackage = reservationViewModel.travelPackage,
+				Id_TravelPackage = reservationViewModel.TravelPackage.Id_TravelPackage,
+				TravelPackage = reservationViewModel.TravelPackage,
 				Client = reservationViewModel.client,
 				Paid = reservationViewModel.Pagado,
 
