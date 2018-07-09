@@ -84,6 +84,7 @@
       <DependentUpon>201807090435283_FunTour.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Payments\PaymentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation\BusReservedSeat.cs" />
     <Compile Include="Reservation\Reservation.cs" />

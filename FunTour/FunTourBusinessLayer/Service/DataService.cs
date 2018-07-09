@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FunTourBusinessLayer.UnitOfWorks;
-using FunTourDataLayer;
+using FunTourDataLayer.Payment;
 using FunTourDataLayer.BusCompany;
 using FunTourDataLayer.EventCompany;
 using FunTourDataLayer.FlightCompany;
@@ -10,7 +10,7 @@ using FunTourDataLayer.Hotel;
 using FunTourDataLayer.Locality;
 using FunTourDataLayer.Reservation;
 using FunTourDataLayer.Services;
-using FunTourDataLayer.Payment;
+using FunTourDataLayer;
 
 namespace FunTourBusinessLayer.Service
 {
@@ -191,7 +191,7 @@ namespace FunTourBusinessLayer.Service
 
 		var consumerPayment = new Consumer<PaymentResponse>();
 
-		GetPaymentResponse getPaymentRespons = consumerPayment.ReLoadEntities(PaymentService.APIURLToPay, "POST", GetPaymentRequest).Result; 
+		PaymentResponse getPaymentRespons = consumerPayment.ReLoadEntities(PaymentService.APIURLToPay, "POST", GetPaymentRequest).Result; 
 		
 		return getPaymentRespons.stateOfPayment;
 	}

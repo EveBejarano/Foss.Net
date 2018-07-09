@@ -78,6 +78,8 @@
     <Compile Include="Service\GetHotelsRequest.cs" />
     <Compile Include="Service\GetHotelsResponse.cs" />
     <Compile Include="Service\EventReservationsToTravelPackageRequest.cs" />
+    <Compile Include="Service\GetPaymentRequest.cs" />
+    <Compile Include="Service\GetPaymentResponse.cs" />
     <Compile Include="UnitOfWorks\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
