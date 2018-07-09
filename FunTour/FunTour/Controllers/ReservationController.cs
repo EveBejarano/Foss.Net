@@ -42,7 +42,7 @@ namespace PruebaUsers.Controllers
 			ReservationViewModel reservationViewModel;
 			reservationViewModel = new ReservationViewModel
 			{
-					Id_Reservation = travelpackage.Id_TravelPackage,
+					Id_TravelPackage = travelpackage.Id_TravelPackage,
 					UserName = User.Identity.Name
 			};
 			return View(reservationViewModel);
@@ -58,8 +58,8 @@ namespace PruebaUsers.Controllers
 				expirationDate = pay.expirationDate,
 				securityNumber = pay.securityNumber
 			};
-
-			AuxPayment = Service.doPayment( payment.Name, payment.creditCardNumber, payment.creditCardNumber, payment.securityNumber );
+		
+			var AuxPayment = Service.doPayment( payment.Name, payment.creditCardNumber, payment.creditCardNumber, payment.securityNumber );
 
 			if (AuxPayment.state)
 			{
@@ -69,7 +69,6 @@ namespace PruebaUsers.Controllers
 			}
 			return View(reservation);
 		}
-		
 
 
 		// POST: Reservation/Create
