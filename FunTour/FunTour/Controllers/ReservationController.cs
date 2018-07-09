@@ -48,16 +48,28 @@ namespace PruebaUsers.Controllers
 			return View(reservationViewModel);
 		}
 		
-		public ActionResult PayReservation(int ReservationID)
+		public ActionResult createPayment(int ReservationId, PaymentModel pay)
 		{
-			bool state;
 			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationID).FirstOrDefault();
-			reservation.Paid = state;
-			Service.UnitOfWork.ReservationRepository.Update(reservation);
-			Service.UnitOfWork.Save();
-        		return View(reservation);
-        		// No tengo idea como se Pagaria
-        		}
+			PaymentModel payment = new PaymentModel 
+			{
+				Name = pay.Name,
+				creditCardNumber = pay.creditCardNumber,
+				expirationDate = pay.expirationDate,
+				securityNumber = pay.securityNumber
+			};
+
+			AuxPayment = Service.doPayment( payment.Name, payment.creditCardNumber, payment.creditCardNumber, payment.securityNumber );
+
+			if (AuxPayment.state)
+			{
+				reservation.Paid = true;
+				Service.UnitOfWork.ReservationRepository.Update(reservation);
+				Service.UnitOfWork.Save();
+			}
+			return View(reservation);
+		}
+		
 
 
 		// POST: Reservation/Create
