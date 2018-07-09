@@ -53,6 +53,7 @@ namespace FunTourDataLayer
         public DbSet<Hotel.Hotel> Hotels { get; set; }
         public DbSet<Reservation.Reservation> Reservations { get; set; }
         public DbSet<ReservedRoom> ReservedRooms { get; set; }
+        public DbSet<FlightReservedSeat> FlightReservedSeats { get; set; }
         public DbSet<ReservedSeat> ReservedSeats { get; set; }
         public DbSet<ReservedTicket> ReservedTickets { get; set; }
         public DbSet<TravelPackage> TravelPackages { get; set; }
@@ -78,18 +79,12 @@ namespace FunTourDataLayer
                    .MapLeftKey("Id_Permission")
                    .MapRightKey("Id_Role")
                 );
-            modelBuilder.Entity<Reservation.BusReservedSeat>()
-                .HasOptional(a => a.Reservation)
-                .WithRequired(a=> a.BusReservedSeat);
 
             modelBuilder.Entity<Reservation.ReservedRoom>()
                 .HasOptional(a => a.Reservation)
                 .WithRequired(a => a.ReservedRoom);
 
-
-            modelBuilder.Entity<Reservation.ReservedSeat>()
-                .HasOptional(a => a.Reservation)
-                .WithRequired(a => a.ReservedSeat);
+            
 
             modelBuilder.Entity<Reservation.ReservedTicket>()
                 .HasOptional(a => a.Reservation)

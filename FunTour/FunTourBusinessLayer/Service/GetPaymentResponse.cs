@@ -2,7 +2,7 @@ using System;
 
 namespace FunTourBusinessLayer.Service
 {
-	public class PaymentResponse
+	public class GetPaymentResponse
 	{
 		public bool stateOfPayment { get; set; }
 	}

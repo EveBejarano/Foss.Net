@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FunTourBusinessLayer.UnitOfWorks;
-using FunTourDataLayer.Payment;
 using FunTourDataLayer.BusCompany;
 using FunTourDataLayer.EventCompany;
 using FunTourDataLayer.FlightCompany;
@@ -11,6 +10,7 @@ using FunTourDataLayer.Locality;
 using FunTourDataLayer.Reservation;
 using FunTourDataLayer.Services;
 using FunTourDataLayer;
+using FunTourDataLayer.Payment;
 
 
 namespace FunTourBusinessLayer.Service
@@ -133,11 +133,12 @@ namespace FunTourBusinessLayer.Service
 
             foreach (var item in getSeatsResponse)
             {
-                var auxSeat = new ReservedSeat()
+                var auxSeat = new FlightReservedSeat()
                 {
-                    Id_Flight = item.Id_Flight,
                     Id_ReservedSeat = item.Id_Seat,
-                    Flight = UnitOfWork.FlightRepository.GetByID(item.Id_Flight)
+                    Flight = UnitOfWork.FlightRepository.GetByID(item.Id_Flight),
+                    TravelPackage = travelPackage,
+                    Available = true
                 };
                 auxSeat.Flight.ReservedSeat.Add(auxSeat);
                 UnitOfWork.ReservedSeatRepository.Insert(auxSeat);
@@ -155,19 +156,24 @@ namespace FunTourBusinessLayer.Service
                 SeatCount = travelPackage.ReservationAmount
             };
 
-            FlightCompany FlightCompany = UnitOfWork.FlightCompanyRepository.GetByID(travelPackage.ToBackFlight.Id_Flight);
+            //FlightCompany FlightCompany = UnitOfWork.FlightCompanyRepository.GetByID(travelPackage.ToGoFlight.Id_Flight);
 
+            FlightCompany FlightCompany = new FlightCompany
+            {
+                APIURLToReserveSeatsToTravelPackage = "http://demo4736431.mockable.io/ReserveFlightSeat"
+            };
             var consumerFlights = new Consumer<List<FlightReservationsToTravelPackageResponse>>();
 
             List<FlightReservationsToTravelPackageResponse> getSeatsResponse = consumerFlights.ReLoadEntities(FlightCompany.APIURLToReserveSeatsToTravelPackage, "GET", reservationFlightRequest).Result;
 
             foreach (var item in getSeatsResponse)
             {
-                var auxSeat = new ReservedSeat()
+                var auxSeat = new FlightReservedSeat()
                 {
-                    Id_Flight = item.Id_Flight,
                     Id_ReservedSeat = item.Id_Seat,
-                    Flight = UnitOfWork.FlightRepository.GetByID(item.Id_Flight)
+                    Flight = UnitOfWork.FlightRepository.GetByID(item.Id_Flight),
+                    TravelPackage = travelPackage,
+                    Available = true
                 };
                 auxSeat.Flight.ReservedSeat.Add(auxSeat);
                 UnitOfWork.ReservedSeatRepository.Insert(auxSeat);
@@ -318,10 +324,11 @@ namespace FunTourBusinessLayer.Service
             {
                 var auxSeat = new BusReservedSeat()
                 {
-                    IdAPI_Bus = item.TripID,
                     TripID = item.TripID,
-                    Id_BusReservedSeat = item.BookingID,
-                    Bus = UnitOfWork.BusRepository.GetByID(item.TripID)
+                    Id_ReservedSeat = item.BookingID,
+                    Bus = UnitOfWork.BusRepository.GetByID(item.TripID),
+                    TravelPackage = travelPackage,
+                    Available = true
                 };
                 auxSeat.Bus.BusReservedSeat.Add(auxSeat);
                 UnitOfWork.BusReservedSeatRepository.Insert(auxSeat);
@@ -339,7 +346,12 @@ namespace FunTourBusinessLayer.Service
                 SeatCount = travelPackage.ReservationAmount
             };
 
-            BusCompany BusCompany = UnitOfWork.BusCompanyRepository.GetByID(travelPackage.ToBackBus.IdAPI_Bus);
+            //BusCompany BusCompany = UnitOfWork.BusCompanyRepository.GetByID(travelPackage.ToBackBus.IdAPI_Bus);
+
+            BusCompany BusCompany = new BusCompany
+            {
+                APIURLToReserveSeatToTravelPackage = "http://demo4736431.mockable.io/ReserverBusSeat",
+            };
 
             var consumerBuss = new Consumer<List<BusReservationsToTravelPackageResponse>>();
 
@@ -349,13 +361,13 @@ namespace FunTourBusinessLayer.Service
             {
                 var auxSeat = new BusReservedSeat()
                 {
-                    IdAPI_Bus = item.TripID,
                     TripID = item.TripID,
-                    Id_BusReservedSeat = item.BookingID,
-                    Bus = UnitOfWork.BusRepository.GetByID(item.TripID)
+                    Id_ReservedSeat = item.BookingID,
+                    Bus = UnitOfWork.BusRepository.GetByID(item.TripID),
+                    TravelPackage = travelPackage,
+                    Available = true
                 };
                 auxSeat.Bus.BusReservedSeat.Add(auxSeat);
-                UnitOfWork.BusReservedSeatRepository.Insert(auxSeat);
                 UnitOfWork.BusRepository.Update(auxSeat.Bus);
             }
             UnitOfWork.Save();
@@ -469,7 +481,9 @@ namespace FunTourBusinessLayer.Service
                 {
                     HotelID = item.HotelID,
                     BookingID = item.BookingID,
-                    Hotel = UnitOfWork.HotelRepository.GetByID(item.HotelID)
+                    Hotel = UnitOfWork.HotelRepository.GetByID(item.HotelID),
+                    TravelPackage = travelPackage,
+                    Available = true
                 };
                 
                UnitOfWork.ReservedRoomRepository.Insert(auxHotels);
@@ -575,7 +589,9 @@ namespace FunTourBusinessLayer.Service
                 {
                     Id_Event = item.EventID,
                     Id_ReservedTicket = item.TicketID,
-                    Event = UnitOfWork.EventRepository.GetByID(item.EventID)
+                    Event = UnitOfWork.EventRepository.GetByID(item.EventID),
+                    TravelPackage = travelPackage,
+                    Available = true
                 };
                 auxTicket.Event.ReservedTicket.Add(auxTicket);
                 UnitOfWork.ReservedTicketRepository.Insert(auxTicket);
@@ -613,20 +629,5 @@ namespace FunTourBusinessLayer.Service
     
     }
 
-    public class GetPaymentResponse
-    {
-        public bool stateOfPayment;
-    }
 
-    public class PaymentResponse
-    {
-    }
-
-    public class GetPaymentRequest
-    {
-        public string Name { get; set; }
-        public string creditCardNumber { get; set; }
-        public string expirationDate { get; set; }
-        public string securityNumber { get; set; }
-    }
 }
