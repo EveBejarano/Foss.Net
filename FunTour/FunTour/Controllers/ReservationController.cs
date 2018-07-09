@@ -22,6 +22,14 @@ namespace PruebaUsers.Controllers
 			return View(Service.UnitOfWork.ReservationRepository.Get());
 		}
 
+		public ActionResult Index(int userId)
+		{
+			IEnumerable<Reservation> ListOfReservations = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Client.Id_UserDetails == userId);
+			return View(ListOfReservations);
+
+		}
+
+
 		//GET: Reservation/Details
 		public ActionResult Details(int? id) 
 		{
