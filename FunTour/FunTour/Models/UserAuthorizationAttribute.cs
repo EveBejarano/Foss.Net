@@ -111,7 +111,7 @@ namespace FunTour.Models
             String RequiredPermission = String.Format("{0}-{1}", filterContext.ActionDescriptor.ControllerDescriptor.ControllerName, filterContext.ActionDescriptor.ActionName);
 
             //Crea una instancia del usuario que necesita autorizacion requiriendo el nombre de usuario para pasarlo al constructor de ActualUser(string UserName)
-            ActualUser RequestedUser = new ActualUser(filterContext.RequestContext.HttpContext.User.Identity.Name, UnitOfWork);
+            ActualUser RequestedUser = new ActualUser(filterContext.RequestContext.HttpContext.User.Identity.Name);
 
             if (!RequestedUser.HasPermission(RequiredPermission) & !RequestedUser.IsSysAdmin)
             {

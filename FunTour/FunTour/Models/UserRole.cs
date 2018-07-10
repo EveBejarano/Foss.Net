@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using FunTour.Models;
+using FunTourBusinessLayer.Service;
 using FunTourBusinessLayer.UnitOfWorks;
 
 namespace FunTour.Models
@@ -12,7 +13,7 @@ namespace FunTour.Models
         public int Id_UserRole { get; set; }
         public string RoleName { get; set; }
         public ICollection<UserPermission> UserPermissions { get; set; }
-
+        private readonly DataService Service = new DataService();
         public string RoleDescription { get; set; }
 
         public UserRole()
@@ -20,7 +21,7 @@ namespace FunTour.Models
             this.UserPermissions = new HashSet<UserPermission>();
         }
 
-        public Boolean IsSysAdmin(UnitOfWork unitOfWork)
+        public Boolean IsSysAdmin()
         {
             try
             {
@@ -28,8 +29,8 @@ namespace FunTour.Models
 
                 Boolean IsSysAdmin = false;
 
-                var rol = unitOfWork.RolesRepository.GetRoleByID(UserRole);
-                IsSysAdmin = unitOfWork.RolesRepository.GetRoleDetailsByID(rol.Id).IsSysAdmin;
+                var rol = Service.UnitOfWork.RolesRepository.GetRoleByID(UserRole);
+                IsSysAdmin = Service.UnitOfWork.RolesRepository.GetRoleDetailsByID(rol.Id).IsSysAdmin;
 
                 return (IsSysAdmin);
             }
@@ -41,13 +42,13 @@ namespace FunTour.Models
 
         }
 
-        public void SetUserRolePermissions(UnitOfWork unitOfWork)
+        public void SetUserRolePermissions()
         {
             var UserRole = this.Id_UserRole;
 
 
-            var rol = unitOfWork.RolesRepository.GetRoleByID(UserRole.ToString());
-            var Permissions = unitOfWork.RolesRepository.GetRoleDetails(filter: p => p.Id_Role.ToString() == rol.Id, includeProperties: "Permissions").FirstOrDefault().Permissions;
+            var rol = Service.UnitOfWork.RolesRepository.GetRoleByID(UserRole.ToString());
+            var Permissions = Service.UnitOfWork.RolesRepository.GetRoleDetails(filter: p => p.Id_Role.ToString() == rol.Id, includeProperties: "Permissions").FirstOrDefault().Permissions;
 
             foreach (var permission in Permissions)
             {

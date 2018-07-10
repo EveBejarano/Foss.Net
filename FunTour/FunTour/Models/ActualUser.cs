@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FunTourBusinessLayer.Service;
 using FunTourBusinessLayer.UnitOfWorks;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -13,16 +14,17 @@ namespace FunTour.Models
         public Boolean IsSysAdmin { get; set; }
         public ICollection<UserRole> ActualUserRoles { get; set; }
 
+        private readonly DataService Service = new DataService();
 
-        public ActualUser(string UserName, UnitOfWork unitOfWork)
+        public ActualUser(string UserName)
         {
                 try
                 {
-                    this.Id_ActualUser = unitOfWork.UserRepository.GetUserByUserName(UserName).Id;
+                    this.Id_ActualUser = Service.UnitOfWork.UserRepository.GetUserByUserName(UserName).Id;
 
                     this.ActualUserName = UserName;
-                    this.IsSysAdmin = unitOfWork.UserRepository.GetUserDetailByUserName(this.ActualUserName).isSysAdmin;
-                    this.SetUserRoles(unitOfWork);
+                    this.IsSysAdmin = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(this.ActualUserName).isSysAdmin;
+                    this.SetUserRoles();
             }
                 catch (Exception ex)
                 {
@@ -36,16 +38,16 @@ namespace FunTour.Models
         // 1. Extrae de la base de datos los Roles de un usuario
         // 2. verifica si es Sysadmin o no
         // 3. Almacena en cada rol los permisos que este posee
-        public void SetUserRoles(UnitOfWork unitOfWork)
+        public void SetUserRoles()
         {
                 
-                List<IdentityUserRole> Roles = unitOfWork.UserRepository.GetUsers(filter: p => p.UserName == this.ActualUserName, includeProperties: "Roles").FirstOrDefault().Roles.ToList();
+                List<IdentityUserRole> Roles = Service.UnitOfWork.UserRepository.GetUsers(filter: p => p.UserName == this.ActualUserName, includeProperties: "Roles").FirstOrDefault().Roles.ToList();
                 foreach (var rol in Roles)
                 {
                     UserRole userRole = new UserRole
                     {
                         
-                        RoleName = unitOfWork.RolesRepository.GetRoleByID(rol.RoleId).Name
+                        RoleName = Service.UnitOfWork.RolesRepository.GetRoleByID(rol.RoleId).Name
                     };
 
                     int a;
@@ -53,11 +55,11 @@ namespace FunTour.Models
 
                     userRole.Id_UserRole = a;
 
-                    userRole.SetUserRolePermissions(unitOfWork);
+                    userRole.SetUserRolePermissions();
 
                     if (IsSysAdmin == false)
                     {
-                        this.IsSysAdmin = userRole.IsSysAdmin(unitOfWork);
+                        this.IsSysAdmin = userRole.IsSysAdmin();
                     }
 
                     ActualUserRoles.Add(userRole);

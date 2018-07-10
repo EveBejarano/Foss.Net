@@ -1,6 +1,6 @@
 ﻿@model FunTour.Models.UserModel
 @{
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+//Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <script type="text/javascript">
     $(document).ready(function () {
@@ -70,7 +70,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.IsSysAdmin, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.CheckBoxFor(model => model.IsSysAdmin, new { @class = "form-control" })
+                        @Html.CheckBoxFor(model => model.IsSysAdmin, new { @class = "form-control", style = "opacity:5; pointer-events:visiblepainted" })
                     </div>
                 </div>
 

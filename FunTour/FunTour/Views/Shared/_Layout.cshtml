@@ -43,44 +43,12 @@
                        class="sidenav-trigger" align="left">
                         <i class="material-icons large">menu</i>
                     </a>
-                    <ul class="right hide-on-med-and-down">
-                        <li>
-                            <a href="#rusia">Rusia 2018</a>
-                        </li>
-                        <li>
-                            <a href="#vacaciones">Vacaciones</a>
-                        </li>
-                        <li>
-                            <a href="#Egresados">Egresados</a>
-                        </li>
-                        <li>
-                            <a href="#contactanos">Contactanos</a>
-                        </li>
-                        <li>
-                            <a href="~/Account/Login">Ingresar</a>
-                        </li>
-                    </ul>
+
+                    @Html.Partial("_LoginPartial")
                 </div>
             </div>
         </Nav>
     </div>
-    <ul class="sidenav" id="mobile-nav">
-        <li>
-            <a href="#rusia">Rusia 2018</a>
-        </li>
-        <li>
-            <a href="#vacaciones">Vacaciones</a>
-        </li>
-        <li>
-            <a href="#Egresados">Egresados</a>
-        </li>
-        <li>
-            <a href="#contactanos">Contáctanos</a>
-        </li>
-        <li>
-            <a href="~/Account/Login">Ingresar</a>
-        </li>
-    </ul>
 
     @RenderBody()
 

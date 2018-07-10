@@ -8,3 +8,4 @@ namespace FunTourDataLayer.Payment
 		public string APIURLToPay { get; set; }
 	}
 }
+      

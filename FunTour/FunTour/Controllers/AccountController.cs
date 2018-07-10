@@ -179,9 +179,17 @@ namespace FunTour.Controllers
                             LastName = model.LastName,
                             LastModified = System.DateTime.Now,
                             Inactive = false,
-                            isSysAdmin = false
+                            
                         };
 
+                        if (_context.UserDetails.Any())
+                        {
+                            userDetails.isSysAdmin = false;
+                        }
+                        else
+                        {
+                            userDetails.isSysAdmin = true;
+                        }
                         try
                         {
 

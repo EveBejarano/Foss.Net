@@ -63,7 +63,7 @@
                 <td>
                     @if (item.FirstName != null && item.LastName != null)
                     {
-                        @Html.ActionLink(item.UserModelName, "UserDetails", new { id = item.UserModelName })
+                        @Html.ActionLink(item.UserModelName, "UserDetails", new { id = item.Id_UserModel })
                     }
                     else
                     {
