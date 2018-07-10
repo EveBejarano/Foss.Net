@@ -49,11 +49,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ToPlace.Name)
             </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.Id_TravelPackage }) |
-                @Html.ActionLink("Detalles", "Details", new { id = item.Id_TravelPackage }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id_TravelPackage })
-            </td>
+            @if (ViewContext.Controller.IsSysAdmin())
+            {
+            
+                <td>
+                @Html.ActionLink("Editar", "Edit", new {id = item.Id_TravelPackage}) |
+                @Html.ActionLink("Detalles", "Details", new {id = item.Id_TravelPackage}) |
+                @Html.ActionLink("Eliminar", "Delete", new {id = item.Id_TravelPackage})
+                </td>
+            }
         </tr>
         }
 

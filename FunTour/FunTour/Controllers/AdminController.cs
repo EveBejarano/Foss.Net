@@ -8,7 +8,7 @@ using System.Web.Routing;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using FunTour.Models;
-using FunTourBusinessLayer.UnitOfWorks;
+using FunTourBusinessLayer.Service;
 using FunTourDataLayer;
 using FunTourDataLayer.AccountManagement;
 
@@ -53,7 +53,7 @@ namespace FunTour.Controllers
             SignInManager = signInManager;
         }
 
-        private readonly UnitOfWork UnitOfWork = new UnitOfWork();
+        private readonly DataService Service = new DataService();
 
         #region FunTour
 
@@ -61,24 +61,15 @@ namespace FunTour.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            // lista los usuarios activos
-            // verifica si el usuario esta activo o no. los ordena primero por apellido y despues por nombre
-            // List<UserDetails> UserList = _context.Database.SqlQuery<UserDetails>(string.Format("SELECT * FROM IdentityUsers p, UserDetails d WHERE p.UserName = d.UserName And(d.Inactive != 'true')", new UserDetails().LastName)).ToList();
 
 
-            //List<UserDetails> UserList = (from d in _context.UserDetails
-            //                              join u in _context.Users
-            //                              on d.UserName equals u.UserName
-            //                              where d.Inactive != true
-            //                              select d).ToList();
-
-            IEnumerable<UserDetails> UserList = UnitOfWork.UserRepository.GetUserDetails(filter : p=> p.Inactive == false);
+            IEnumerable<UserDetails> UserList = Service.UnitOfWork.UserRepository.GetUserDetails(filter : p=> p.Inactive == false);
 
             List < UserModel > UserModelList = new List<UserModel>();
 
             foreach (var item in UserList)
             {
-                var auxUser = UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
+                var auxUser = Service.UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
                     //_context.Users.FirstOrDefault(p => p.UserName == item.UserName);
 
                 var UserModel = new UserModel
@@ -103,7 +94,7 @@ namespace FunTour.Controllers
         //Busca un usuario y muestra los datos
         public ViewResult UserDetails(string  IdUser)
         {
-            var user = UnitOfWork.UserRepository.GetUserByID(IdUser);
+            var user = Service.UnitOfWork.UserRepository.GetUserDetails(filter: p=> p.Id_UserDetails.ToString() == IdUser).FirstOrDefault();
                 //_context.Users.FirstOrDefault(p => p.Id == IdUser);
 
             var User = UserModel.GetDataUserModel(user.UserName); //Ver
@@ -128,7 +119,7 @@ namespace FunTour.Controllers
         {
             ViewBag.UserId = _UserId;
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
-            ViewBag.RoleId = new SelectList(UnitOfWork.RolesRepository.GetRoles(orderBy: q => q.OrderBy(p => p.Name) ), "Id_Role", "RoleName");
+            ViewBag.RoleId = new SelectList(Service.UnitOfWork.RolesRepository.GetRoles(orderBy: q => q.OrderBy(p => p.Name) ), "Id_Role", "RoleName");
         }
 
         // Toma un Model de Usuario
@@ -153,28 +144,17 @@ namespace FunTour.Controllers
         }
 
         [HttpPost]
-        public async System.Threading.Tasks.Task<ActionResult> UserCreate(UserModel NewUser)
+        public ActionResult UserCreate(UserModel NewUser)
         {
             // controla que el usuario no haya ingresado un nombre NO valido
             if (NewUser.UserModelName == "" || NewUser.UserModelName == null)
             {
                 ModelState.AddModelError(string.Empty, "El nombre de usuario es obligatorio.");
             }
-
-            try
-            {
+            
                 if (ModelState.IsValid)
                 {
-
-                    // busca una lista de nombres de usuario que coincidan con el ingresado
-                    //List<string> results = (from d in _context.UserDetails
-                    //                        join u in _context.Users
-                    //                        on d.UserName equals u.UserName
-                    //                        where d.UserName == NewUser.UserModelName
-                    //                        || (d.UserName == u.UserName && u.Email == NewUser.Email)
-                    //                        select d.UserName).ToList();
-
-                    List<string> results = UnitOfWork.UserRepository.GetStringUserNames(NewUser.UserModelName, NewUser.Email);
+                    List<string> results = Service.UnitOfWork.UserRepository.GetStringUserNames(NewUser.UserModelName, NewUser.Email);
 
                     bool _UserExistsInTable = (results.Count > 0);
 
@@ -184,106 +164,65 @@ namespace FunTour.Controllers
                     // Si el usuario no esta activo, lo activa
                     if (_UserExistsInTable)
                     {
-                        
-                        var Users = UnitOfWork.UserRepository.GetUserDetailsByNameEmail(NewUser.UserModelName, NewUser.Email);
+
+                        var Users = Service.UnitOfWork.UserRepository.GetUserDetailsByNameEmail(NewUser.UserModelName, NewUser.Email);
 
 
-                            var band = false;
-                            foreach (var item in Users)
+                        var band = false;
+                        foreach (var item in Users)
+                        {
+                            if (item.Inactive == false)
                             {
-                                if (item.Inactive == false)
-                                {
-                                    ModelState.AddModelError(string.Empty, "El usuario ya existe!");
-
-                                    band = true;
-                                    break;
-                                }
+                                ModelState.AddModelError(string.Empty, "El usuario ya existe!");                                band = true;
+                                break;
                             }
-                            if (!band)
-                            {
-                                _User = Users.First(p => p.Inactive == true);
-                                UnitOfWork.UserRepository.ActivateUserDetails(_User);
-                                UnitOfWork.Save();
-                                return RedirectToAction("Index");
-                            }
+                        }
+                        if (!band)
+                        {
+                            _User = Users.First(p => p.Inactive == true);
+                            Service.UnitOfWork.UserRepository.ActivateUserDetails(_User);
+                            Service.UnitOfWork.Save();
+                            return RedirectToAction("Index");
+                        }
 
                     }
 
 
-                    // Si no hay usuarios con el mismo nombre, crea el usuario y lo almacena
-                    else
+                // Si no hay usuarios con el mismo nombre, crea el usuario y lo almacena
+                else
                     {
 
                         var user = new ApplicationUser
                         {
-                            UserName = NewUser.UserModelName,
-                            Email = NewUser.Email
+                            UserName = NewUser.UserModelName,                            
+                            Email = NewUser.Email,
+                            PhoneNumber = NewUser.PhoneNumber,
+                            
                         };
 
 
-                        var result = await UserManager.CreateAsync(user, NewUser.Password);
+                        var result = UserManager.CreateAsync(user, NewUser.Password).Result;
                         if (result.Succeeded)
                         {
 
                             var userDetails = new UserDetails
                             {
+                                UserName = user.UserName,
                                 FirstName = NewUser.FirstName,
                                 LastName = NewUser.LastName,
+                                isSysAdmin = NewUser.IsSysAdmin
                             };
 
-                            UnitOfWork.UserRepository.CreateUserDetails(userDetails);
-                            try
-                            {
+                            Service.UnitOfWork.UserRepository.CreateUserDetails(userDetails);
 
-                                UnitOfWork.Save();
-                            }
-                            catch (Exception ex)
-                            {
-
-                                throw;
-                            }
-
-                        
-                        //{
-                        //    using (var _context = new ApplicationDbContext())
-                        //    {
-
-                        //        var userDetails = new UserDetails
-                        //        {
-                        //            UserName = _context.Users.FirstOrDefault(p => p.UserName == NewUser.UserModelName).UserName,
-
-                        //            FirstName = NewUser.FirstName,
-                        //            LastName = NewUser.LastName,
-                        //            LastModified = System.DateTime.Now,
-                        //            Inactive = false,
-                        //            isSysAdmin = true
-                        //        };
-
-                        //        try
-                        //        {
-
-                        //            _context.UserDetails.Add(userDetails);
-                        //            _context.SaveChanges();
-                        //        }
-                        //        catch (Exception ex)
-                        //        {
-
-                        //            throw;
-                        //        }
-
-                        //    }
-
+                            Service.UnitOfWork.Save();
                         return RedirectToAction("Index");
                         }
                         
                     }
                     
                 }
-            }
-            catch (Exception ex)
-            {
-                //return base.ShowError(ex);
-            }
+
 
             return View(NewUser);
         }
@@ -301,7 +240,7 @@ namespace FunTour.Controllers
         [HttpPost]
         public ActionResult UserEdit(UserModel User)
         {
-            var _User = UnitOfWork.UserRepository.GetUserByID(User.Id_UserModel);
+            var _User = Service.UnitOfWork.UserRepository.GetUserByID(User.Id_UserModel);
                 /*_context.Users.Where(p => p.Id == User.Id_UserModel).FirstOrDefault()*/;
             if (_User != null)
             {
@@ -323,12 +262,12 @@ namespace FunTour.Controllers
             //var role = _context.Roles.Find(id);
             //var user = _context.Users.Find(UserId);
 
-            var role = UnitOfWork.RolesRepository.GetRoleByID(id);
-            var user = UnitOfWork.UserRepository.GetUserByID(UserId);
+            var role = Service.UnitOfWork.RolesRepository.GetRoleByID(id);
+            var user = Service.UnitOfWork.UserRepository.GetUserByID(UserId);
 
-            if (UnitOfWork.UserRepository.DeleteRoleFromUser(user, role))
+            if (Service.UnitOfWork.UserRepository.DeleteRoleFromUser(user, role))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             };
                
             
@@ -344,7 +283,7 @@ namespace FunTour.Controllers
         [HttpGet]
         public PartialViewResult filterReset()
         {
-            IEnumerable<UserDetails> usersdetails = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
+            IEnumerable<UserDetails> usersdetails = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<UserModel> users = new List<UserModel>();
             foreach (var user in usersdetails)
@@ -353,7 +292,7 @@ namespace FunTour.Controllers
                 {
                     LastName = user.LastName,
                     FirstName = user.FirstName,
-                    Id_UserModel = UnitOfWork.UserRepository.GetUserByUserName(user.UserName).Id,
+                    Id_UserModel = Service.UnitOfWork.UserRepository.GetUserByUserName(user.UserName).Id,
                     UserModelName = user.UserName
 
                 };
@@ -367,27 +306,12 @@ namespace FunTour.Controllers
         [HttpGet]
         public PartialViewResult DeleteUserReturnPartialView(string UserId)
         {
-            try
-            {
-                if (UnitOfWork.UserRepository.DeleteUserDetail(UserId))
+                if (Service.UnitOfWork.UserRepository.DeleteUserDetail(UserId))
                 {
-                    UnitOfWork.Save();
+                    Service.UnitOfWork.Save();
                 };
-                //var User = _context.UserDetails.Find(UserId);
-                //if (User != null)
-                //{
-                //    User.Inactive = true;
-                //    User.LastModified = System.DateTime.Now;
 
-                //    var User1 = _context.UserDetails.Find(UserId);
-                //    _context.Entry(User1).CurrentValues.SetValues(User);
-                //    _context.SaveChanges();
-                    
-                //}
-            }
-            catch
-            {
-            }
+
             return this.filterReset();
         }
 
@@ -398,14 +322,14 @@ namespace FunTour.Controllers
             {
                 if (string.IsNullOrEmpty(_surname))
                 {
-                    var userDetails = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
+                    var userDetails = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
                     foreach (var user in userDetails)
                     {
                         var userModel = new UserModel
                         {
 
-                            Id_UserModel = UnitOfWork.UserRepository.GetUserByUserName(user.UserName).Id,
+                            Id_UserModel = Service.UnitOfWork.UserRepository.GetUserByUserName(user.UserName).Id,
                             UserModelName = user.UserName,
                             Inactive = user.Inactive,
                             FirstName = user.FirstName,
@@ -414,7 +338,7 @@ namespace FunTour.Controllers
 
                         };
 
-                        var users = UnitOfWork.UserRepository.GetUserByUserName(_surname);
+                        var users = Service.UnitOfWork.UserRepository.GetUserByUserName(_surname);
 
                         userModel.UserModelName = users.UserName;
                         userModel.Email = users.Email;
@@ -426,7 +350,7 @@ namespace FunTour.Controllers
                 }
                 else
                 {
-                    IEnumerable<IdentityUser> users = UnitOfWork.UserRepository.GetUsers(filter: p => p.UserName == _surname);
+                    IEnumerable<IdentityUser> users = Service.UnitOfWork.UserRepository.GetUsers(filter: p => p.UserName == _surname);
 
                     foreach (var user in users)
                     {
@@ -438,7 +362,7 @@ namespace FunTour.Controllers
                             PhoneNumber = user.PhoneNumber
                         };
 
-                        var userDetail = UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
+                        var userDetail = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
 
                         userModel.Inactive = userDetail.Inactive;
                         userModel.FirstName = userDetail.FirstName;
@@ -461,12 +385,12 @@ namespace FunTour.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult DeleteUserRoleReturnPartialView(int id, string UserId)
         {
-            var role = UnitOfWork.RolesRepository.GetRoleByID(id);
-            var user = UnitOfWork.UserRepository.GetUserByID(UserId);
+            var role = Service.UnitOfWork.RolesRepository.GetRoleByID(id);
+            var user = Service.UnitOfWork.UserRepository.GetUserByID(UserId);
 
-            if (UnitOfWork.UserRepository.DeleteRoleFromUser(user, role))
+            if (Service.UnitOfWork.UserRepository.DeleteRoleFromUser(user, role))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             };
             //IdentityRole role = _context.Roles.Find(id);
             //IdentityUser User = _context.Users.Find(UserId);
@@ -515,21 +439,21 @@ namespace FunTour.Controllers
         public ActionResult RoleIndex()
         {
             //Get rolesrepository 
-            return View(UnitOfWork.RolesRepository.GetRoleDetails(orderBy: q=> q.OrderBy(r => r.RoleDescription)));
+            return View(Service.UnitOfWork.RolesRepository.GetRoleDetails(orderBy: q=> q.OrderBy(r => r.RoleDescription)));
         }
 
         public ViewResult RoleDetails(int id)
         {
 
-            IdentityUser User = UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
-            var roleDetails = UnitOfWork.RolesRepository.GetRoleDetails(filter:r => r.Id_Role == id, includeProperties : "Permissions")
+            IdentityUser User = Service.UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
+            var roleDetails = Service.UnitOfWork.RolesRepository.GetRoleDetails(filter:r => r.Id_Role == id, includeProperties : "Permissions")
                    .FirstOrDefault();
 
-            var role = UnitOfWork.RolesRepository.GetRoles(filter: p => p.Id == roleDetails.Id_Role.ToString(), includeProperties: "Users").FirstOrDefault();
+            var role = Service.UnitOfWork.RolesRepository.GetRoles(filter: p => p.Id == roleDetails.Id_Role.ToString(), includeProperties: "Users").FirstOrDefault();
             foreach (var item in role.Users)
             {
-                var user = UnitOfWork.UserRepository.GetUserByID(item.UserId);
-                var auxuser = UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
+                var user = Service.UnitOfWork.UserRepository.GetUserByID(item.UserId);
+                var auxuser = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
 
                 if (user!= null && (auxuser.Inactive == false || auxuser.Inactive == null))
                 {
@@ -538,13 +462,13 @@ namespace FunTour.Controllers
             }
 
 
-            var auxuserlist = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
+            var auxuserlist = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<IdentityUser> UserList = new List<IdentityUser>();
 
             foreach (var item in auxuserlist)
             {
-                var auxuser = UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
+                var auxuser = Service.UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
                 UserList.Add(auxuser);
             }
 
@@ -553,7 +477,7 @@ namespace FunTour.Controllers
 
 
             // Rights combo
-            ViewBag.PermissionId = new SelectList(UnitOfWork.PermissionRepository.Get(orderBy: p=> p.OrderBy(a => a.PermissionDescription)), "Id_Permission", "PermissionDescription");
+            ViewBag.PermissionId = new SelectList(Service.UnitOfWork.PermissionRepository.Get(orderBy: p=> p.OrderBy(a => a.PermissionDescription)), "Id_Permission", "PermissionDescription");
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
 
             return View(roleDetails);
@@ -561,7 +485,7 @@ namespace FunTour.Controllers
 
         public ActionResult RoleCreate()
         {
-           IdentityUser User = UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
+           IdentityUser User = Service.UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
             return View();
         }
@@ -574,12 +498,12 @@ namespace FunTour.Controllers
                 ModelState.AddModelError("Role Description", "Role Description must be entered");
             }
 
-            IdentityUser User = UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
+            IdentityUser User = Service.UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
             if (ModelState.IsValid)
             {
-                if (UnitOfWork.RolesRepository.CreateRol(_role))
+                if (Service.UnitOfWork.RolesRepository.CreateRol(_role))
                 {
-                    UnitOfWork.Save();
+                    Service.UnitOfWork.Save();
                 };
                 return RedirectToAction("RoleIndex");
             }
@@ -591,13 +515,13 @@ namespace FunTour.Controllers
         public ActionResult RoleEdit(int id)
         {
         //    IdentityUser User = _context.Users.Where(r => r.UserName == this.User.Identity.Name).FirstOrDefault();
-            var roleDetails = UnitOfWork.RolesRepository.GetRoleDetails(filter: r => r.Id_Role == id, includeProperties : "Permissions").FirstOrDefault();
+            var roleDetails = Service.UnitOfWork.RolesRepository.GetRoleDetails(filter: r => r.Id_Role == id, includeProperties : "Permissions").FirstOrDefault();
 
-            var role = UnitOfWork.RolesRepository.GetRoles(filter: p => p.Name == roleDetails.RoleName, includeProperties: "Users").FirstOrDefault();
+            var role = Service.UnitOfWork.RolesRepository.GetRoles(filter: p => p.Name == roleDetails.RoleName, includeProperties: "Users").FirstOrDefault();
             foreach (var item in role.Users)
             {
-                var user = UnitOfWork.UserRepository.GetUserByID(item.UserId);
-                var auxuser = UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
+                var user = Service.UnitOfWork.UserRepository.GetUserByID(item.UserId);
+                var auxuser = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
 
                 if (user != null && (auxuser.Inactive == false || auxuser.Inactive == null))
                 {
@@ -605,13 +529,13 @@ namespace FunTour.Controllers
                 }
             }
 
-            var auxuserlist = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
+            var auxuserlist = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<IdentityUser> UserList = new List<IdentityUser>();
 
             foreach (var item in auxuserlist)
             {
-                var auxuser = UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
+                var auxuser = Service.UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
                 UserList.Add(auxuser);
             }
 
@@ -620,7 +544,7 @@ namespace FunTour.Controllers
 
 
             // Rights combo
-            ViewBag.PermissionId = new SelectList(UnitOfWork.PermissionRepository.Get(orderBy: p=> p.OrderBy(a => a.Id_Permission)), "Id_Permission", "PermissionDescription");
+            ViewBag.PermissionId = new SelectList(Service.UnitOfWork.PermissionRepository.Get(orderBy: p=> p.OrderBy(a => a.Id_Permission)), "Id_Permission", "PermissionDescription");
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
 
             return View(roleDetails);
@@ -634,24 +558,24 @@ namespace FunTour.Controllers
                 ModelState.AddModelError("Role Description", "Role Description must be entered");
             }
             
-            IdentityUser User = UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
+            IdentityUser User = Service.UnitOfWork.UserRepository.GetUserByUserName(this.User.Identity.Name);
             if (ModelState.IsValid)
             {
                 
-                if (UnitOfWork.RolesRepository.Update(_role))
+                if (Service.UnitOfWork.RolesRepository.Update(_role))
                 {
-                    UnitOfWork.Save();
+                    Service.UnitOfWork.Save();
                 }
                 return RedirectToAction("RoleDetails", new RouteValueDictionary(new { id = _role.Id_Role }));
             }
 
-            var auxuserlist = UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
+            var auxuserlist = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
 
             List<IdentityUser> UserList = new List<IdentityUser>();
 
             foreach (var item in auxuserlist)
             {
-                var auxuser = UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
+                var auxuser = Service.UnitOfWork.UserRepository.GetUserByUserName(item.UserName);
                 UserList.Add(auxuser);
             }
 
@@ -659,7 +583,7 @@ namespace FunTour.Controllers
             ViewBag.UserList = new SelectList( UserList, "Id", "UserName");
 
             // Rights combo
-            ViewBag.PermissionId = new SelectList(UnitOfWork.PermissionRepository.Get(orderBy: p=>p.OrderBy(a => a.Id_Permission)), "Id_Permission", "PermissionDescription");
+            ViewBag.PermissionId = new SelectList(Service.UnitOfWork.PermissionRepository.Get(orderBy: p=>p.OrderBy(a => a.Id_Permission)), "Id_Permission", "PermissionDescription");
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
             return View(_role);
         }
@@ -667,14 +591,14 @@ namespace FunTour.Controllers
 
         public ActionResult RoleDelete(int id)
         {
-            RoleDetails roleDetails = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            RoleDetails roleDetails = Service.UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
 
-            IdentityRole _role = UnitOfWork.RolesRepository.GetRoles(filter: p => p.Name == roleDetails.RoleName).FirstOrDefault();
+            IdentityRole _role = Service.UnitOfWork.RolesRepository.GetRoles(filter: p => p.Name == roleDetails.RoleName).FirstOrDefault();
 
 
-            if (UnitOfWork.RolesRepository.DeleteRole(_role))
+            if (Service.UnitOfWork.RolesRepository.DeleteRole(_role))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             }
             return RedirectToAction("RoleIndex");
         }
@@ -683,13 +607,13 @@ namespace FunTour.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult DeleteUserFromRoleReturnPartialView(int id, int UserId)
         {
-            IdentityRole role = UnitOfWork.RolesRepository.GetRoleByID(id);
-            IdentityUser user = UnitOfWork.UserRepository.GetUserByID(UserId);
+            IdentityRole role = Service.UnitOfWork.RolesRepository.GetRoleByID(id);
+            IdentityUser user = Service.UnitOfWork.UserRepository.GetUserByID(UserId);
             
 
-            if (UnitOfWork.RolesRepository.DeleteUserFromRole(user,role))
+            if (Service.UnitOfWork.RolesRepository.DeleteUserFromRole(user,role))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             }
             return PartialView("_ListUsersTable4Role", role);
         }
@@ -698,12 +622,12 @@ namespace FunTour.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult AddUser2RoleReturnPartialView(int id, string UserId)
         {
-            IdentityRole role = UnitOfWork.RolesRepository.GetRoleByID(id);
-            IdentityUser User = UnitOfWork.UserRepository.GetUserByID(UserId);
+            IdentityRole role = Service.UnitOfWork.RolesRepository.GetRoleByID(id);
+            IdentityUser User = Service.UnitOfWork.UserRepository.GetUserByID(UserId);
 
-            if (UnitOfWork.UserRepository.AddRolesToUser(User, role))
+            if (Service.UnitOfWork.UserRepository.AddRolesToUser(User, role))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             }
             return PartialView("_ListUsersTable4Role", role);
         }
@@ -714,13 +638,13 @@ namespace FunTour.Controllers
 
         public ViewResult PermissionIndex()
         {
-            IEnumerable<Permission> _permissions = UnitOfWork.PermissionRepository.Get(orderBy : p=>p.OrderBy(wn => wn.PermissionDescription), includeProperties :"Roles");
+            IEnumerable<Permission> _permissions = Service.UnitOfWork.PermissionRepository.Get(orderBy : p=>p.OrderBy(wn => wn.PermissionDescription), includeProperties :"Roles");
             return View(_permissions);
         }
 
         public ViewResult PermissionDetails(int id)
         {
-            Permission _permission = UnitOfWork.PermissionRepository.GetByID(id);
+            Permission _permission = Service.UnitOfWork.PermissionRepository.GetByID(id);
             return View(_permission);
         }
 
@@ -739,8 +663,8 @@ namespace FunTour.Controllers
 
             if (ModelState.IsValid)
             {
-                UnitOfWork.PermissionRepository.Insert(_permission);
-                UnitOfWork.Save();
+                Service.UnitOfWork.PermissionRepository.Insert(_permission);
+                Service.UnitOfWork.Save();
                 return RedirectToAction("PermissionIndex");
             }
             return View(_permission);
@@ -748,8 +672,8 @@ namespace FunTour.Controllers
 
         public ActionResult PermissionEdit(int id)
         {
-            Permission _permission = UnitOfWork.PermissionRepository.GetByID(id);
-            ViewBag.RoleId = new SelectList(UnitOfWork.RolesRepository.GetRoleDetails(orderBy: q=> q.OrderBy(p => p.RoleDescription)), "Id_Role", "RoleDescription");
+            Permission _permission = Service.UnitOfWork.PermissionRepository.GetByID(id);
+            ViewBag.RoleId = new SelectList(Service.UnitOfWork.RolesRepository.GetRoleDetails(orderBy: q=> q.OrderBy(p => p.RoleDescription)), "Id_Role", "RoleDescription");
             return View(_permission);
         }
 
@@ -758,8 +682,8 @@ namespace FunTour.Controllers
         {
             if (ModelState.IsValid)
             {
-                UnitOfWork.PermissionRepository.Update(_permission);
-                UnitOfWork.Save();
+                Service.UnitOfWork.PermissionRepository.Update(_permission);
+                Service.UnitOfWork.Save();
                 return RedirectToAction("PermissionDetails", new RouteValueDictionary(new { id = _permission.Id_Permission }));
             }
             return View(_permission);
@@ -769,12 +693,12 @@ namespace FunTour.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public ActionResult PermissionDelete(int id)
         {
-            Permission permission = UnitOfWork.PermissionRepository.GetByID(id);
+            Permission permission = Service.UnitOfWork.PermissionRepository.GetByID(id);
             if (permission.Roles.Count > 0)
                 permission.Roles.Clear();
 
-            UnitOfWork.PermissionRepository.Delete(permission);
-            UnitOfWork.Save();
+            Service.UnitOfWork.PermissionRepository.Delete(permission);
+            Service.UnitOfWork.Save();
             return RedirectToAction("PermissionIndex");
         }
 
@@ -782,11 +706,11 @@ namespace FunTour.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult AddPermission2RoleReturnPartialView(int id, int permissionId)
         {
-            if (UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
+            if (Service.UnitOfWork.RolesRepository.AddPermissionToRole(id, permissionId))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             }
-            RoleDetails role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            RoleDetails role = Service.UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
             return PartialView("_ListPermissions", role);
         }
 
@@ -795,12 +719,12 @@ namespace FunTour.Controllers
         public PartialViewResult AddAllPermissions2RoleReturnPartialView(string id)
         {
 
-            if (UnitOfWork.RolesRepository.AddAllPermissions2Role(id))
+            if (Service.UnitOfWork.RolesRepository.AddAllPermissions2Role(id))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             }
 
-            RoleDetails _role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            RoleDetails _role = Service.UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
             return PartialView("_ListPermissions", _role);
         }
 
@@ -808,10 +732,10 @@ namespace FunTour.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult DeletePermissionFromRoleReturnPartialView(int id, int permissionId)
         {
-            RoleDetails _role = UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
-            if (UnitOfWork.RolesRepository.DeletePermissionFromRole(id, permissionId))
+            RoleDetails _role = Service.UnitOfWork.RolesRepository.GetRoleDetailsByID(id);
+            if (Service.UnitOfWork.RolesRepository.DeletePermissionFromRole(id, permissionId))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             }
             return PartialView("_ListPermissions", _role);
         }
@@ -820,10 +744,10 @@ namespace FunTour.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult DeleteRoleFromPermissionReturnPartialView(int id, int permissionId)
         {
-            Permission permission= UnitOfWork.PermissionRepository.GetByID(permissionId);
-            if (UnitOfWork.RolesRepository.DeleteRoleFromPermission(id, permissionId))
+            Permission permission= Service.UnitOfWork.PermissionRepository.GetByID(permissionId);
+            if (Service.UnitOfWork.RolesRepository.DeleteRoleFromPermission(id, permissionId))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             }
             return PartialView("_ListRolesTable4Permission", permission);
         }
@@ -832,11 +756,11 @@ namespace FunTour.Controllers
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
         public PartialViewResult AddRole2PermissionReturnPartialView(int permissionId, int roleId)
         {
-            Permission _permission = UnitOfWork.PermissionRepository.GetByID(permissionId);
+            Permission _permission = Service.UnitOfWork.PermissionRepository.GetByID(permissionId);
 
-            if (UnitOfWork.RolesRepository.AddRole2Permission(permissionId, roleId))
+            if (Service.UnitOfWork.RolesRepository.AddRole2Permission(permissionId, roleId))
             {
-                UnitOfWork.Save();
+                Service.UnitOfWork.Save();
             }
             return PartialView("_ListRolesTable4Permission", _permission);
         }
@@ -867,7 +791,7 @@ namespace FunTour.Controllers
                     }
 
                     string _permissionDescription = string.Format("{0}-{1}", _controllerName, _controllerActionName);
-                    Permission _permission = UnitOfWork.PermissionRepository.Get(filter : p => p.PermissionDescription == _permissionDescription).FirstOrDefault();
+                    Permission _permission = Service.UnitOfWork.PermissionRepository.Get(filter : p => p.PermissionDescription == _permissionDescription).FirstOrDefault();
                     if (_permission == null)
                     {
                         if (ModelState.IsValid)
@@ -875,8 +799,8 @@ namespace FunTour.Controllers
                             Permission _perm = new Permission();
                             _perm.PermissionDescription = _permissionDescription;
 
-                            UnitOfWork.PermissionRepository.Insert(_perm);
-                            UnitOfWork.Save();
+                            Service.UnitOfWork.PermissionRepository.Insert(_perm);
+                            Service.UnitOfWork.Save();
                         }
                     }
                 }
@@ -899,6 +823,29 @@ namespace FunTour.Controllers
         //    };
         //        ViewBag.Roles = RolesList;
 
+
         //    }
+
+        [HttpGet]
+        public ActionResult UserDelete(string IdUser)
+        {
+            var user = Service.UnitOfWork.UserRepository.GetUserDetails(filter: p => p.Id_UserDetails.ToString() == IdUser).FirstOrDefault();
+            //_context.Users.FirstOrDefault(p => p.Id == IdUser);
+
+            var User = UserModel.GetDataUserModel(user.UserName); //Ver
+            SetViewBagData(IdUser);
+            return View(User);
+        }
+
+        
+        [HttpPost, ActionName("UserDelete")]
+        public ActionResult UserDeleteConfirmed(string UserId)
+        {
+            if (Service.UnitOfWork.UserRepository.DeleteUserDetail(UserId))
+            {
+                Service.UnitOfWork.Save();
+            };
+            return RedirectToAction("Index");
+        }
     }
 }
