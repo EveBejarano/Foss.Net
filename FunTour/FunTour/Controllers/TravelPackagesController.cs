@@ -47,13 +47,41 @@ namespace PruebaUsers.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TravelPackage travelPackage = Service.UnitOfWork.TravelPackageRepository.GetByID(id);
-            if (travelPackage == null)
+            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id, includeProperties: "FromPLace,ToPlace,ToGoBus,ToBackBus,ToGoFlight,ToBackFlight, Event, Hotel, Reservations").FirstOrDefault();
+            if (travelPackage != null)
             {
-                return HttpNotFound();
+                var travelPackageViewModel = new TravelPackageViewModel
+                {
+                    Id_TravelPackage = travelPackage.Id_TravelPackage,
+                    PackageName = travelPackage.PackageName,
+                    Description = travelPackage.Description,
+                    FromDay = travelPackage.FromDay,
+                    ToDay = travelPackage.ToDay,
+                    FlightOrBus = travelPackage.FlightOrBus,
+                    FromPlace = travelPackage.FromPlace,
+                    ToPlace = travelPackage.ToPlace,
+                    Hotel = travelPackage.Hotel,
+                    Event = travelPackage.Event,
+                    ReservationAmount = travelPackage.ReservationAmount,
+                    TotalPrice = travelPackage.TotalPrice,
+                    Reservations = travelPackage.Reservations
+
+                };
+
+                if (travelPackageViewModel.FlightOrBus)
+                {
+                    travelPackageViewModel.ToGoFlight = travelPackage.ToGoFlight;
+                    travelPackageViewModel.ToBackFlight = travelPackage.ToBackFlight;
+                }
+                else
+                {
+                    travelPackageViewModel.ToGoBus = travelPackage.ToGoBus;
+                    travelPackageViewModel.ToBackBus = travelPackage.ToBackBus;
+                }
+                return View(travelPackageViewModel);
             }
-            return View(travelPackage);
-        }
+            return HttpNotFound();
+    }
 
         [UserAuthorization]
         [HttpGet]

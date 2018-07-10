@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FunTourDataLayer.BusCompany;
 using FunTourDataLayer.EventCompany;
 using FunTourDataLayer.FlightCompany;
 using FunTourDataLayer.Hotel;
 using FunTourDataLayer.Locality;
+using FunTourDataLayer.Reservation;
 
 namespace FunTour.Models
 {
@@ -48,5 +50,6 @@ namespace FunTour.Models
 
         [Display(Name = "Precio Total del Paquete")]
         public float TotalPrice { get; internal set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

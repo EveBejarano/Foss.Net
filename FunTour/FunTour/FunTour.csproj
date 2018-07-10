@@ -390,6 +390,7 @@
     <Content Include="Views\Reservation\Details.cshtml" />
     <Content Include="Views\Admin\UserDelete.cshtml" />
     <None Include="Views\Reservation\index.cshtml" />
+    <Content Include="Views\TravelPackages\_TravelPackageDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

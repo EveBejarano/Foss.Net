@@ -185,14 +185,14 @@ namespace FunTourBusinessLayer.Service
         #endregion
 
         #region Payments
-        public bool DoPayment(PaymentModel payment)
+        public bool DoPayment(GetPaymentRequest payment)
         {
             var GetPaymentRequest = new GetPaymentRequest
             {
                 Name = payment.Name,
-                CreditCardNumber = payment.creditCardNumber,
-                ExpirationDate = expirationDate,
-                SecurityNumber = securityNumber
+                CreditCardNumber = payment.CreditCardNumber,
+                ExpirationDate = payment.ExpirationDate,
+                SecurityNumber = payment.SecurityNumber
 	    };
 
             PaymentService PaymentService = new PaymentService

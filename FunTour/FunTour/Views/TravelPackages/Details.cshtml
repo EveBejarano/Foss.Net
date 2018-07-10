@@ -1,4 +1,4 @@
-﻿@model FunTourDataLayer.Reservation.TravelPackage
+﻿@model FunTour.Models.TravelPackageViewModel
 @{
 //Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -7,51 +7,20 @@
 }
 
 <div class="container">
-    <h3>Detalles</h3>
+    
 
-    <div>
-        <h4>TravelPackage</h4>
-        <hr />
-        <dl class="dl-horizontal"></dl>
-        <dt>
-            @Html.DisplayNameFor(model => model.PackageName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PackageName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FromDay)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FromDay)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ToDay)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ToDay)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.FromPlace)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.FromPlace.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ToPlace)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ToPlace.Name)
-        </dd>
-    </div>
+    @Html.Partial("_TravelPackageDetails", Model)
     <p>
-        @Html.ActionLink("Editar", "Edit", new { id = Model.Id_TravelPackage }) |
-        @Html.ActionLink("Volver a la lista", "Index")
+        @if (Model.Reservations.Count() == 0)
+        {
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Id_TravelPackage }, new {@class="waves-effect waves-light btn blue lighten-1"})
+        }
+        else
+        {
+            <a>"No se puede editar este paquete porque ya posee reservaciones."</a>
+        }
+
+
+        @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
     </p>
 </div>
