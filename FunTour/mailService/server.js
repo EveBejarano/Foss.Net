@@ -6,7 +6,7 @@ var Publicity = require('./api/models/publicityModel.js');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 
-var storage = multer.diskStorage({
+/*var storage = multer.diskStorage({
 	destination: function (req, file, callback) {
 		callback(null, '../FunTour/Newsletter');
 	},
@@ -28,7 +28,7 @@ app.post('/api/file', function(req, res) {
 		res.end("FileDone");
 	});
 });
-
+*/
 
 mongoose.connect('mongodb://localhost/publicityDB');
 
