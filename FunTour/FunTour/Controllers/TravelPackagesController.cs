@@ -39,7 +39,7 @@ namespace PruebaUsers.Controllers
             }
 
         }
-
+        [UserAuthorization]
         // GET: TravelPackages/Details/5
         public ActionResult Details(int? id)
         {
@@ -54,6 +54,8 @@ namespace PruebaUsers.Controllers
             }
             return View(travelPackage);
         }
+
+        [UserAuthorization]
         [HttpGet]
         // GET: TravelPackages/Create
         public ActionResult Create()
@@ -76,7 +78,7 @@ namespace PruebaUsers.Controllers
         //    };
         //    return View(travelPackageViewModel);
         //}
-
+        [UserAuthorization]
         // POST: TravelPackages/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -112,7 +114,7 @@ namespace PruebaUsers.Controllers
 
         #region Places
 
-
+        [UserAuthorization]
         public ActionResult AddPlaces(TravelPackageViewModel travelPackageView)
         {
             IEnumerable<City> ListOfCityToGo = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province");
@@ -124,7 +126,7 @@ namespace PruebaUsers.Controllers
             
             return View(travelPackageView);
         }
-
+        [UserAuthorization]
         public ActionResult AddPlacesReturn(int TravelPackageId, int ToCityId, int FromCityId)
         {
 
@@ -146,6 +148,7 @@ namespace PruebaUsers.Controllers
         #endregion
 
         #region Bus&Flights
+        [UserAuthorization]
         //[HttpGet]
         //[ValidateAntiForgeryToken]
         public ActionResult AddServicesToTravel(int idTravelPackage)
@@ -187,7 +190,7 @@ namespace PruebaUsers.Controllers
             return View(travelPackageViewModel);
             
         }
-
+        [UserAuthorization]
         public ActionResult AddServicesToTravelReturn(int TravelPackageId, int ToGoId, int ToBackId)
         {
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPLace,ToPlace").FirstOrDefault();
@@ -212,7 +215,7 @@ namespace PruebaUsers.Controllers
         #endregion
 
         #region Hotels&Events
-
+        [UserAuthorization]
 
         public ActionResult AddServicesInPlace(int TravelPackageId)
         {
@@ -255,7 +258,7 @@ namespace PruebaUsers.Controllers
 
             return View(travelPackageViewModel);
         }
-
+        [UserAuthorization]
         public ActionResult AddServicesInPlaceReturn(int TravelPackageId, int EventId, int HotelId)
         {
             
@@ -269,7 +272,7 @@ namespace PruebaUsers.Controllers
 
 
         #endregion
-
+        [UserAuthorization]
         public ActionResult ShowToConfirmCreation(int TravelPackageId)
         {
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPLace,ToPlace,ToGoBus,ToBackBus,ToGoFlight,ToBackFlight, Event, Hotel").FirstOrDefault();
@@ -309,7 +312,7 @@ namespace PruebaUsers.Controllers
             }
             return View(travelPackageViewModel);
         }
-
+        [UserAuthorization]
         public ActionResult ConfirmCreation(int TravelPackageId)
         {
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPLace,ToPlace,ToGoBus,ToBackBus,ToGoFlight,ToBackFlight, Event, Hotel").FirstOrDefault();
@@ -335,7 +338,7 @@ namespace PruebaUsers.Controllers
             
             return RedirectToAction("Index");
         }
-
+        [UserAuthorization]
         public ActionResult CancelCreation(int TravelPackageId)
         {
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.GetByID(TravelPackageId);
@@ -343,7 +346,7 @@ namespace PruebaUsers.Controllers
             Service.UnitOfWork.Save();
             return RedirectToAction("Index");
         }
-
+        [UserAuthorization]
         // GET: TravelPackages/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -365,6 +368,8 @@ namespace PruebaUsers.Controllers
             return View(travelPackage);
         }
 
+
+        [UserAuthorization]
         // POST: TravelPackages/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -387,7 +392,7 @@ namespace PruebaUsers.Controllers
 
 
 
-
+        [UserAuthorization]
         // GET: TravelPackages/Delete/5
         public ActionResult Delete(int? id)
         {

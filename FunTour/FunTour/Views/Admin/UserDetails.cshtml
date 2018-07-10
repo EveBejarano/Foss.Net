@@ -14,7 +14,7 @@
     <fieldset>
         <legend>
             <h3>
-                User Details
+                Detalles Del Usuario: @Model.UserModelName:
             </h3>
         </legend>
         @Html.Partial("_userDetails", Model)
@@ -24,9 +24,9 @@
 
     <fieldset>
         <legend>
-            <h3>
-                Roles Associated with this User
-            </h3>
+            <h5>
+                Roles:
+            </h5>
         </legend>
         <div class="panel" id="RolesTable">
             @Html.Partial("_ListUserRoleTable", Model)

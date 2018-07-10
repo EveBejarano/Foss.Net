@@ -25,15 +25,15 @@
     <fieldset>
         <legend>
             <h3>
-                User Details
+                Detalles Del Usuario: @Model.UserModelName:
             </h3>
         </legend>
         @Html.Partial("_userDetailsEdit", Model)
 
         <legend>
-            <h3>
-                Roles Associated with this User
-            </h3>
+            <h5>
+               Roles:
+            </h5>
         </legend>
         @foreach (var item in Model.SelectedRoles)
         {

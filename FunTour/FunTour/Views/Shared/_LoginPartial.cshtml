@@ -72,7 +72,9 @@
                     {
 
                         <li>
-                            <a class="nav-item nav-link text-white" href="#rusia">Rusia 2018</a>
+                            <a class="dropdown-trigger"href="~/TravelPackages/Index" data-target="Paquetes">
+                                Paquetes
+                            </a>
                         </li>
                         <li>
                             <a class="nav-item nav-link text-white" href="#vacaciones">Vacaciones</a>
@@ -99,9 +101,14 @@
         else
         {
             <ul class="right hide-on-med-and-down">
-                <li><a class="nav-item nav-link text-white" href="/Home">INICIO</a></li>
-                <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-                <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+
+                <li>
+                    <a class="dropdown-trigger"href="~/TravelPackages/Index" data-target="Paquetes">
+                        Paquetes
+                    </a>
+                </li>
+                <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink"})</li>
+                <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink"})</li>
             </ul>
         }
 

@@ -146,7 +146,7 @@ namespace FunTourBusinessLayer.Repositories
                 LastName = NewUser.LastName,
                 LastModified = System.DateTime.Now,
                 Inactive = false,
-                isSysAdmin = true
+                
             };
 
             UserDetails.Add(userDetails);
