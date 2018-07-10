@@ -32,10 +32,10 @@ La base de datos esta compuesta por:
 
 # API Hoteles
 
-Simula una API que devuelve listas de datos de hoteles, según el nombre de la ciudad que se pase como parámetro.
+Simula un sistema que devuelve listas de datos de hoteles, según la ciudad que se pase como parámetro, identificándola por su nombre, región y país.
 Permite ver los detalles completos de un hotel pasando su ID, incluyendo los tipos de habitaciones que tiene.
-Funcionalidad que falta: ver disponibilidad de habitaciones según las fechas.
-Permite dar de alta reservas, pasando los datos necesarios para su creación.
+Se puede consultar disponibilidad de habitaciones en hoteles de una ciudad, para un cierto rango de fechas.
+Permite dar de alta reservas de habitación en un hotel, pasando los datos necesarios para su creación. Se pueden obtener varias reservas de habitación con una llamada.
 
 ------
 
@@ -50,6 +50,10 @@ La base de datos está compuesta por:
   - Datos de los estados en los que puede estar una reserva.
 - Country: 
   - Información de los países en los cuales se tienen hoteles, incluyendo nombre del paí y la moneda que utiliza.
+-Region:
+  - Datos de la región, provincia o estado en cuyas ciudades se tienen hoteles registrados.
+-Ciudad:
+  - Datos de una ciudad en la que se tienen hoteles.
 - Guest: 
   - Información de los huéspedes que tuvieron reservas asociadas por lo menos una vez.
 - Hotel: 
