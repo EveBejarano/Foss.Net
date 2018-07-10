@@ -191,4 +191,4 @@ API que permite simular la gestión de clientes, reservas y viajes de colectivos
 ---
 
 Contiene CRUD para todas las entidades, y vistas que aportan información pertinente sobre reservas y viajes.
-Falta: Filtrar viajes por rango de fechas. Filtrar viajes por companía.
+Permite obtener viajes disponibles entre dos destinos, para un rango de fechas. Se pueden dar de alta reservas de pasajes.
