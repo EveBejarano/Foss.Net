@@ -4,6 +4,7 @@ var port = process.env.PORT || 3400;
 var mongoose = require('mongoose');
 var Publicity = require('./api/models/publicityModel.js');
 var bodyParser = require('body-parser');
+var multer = require('multer');
 
 mongoose.connect('mongodb://localhost/publicityDB');
 
