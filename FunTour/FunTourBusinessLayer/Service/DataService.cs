@@ -9,7 +9,10 @@ using FunTourDataLayer.Hotel;
 using FunTourDataLayer.Locality;
 using FunTourDataLayer.Reservation;
 using FunTourDataLayer.Services;
+<<<<<<< HEAD
+=======
 using FunTourDataLayer;
+>>>>>>> 43356421f7cb5bfd0b7947f85f6e4e00f6242257
 using FunTourDataLayer.Payment;
 
 
@@ -185,14 +188,14 @@ namespace FunTourBusinessLayer.Service
         #endregion
 
         #region Payments
-        public bool doPayment(string creditCard, string date, string code, string name)
+        public bool DoPayment(string creditCard, string date, string code, string name)
         {
             var GetPaymentRequest = new GetPaymentRequest
             {
                 Name = name,
-                creditCardNumber = creditCard,
-                expirationDate = date,
-                securityNumber = code
+                CreditCardNumber = creditCard,
+                ExpirationDate = date,
+                SecurityNumber = code
             };
 
             PaymentService PaymentService = new PaymentService

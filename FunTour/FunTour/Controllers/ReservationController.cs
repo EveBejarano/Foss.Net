@@ -56,6 +56,20 @@
 //			return View(reservationViewModel);
 //		}
 		
+<<<<<<< HEAD
+		public ActionResult CreatePayment(int ReservationId, PaymentModel pay)
+		{
+			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationId).FirstOrDefault();
+			PaymentModel payment = new PaymentModel 
+			{
+				Name = pay.Name,
+				creditCardNumber = pay.creditCardNumber,
+				expirationDate = pay.expirationDate,
+				securityNumber = pay.securityNumber
+			};
+		
+			var AuxPayment = Service.DoPayment( payment.Name, payment.creditCardNumber, payment.creditCardNumber, payment.securityNumber );
+=======
 //		public ActionResult createPayment(int ReservationId, PaymentModel pay)
 //		{
 //			var reservation = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Id_Reservation == ReservationID).FirstOrDefault();
@@ -68,6 +82,7 @@
 //			};
 		
 //			var AuxPayment = Service.doPayment( payment.Name, payment.creditCardNumber, payment.creditCardNumber, payment.securityNumber );
+>>>>>>> 43356421f7cb5bfd0b7947f85f6e4e00f6242257
 
 //			if (AuxPayment.state)
 //			{
@@ -79,6 +94,19 @@
 //		}
 
 
+<<<<<<< HEAD
+		// POST: Reservation/Create
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Create([Bind(Include = "Id_Reservation")] ReservationViewModel reservationViewModel)
+		{
+			var reservation = new Reservation
+			{
+				Id_TravelPackage = reservationViewModel.TravelPackage.Id_TravelPackage,
+				TravelPackage = reservationViewModel.TravelPackage,
+				Client = reservationViewModel.client,
+				Paid = reservationViewModel.Pagado,
+=======
 //		// POST: Reservation/Create
 //		[HttpPost]
 //		[ValidateAntiForgeryToken]
@@ -90,6 +118,7 @@
 //				TravelPackage = reservationViewModel.travelPackage,
 //				Client = reservationViewModel.client,
 //				Paid = reservationViewModel.Pagado,
+>>>>>>> 43356421f7cb5bfd0b7947f85f6e4e00f6242257
 
 //			};
 
