@@ -384,7 +384,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\TravelPackages\AddServicesToTravel.cshtml" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Details.cshtml" />
     <Content Include="Views\index.cshtlm" />
     <Content Include="Views\Reservation\Details.cshtml" />
