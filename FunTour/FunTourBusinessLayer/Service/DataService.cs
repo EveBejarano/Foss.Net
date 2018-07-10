@@ -9,10 +9,7 @@ using FunTourDataLayer.Hotel;
 using FunTourDataLayer.Locality;
 using FunTourDataLayer.Reservation;
 using FunTourDataLayer.Services;
-<<<<<<< HEAD
-=======
 using FunTourDataLayer;
->>>>>>> 43356421f7cb5bfd0b7947f85f6e4e00f6242257
 using FunTourDataLayer.Payment;
 
 
