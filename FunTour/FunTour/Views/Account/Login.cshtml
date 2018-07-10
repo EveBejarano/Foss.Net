@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body class="img">
+<body background="~/Content/images/Beach2.jpeg">
 
 
 <!-- Login Form -->
@@ -15,8 +15,8 @@
 <div class="row login">
     <div class="col s8 offset-s2">
         <div class="card center login">
-            <div class="card-action grey lighten-3 white-text redonded">
-                <h3 class="purple-text text-darken-3" style="font-family:'Pacifico',cursive;">Ingresar</h3>
+            <div class="card-action blue lighten-1 white-text redonded">
+                <h3 class="white-text text-darken-3" style="font-family:'Pacifico',cursive;">Ingresar</h3>
             </div>
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
@@ -24,7 +24,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="card-content">
             <div class="form-field ">
-                <label for="username">E-mail</label>
+                <label for="username">Usuario</label>
 
                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
