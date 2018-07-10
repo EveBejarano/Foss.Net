@@ -9,7 +9,7 @@ using FunTourDataLayer.Locality;
 
 namespace FunTourDataLayer.Reservation
 {
-    public partial class TravelPackage
+    public class TravelPackage
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TravelPackage()
@@ -52,6 +52,7 @@ namespace FunTourDataLayer.Reservation
         public IList<ReservedSeat> ReservedSeats { get; set; }
         public IList<ReservedRoom> ReservedRooms { get; set; }
         public IList<ReservedTicket> ReservedTickets { get; set; }
+        public bool Activate { get; set; }
 
         public void SetReservationAmount()
         {

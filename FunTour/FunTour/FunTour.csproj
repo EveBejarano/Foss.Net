@@ -252,9 +252,7 @@
     <Content Include="Content\js\bootstrap.bundle.min.js" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\bootstrap.min.js" />
-    <Content Include="Content\js\site.js" />
     <Content Include="Content\js\site.min.js" />
-    <Content Include="Content\js\site2.js" />
     <Content Include="Content\lib\bootstrap\dist\css\bootstrap-theme.css" />
     <Content Include="Content\lib\bootstrap\dist\css\bootstrap-theme.min.css" />
     <Content Include="Content\lib\bootstrap\dist\css\bootstrap.css" />
@@ -495,7 +493,6 @@
     <Content Include="Views\TravelPackages\Create.cshtml" />
     <Content Include="Views\TravelPackages\Delete.cshtml" />
     <Content Include="Views\TravelPackages\Details.cshtml" />
-    <Content Include="Views\TravelPackages\Edit.cshtml" />
     <Content Include="Views\TravelPackages\Index.cshtml" />
     <Content Include="Views\TravelPackages\ShowToConfirmCreation.cshtml" />
     <Content Include="Views\TravelPackages\_AddBusToTravelPackagePartialView.cshtml" />

@@ -602,31 +602,21 @@ namespace FunTourBusinessLayer.Service
 
         #endregion
 
+        public void InactivatePackage(int? travelPackageId)
+        {
+            var package = UnitOfWork.TravelPackageRepository.GetByID(travelPackageId);
+            package.Activate = false;
+            UnitOfWork.TravelPackageRepository.Update(package);
+            UnitOfWork.Save();
+        }
 
-        //public void CargarTablasDeLectura()
-        //{
-        //    if (!(UnitOfWork.CRepository.Any()))
-        //    {
-        //        InicializarCountry();
-        //    }
-
-        //    if (!UnitOfWork.ProvinceRepository.Any())
-        //    {
-        //        InicializarProvince();
-        //    }
-        //    if (!UnitOfWork.CityRepository.Any())
-        //    {
-        //        InicializarCity();
-        //    }
-
-        //    if (!UnitOfWork.TituloProfesionalRepository.Any())
-        //    {
-        //        InicializarTituloProfesional();
-        //    }
-
-        //    UnitOfWork.Save();
-        //}
-    
+        public void ActivatePackage(int? travelPackageId)
+        {
+            var package = UnitOfWork.TravelPackageRepository.GetByID(travelPackageId);
+            package.Activate = true;
+            UnitOfWork.TravelPackageRepository.Update(package);
+            UnitOfWork.Save();
+        }
     }
 
 

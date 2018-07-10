@@ -35,6 +35,7 @@ namespace FunTour.Models
         public DateTime ToDay { get; set; }
 
         public bool FlightOrBus { get; set; }
+        public bool Activate { get; set; }
 
         public virtual Hotel Hotel { get; set; }
         public virtual Flight ToGoFlight { get; set; }
