@@ -17,7 +17,6 @@ var transporter = nodemailer.createTransport({
 var fs = require('fs');
 
 exports.sendPublicity = function(req) {
-	function send (req) {
 		var emailsubject = req.subject;
 		var publicitybody = req.description;
 		var emaillist = req.emails;
@@ -42,6 +41,3 @@ exports.sendPublicity = function(req) {
 		});
 	};
 
-
-	send(req);
-}
