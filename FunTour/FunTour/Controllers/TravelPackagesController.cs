@@ -78,6 +78,7 @@ namespace PruebaUsers.Controllers
         //    };
         //    return View(travelPackageViewModel);
         //}
+
         [UserAuthorization]
         // POST: TravelPackages/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -97,14 +98,14 @@ namespace PruebaUsers.Controllers
             };
 
             if (ModelState.IsValid )
-            {
+            {   //validación de fechas
                 if(travelPackageViewModel.FromDay > System.DateTime.Now & travelPackageViewModel.ToDay > System.DateTime.Now & travelPackage.FromDay != travelPackageViewModel.ToDay)
                 {
-                    Service.UnitOfWork.TravelPackageRepository.Insert(travelPackage);
+                    Service.UnitOfWork.TravelPackageRepository.Insert(travelPackage); //se crea y guarda el paquete. se busca el id del creado
                     Service.UnitOfWork.Save();
                     travelPackageViewModel.Id_TravelPackage =
                         Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.PackageName == travelPackage.PackageName && p.Description == travelPackage.Description).FirstOrDefault().Id_TravelPackage;
-                    return RedirectToAction(AddPlacesString, routeValues: travelPackageViewModel);
+                    return RedirectToAction(AddPlacesString, routeValues: travelPackageViewModel); //redirección a la siguiente vista
                 }
             }
 
@@ -120,7 +121,7 @@ namespace PruebaUsers.Controllers
             IEnumerable<City> ListOfCityToGo = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province");
             IEnumerable<City> ListOfCityToStay = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province");
 
-
+            //se cargan listas para elegir ciudad origen y destino
             ViewBag.FromCities = new SelectList(ListOfCityToGo, "Id_City", "Name");
             ViewBag.ToCities = new SelectList(ListOfCityToStay, "Id_City", "Name");
             
@@ -134,8 +135,8 @@ namespace PruebaUsers.Controllers
                 .Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPlace, ToPlace")
                 .FirstOrDefault();
 
+            //se agregan origen y destino al paquete
             travelPackage.ToPlace = Service.UnitOfWork.CityRepository.GetByID(ToCityId);
-
             travelPackage.FromPlace = Service.UnitOfWork.CityRepository.GetByID(FromCityId);
             Service.UnitOfWork.TravelPackageRepository.Update(travelPackage);
             Service.UnitOfWork.Save();
@@ -150,7 +151,7 @@ namespace PruebaUsers.Controllers
         #region Bus&Flights
         [UserAuthorization]
         //[HttpGet]
-        //[ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]       //llena las listas con vuelos o viajes
         public ActionResult AddServicesToTravel(int idTravelPackage)
         {
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == idTravelPackage, includeProperties: "FromPlace, ToPlace").FirstOrDefault();
@@ -165,7 +166,7 @@ namespace PruebaUsers.Controllers
                 FromPlace = travelPackage.FromPlace,
                 ToPlace = travelPackage.ToPlace
             };
-            if (travelPackageViewModel.FlightOrBus)
+            if (travelPackageViewModel.FlightOrBus) 
             {
                 IEnumerable<AuxFlight> ListOfFlightsToGo = Service.GetFlights(travelPackageViewModel.FromDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
                 IEnumerable<AuxFlight> ListOfFlightsToBack = Service.GetFlights( travelPackageViewModel.ToDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
@@ -190,7 +191,7 @@ namespace PruebaUsers.Controllers
             return View(travelPackageViewModel);
             
         }
-        [UserAuthorization]
+        [UserAuthorization]  //asigna vuelos o viajes al paquete
         public ActionResult AddServicesToTravelReturn(int TravelPackageId, int ToGoId, int ToBackId)
         {
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPLace,ToPlace").FirstOrDefault();
