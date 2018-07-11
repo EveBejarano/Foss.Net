@@ -8,6 +8,11 @@
 
 <div class="container">
     <h3>Enviar Email de Publicidad</h3>
+
+    <h4>Desearia cargar la publicidad?</h4>
+    <form action="http:localhost:3400">
+        <input type="submit" value="Ir a Cargar" />
+    </form>
     @using (Html.BeginForm("Create", "Newsletter", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
