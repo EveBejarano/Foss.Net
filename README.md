@@ -1,6 +1,6 @@
 # Foss.Net
 
-# PruebaUsers
+# FunTour
 Es el sistema de Fantour que (hasta ahora) permite registrarse e iniciar sesión como usuario. Al registrarse, un usuario que es administrador puede crear/editar/listar/eliminar usuarios y roles. Posee las entidades necesarias para la administración de permisos de cada rol y de paquetes pero esto todavía no se encuentra implementado. 
 
 La base de datos esta compuesta por:
