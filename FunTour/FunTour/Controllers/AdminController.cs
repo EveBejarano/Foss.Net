@@ -478,16 +478,20 @@ namespace FunTour.Controllers
                    .FirstOrDefault();
 
             var role = Service.UnitOfWork.RolesRepository.GetRoles(filter: p => p.Id == roleDetails.Id_Role.ToString(), includeProperties: "Users").FirstOrDefault();
-            foreach (var item in role.Users)
+            if (role.Users != null)
             {
-                var user = Service.UnitOfWork.UserRepository.GetUserByID(item.UserId);
-                var auxuser = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
-
-                if (user!= null && (auxuser.Inactive == false || auxuser.Inactive == null))
+                foreach (var item in role.Users)
                 {
-                    roleDetails.Users.Add(user);
+                    var user = Service.UnitOfWork.UserRepository.GetUserByID(item.UserId);
+                    var auxuser = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
+
+                    if (user != null && (auxuser.Inactive == false || auxuser.Inactive == null))
+                    {
+                        roleDetails.Users.Add(user);
+                    }
                 }
             }
+
 
 
             var auxuserlist = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
