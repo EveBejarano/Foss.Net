@@ -1,0 +1,66 @@
+﻿@model FunTour.Models.NewsletterModel
+@{
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container">
+    <h3>Enviar Email de Publicidad</h3>
+
+    <h4>Desearia cargar la publicidad?</h4>
+    <form action="http:localhost:3400">
+        <input type="submit" value="Ir a Cargar" />
+    </form>
+    @using (Html.BeginForm("Create", "Newsletter", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        <div style="padding-right:10px ">
+            <div class="form-group">
+                @Html.LabelFor(model => model.description, new { @class = "col-md-2 control-label" })
+
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.description, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.emails, new { @class = "col-md-2 control-label" })
+
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.emails, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.subject, new { @class = "col-md-2 control-label" })
+
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.subject, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.fileName, new { @class = "col-md-2 control-label" })
+
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.fileName, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="form-group" style="padding-top: 20px">
+                <div class="col-md-offset-2 col-md-10">
+                    <button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="CreateNewsletterAsync()">Guardar y Continuar</button>
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+    <div>
+        @Html.ActionLink("Volver a la lista", "Index")
+    </div>
+    <br />
+</div>

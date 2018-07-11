@@ -1,0 +1,29 @@
+﻿@model FunTourDataLayer.Reservation.Reservation
+@{
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    ViewBag.Title = "Eliminar Reserva";
+}
+
+<div class="container">
+    <h3>Eliminar Reserva</h3>
+
+    <h5>¿Está seguro de que desea eliminar esta reserva definitivamente?</h5>
+    <div>
+        <dl class="dl-horizontal"></dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.Partial("_ReservationDetails")
+            <div class="form-actions no-color">
+                <button class="waves-effect waves-light btn blue lighten-1" type="submit">Eliminar</button> |
+                @Html.ActionLink("Volver a la lista", "Index")
+            </div>
+
+        }
+        </br>
+    </div>
+</div>
