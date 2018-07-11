@@ -10,14 +10,17 @@ namespace FunTour.Controllers
     {
         private readonly DataService Service = new DataService();
 
+        
+
         public ActionResult Index()
         {
             IEnumerable<City> ListOfCityToGo = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province");
-            IEnumerable<City> ListOfCityToStay = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province"); 
+            IEnumerable<City> ListOfCityToStay = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province");
             //se cargan listas para elegir ciudad origen y destino
             ViewBag.SelectOrigen = ListOfCityToGo;
 
             ViewBag.SelectDestino = ListOfCityToStay;
+
 
             return View();
         }
@@ -42,6 +45,13 @@ namespace FunTour.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+
+        public ActionResult SearchResults()
+        {
+            ViewBag.Message = "Tu busqueda coincide con estos resultados";
+            var listOfPackages = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.ToPlace.Name == "Corrientes" );
+            return View(listOfPackages);
         }
     }
 }
