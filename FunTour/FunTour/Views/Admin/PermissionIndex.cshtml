@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<FunTourDataLayer.AccountManagement.Permission>
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "Rights";
 }
@@ -13,6 +11,15 @@
 
 
 <div class="container">
+    <nav>
+        <div class="nav-wrapper red-darken-2">
+            <div class="col s12">
+                <a href="~/Admin/Index" class="breadcrumb">Usuarios</a>
+                <a href="~/Admin/PermissionIndex" class="breadcrumb">Permisos</a>
+            </div>
+        </div>
+    </nav>
+
     <h3>
         Permisos
     </h3>
@@ -35,11 +42,13 @@
                 <td>
                     <center>
                         <a href="@Url.Action("PermissionEdit", "Admin", new { id = item.Id_Permission })">
-                            <img src="@Url.Content("~/Content/Images/pen.png")" alt="Edit Permission" />
+                            <i class="material-icons">create</i>
                         </a>
 
                         <a href="@Url.Action("PermissionDelete", "Admin", new { id = item.Id_Permission })">
-                            <img src="@Url.Content("~/Content/Images/bin.png")" alt="Delete Permission" />
+                            <i class="material-icons" type="button" id=".deleteUser">
+                                delete_forever
+                            </i>
                         </a>
                     </center>
                 </td>

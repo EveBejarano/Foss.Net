@@ -7,7 +7,9 @@ var emailAccountSchema = new Schema({
 
 var publicitySchema = new Schema({
 	subject: String,
-	description: String
+	description: String,
+	emails: String,
+	fileName: String
 });
 
 module.exports = mongoose.model('email', emailAccountSchema);
