@@ -30,7 +30,6 @@ namespace FunTourBusinessLayer.UnitOfWorks
         private GenericRepository<AuxBus> auxbusRepository;
         private GenericRepository<AuxEvent> auxeventRepository;
 
-
         private GenericRepository<Reservation> reservationRepository;
 
         private GenericRepository<City> cityRepository;
@@ -348,7 +347,6 @@ namespace FunTourBusinessLayer.UnitOfWorks
                 return flightreservedSeatRepository;
             }
         }
-
 
 
         public void Save()

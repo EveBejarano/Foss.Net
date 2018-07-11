@@ -1,7 +1,7 @@
 @model IEnumerable<FunTourDataLayer.Reservation.Reservation>
 
 @{
-	ViewBag.Title="Index";
+    ViewBag.Title = "Index";
 }
 
 <div class="container">
@@ -35,3 +35,53 @@
 
     </table>
 </div>
+<!--
+@*<div class="page">
+
+        <div id="menucontainer">
+            <ul class="menuTemplate3 decor3_1">
+                @{
+
+                    if (ViewContext.Controller.IsSysAdmin())
+                    {
+                        <li>
+                            <a href="#" class="arrow">System Administration</a>
+                            <div class="drop decor3_2 dropToLeft" style="width: 160px;">
+                                <div class='right'>
+                                    <a href="/Admin">PruebaUsers</a><br />
+                                    <a href="/Admin/RoleIndex">Roles</a><br />
+                                    <a href="/Admin/PermissionIndex">Permissions</a><br />
+                                </div>
+                            </div>
+                        </li>
+                    }}
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>*@
+
+            <div class="container">
+            <div class="row">
+
+<div class="col-2 bg-white shad-inf p-0">
+    <div class="row p-0 m-3">
+        <ul class="list-unstyled col-12 p-0">
+            <font style="font-size: 12px">Current </font>
+            <li class="h6"> User: @this.User.Identity.Name</li>
+            @*<li><small>@ViewBag.user.Dni</small></li>
+                <li><small>@ViewBag.user.Email</small></li>*@
+            @*<li><h6><a class="col-12 btn btn-sm btn-inf mb-3" href="http://192.168.42.27:8000/Usuarios/editardatos/@ViewBag.user.id">Editar Datos</a></h6></li>*@
+        </ul>
+
+        <ul class="list-unstyled col-12 p-0">
+
+            <li class="h6"> ADMINISTRADOR</li>
+            <li><small><a href="/Admin">Usuarios</a></small></li>
+            <li><small><a href="/Admin/RoleIndex">Roles</a></small></li>
+            <li><small><a href="/Admin/PermissionIndex">Permissions</a></small></li>
+
+
+        </ul>
+    </div>
+</div>
+    -->

@@ -1,12 +1,39 @@
-div.navbar-fixed.general {
-    margin: 0px 0px 0px 0px;
-}
+/*estilo buscador*/
+
 .section-search input {
     padding: 5px !important;
     font-size: 18px !important;
     width: 90% !important;
     border: #f4f4f4 3px solid !important;
 }
+
+div.row.form1 {
+    background-color: rgba(1,87,155, .8);
+    border-radius: 7px;
+    width: 100%;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+    padding: 4px 7px 2px 4px;
+}
+
+/*Estilo footer follow*/
+.section-follow .fa-4x {
+    margin: 5px 10px;
+}
+
+
+/*estilo Logo FanTour del Nav*/
+a.brand-logo {
+    margin: 0px 0px 0px 40px;
+}
+
+
+
+div.navbar-fixed.general {
+    margin: 0px 0px 0px 0px;
+}
+
+
+/*Login*/
 
 body {
     display: flex;
@@ -18,13 +45,6 @@ main {
     flex: 1 0 auto;
 }
 
-.section-follow .fa-4x {
-    margin: 5px 10px;
-}
-
-a.brand-logo {
-    margin: 0px 0px 0px 50px;
-}
 
 body.img {
     background-image: url('../images/Lobito lindo.jpg');
