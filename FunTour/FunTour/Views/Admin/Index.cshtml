@@ -31,8 +31,16 @@
 
 
 <div class="container">
-
-
+    <br/>
+    <div class="row center-align">
+        <div class="col s6">
+            <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='/Admin/RoleIndex'">Roles</button>
+        </div>
+        <div class="col s6">
+            <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='/Admin/PermissionIndex'">Permisos</button>
+        </div>
+    </div>
+    <h3>Usuarios</h3>
         <h5>Filtro de Búsqueda</h5>
 
         @Html.TextBox("SurnameId", string.Empty, new { style = "width:200px", maxlength = 30, placeholder = "Apellido" })
@@ -49,13 +57,13 @@
 
 
 
-    <br />
-    <br />
-    @Html.Partial("_ListUserTable", Model)
-    <br />
-    <div>
-        <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='@Url.Action("UserCreate","Admin")'">Crear Usuario</button>
         <br />
+        <br />
+        @Html.Partial("_ListUserTable", Model)
+        <br />
+        <div>
+            <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='@Url.Action("UserCreate","Admin")'">Crear Usuario</button>
+            <br />
+        </div>
+        <br /><br />
     </div>
-    <br /><br />
-</div>

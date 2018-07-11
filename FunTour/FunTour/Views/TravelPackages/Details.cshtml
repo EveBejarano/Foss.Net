@@ -1,26 +1,26 @@
 ﻿@model FunTour.Models.TravelPackageViewModel
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "Details";
 }
 
 <div class="container">
-    
+
 
     @Html.Partial("_TravelPackageDetails", Model)
     <p>
         @if (Model.Reservations.Count() == 0)
         {
-            @Html.ActionLink("Editar", "Edit", new { id = Model.Id_TravelPackage }, new {@class="waves-effect waves-light btn blue lighten-1"})
+            @Html.ActionLink("Editar", "Edit", new { id = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
         }
         else
         {
-            <a>"No se puede editar este paquete porque ya posee reservaciones."</a>
+            <a class="black-text">No se puede editar este paquete porque ya posee reservaciones.</a>
         }
 
+        <br />
 
-        @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
     </p>
+    @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
+    <br/>
 </div>

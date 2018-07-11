@@ -7,60 +7,60 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body class="img">
+<body background="~/Content/images/Beach2.jpeg">
 
 
 <!-- Login Form -->
 <div class="container ">
 <div class="row login">
-<div class="col s8 offset-s2">
-    <div class="card center login">
-        <div class="card-action grey lighten-3 white-text redonded">
-            <h3 class="purple-text text-darken-3" style="font-family:'Pacifico',cursive;">Ingresar</h3>
-        </div>
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="card-content">
-                <div class="form-field ">
-                    <label for="username">E-mail</label>
-
-                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
-                </div><br>
-                <div class="form-field white-text">
-                    <label for="password">Contraseña</label>
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                </div><br>
-                <div class="form-field left-aling">
-                    <label>
-                        <input type="checkbox" class="Green" id="remember" />
-                        <span><label for="">Recordarme</label></span>
-                    </label>
-
-
-                </div><br>
-                <div class="form-field">
-                    <button class="btn-large red darken-1">Ingresar</button>
-                </div><br>
-                <p>
-                    @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
-                </p>
-                <br>
-                <p>
-                    @Html.ActionLink("Registrar como nuevo usuario", "Register")
-                </p>
+    <div class="col s8 offset-s2">
+        <div class="card center login">
+            <div class="card-action blue lighten-1 white-text redonded">
+                <h3 class="white-text text-darken-3" style="font-family:'Pacifico',cursive;">Ingresar</h3>
             </div>
-        }
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="card-content">
+            <div class="form-field ">
+                <label for="username">Usuario</label>
+
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            </div><br>
+            <div class="form-field white-text">
+                <label for="password">Contraseña</label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div><br>
+            <div class="form-field left-aling">
+                <label>
+                    <input type="checkbox" class="Green" id="remember" />
+                    <span><label for="">Recordarme</label></span>
+                </label>
+
+
+            </div><br>
+            <div class="form-field">
+                <button class="btn-large red darken-1">Ingresar</button>
+            </div><br>
+            <p>
+                @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
+            </p>
+            <br>
+            <p>
+                @Html.ActionLink("Registrar como nuevo usuario", "Register")
+            </p>
         </div>
-    </div>
+}
+            </div>
+        <div class="col-md-4">
+            @* <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>*@
+        </div>
+            </div>
+        </div>
 </div>
 </body>
