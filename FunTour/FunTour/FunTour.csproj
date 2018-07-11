@@ -389,6 +389,7 @@
     <Content Include="Views\Reservation\CreateReservation.cshtml" />
     <None Include="Views\Reservation\index.cshtml" />
     <Content Include="Views\TravelPackages\_TravelPackageDetails.cshtml" />
+    <Content Include="Views\Reservation\_TravelPackageDetails.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
