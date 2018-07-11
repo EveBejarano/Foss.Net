@@ -16,24 +16,28 @@
     <p>
 
         @if (ViewContext.Controller.IsSysAdmin())
+    {
+        if (Model.Activate == false)
         {
-            if(Model.Activate == false)
-             {
 
-                 
-                     @Html.ActionLink("Activar", "Activate", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+
+            @Html.ActionLink("Activar", "Activate", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
 
 
 
-             }
-             else
-             {
+    }
+    else
+    {
 
-                     @Html.ActionLink("Desactivar", "Inactivate", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+        @Html.ActionLink("Desactivar", "Inactivate", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
 
-            }
-        }
-        @Html.ActionLink("Reservar Paquete Individual","Create" ,"Reservation", new { id = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
-        @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
+}
+}
+        <div class="row">
+            @Html.ActionLink("Reservar Paquete Individual", "CreateReservation", "Reservation", new { id = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+        </div>
+        <div class="row">
+            @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
+        </div>
     </p>
 </div>
