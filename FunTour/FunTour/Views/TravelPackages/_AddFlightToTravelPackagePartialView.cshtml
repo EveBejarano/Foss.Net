@@ -1,34 +1,35 @@
 ﻿@model FunTour.Models.TravelPackageViewModel
 
-<h1>Vuelo de Ida</h1>>
-<table style="width:100%">
-    <tr>
-        <th>ID Vuelo</th>
-        <th>Fecha de Salida</th>
-        <th>Fecha de Llegada</th>
-        <th>Cantidad de Asientos Libres</th>
-        <th>Precio</th>
-    </tr>
-    @foreach (var item in ViewBag.FlightsToGoToShow)
-    {
-
-        <tr>
-            <td>@item.Id_Flight</td>
-            <td>@item.DepartureDate</td>
-            <td>@item.ArrivedDate</td>
-            <td>@item.NotReservedSeats</td>
-            <td>@item.Price</td>
-        </tr>
-    }
-</table>
-
-
+<h4>Vuelo de Ida</h4>
 @Html.HiddenFor(model => model.Id_TravelPackage)
 <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
     border-width: thin; border-color: Silver; width: 740px">
+
+    <table style="width:100%">
+        <tr>
+            <th>ID Vuelo</th>
+            <th>Fecha de Salida</th>
+            <th>Fecha de Llegada</th>
+            <th>Cantidad de Asientos Libres</th>
+            <th>Precio</th>
+        </tr>
+        @foreach (var item in ViewBag.FlightsToGoToShow)
+        {
+
+            <tr>
+                <td>@item.Id_Flight</td>
+                <td>@item.DepartureDate</td>
+                <td>@item.ArrivedDate</td>
+                <td>@item.NotReservedSeats</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </table>
+
+
     @if (Model.ToGoFlight == null)
     {
-        <legend><strong>Agregar Vuelo al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
+        <legend><strong>Agregar Vuelo al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace.Name</strong></legend>
 
     }
     else
@@ -38,15 +39,18 @@
             @Model.ToGoFlight.FlightCompany.Name
             @Model.ToGoFlight.Id_Flight
         </a>
-        <legend><strong>Cambiar Vuelo Asociado al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
+        <legend><strong>Cambiar Vuelo Asociado al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace.Name</strong></legend>
     }
-    
-    
+
+
 
     @Html.DropDownList("FlightsToGo", null, string.Empty, new { style = "display:initial" })
+</fieldset>
 
+<h4>Vuelo de Vuelta</h4>
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
 
-    <h1>Vuelo de Vuelta</h1>>
     <table style="width:100%">
         <tr>
             <th>ID Vuelo</th>
@@ -70,7 +74,7 @@
 
     @if (Model.ToBackFlight == null)
     {
-        <legend><strong>Agregar Vuelo al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
+        <legend><strong>Agregar Vuelo al Paquete para volver desde @Model.ToPlace.Name a @Model.FromPlace.Name</strong></legend>
 
     }
     else
@@ -80,11 +84,12 @@
             @Model.ToBackFlight.FlightCompany.Name
             @Model.ToBackFlight.Id_Flight
         </a>
-        <legend><strong>Cambiar Vuelo Asociado al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
+        <legend><strong>Cambiar Vuelo Asociado al Paquete para volver desde @Model.ToPlace.Name a @Model.FromPlace.Name</strong></legend>
     }
 
     @Html.DropDownList("FlightsToBack", null, string.Empty, new { style = "display:initial" })
 
 
-        <button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddFlight()">Guardar y Continuar</button>
 </fieldset>
+<br/>
+<button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddFlight()">Guardar y Continuar</button>

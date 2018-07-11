@@ -193,32 +193,34 @@
                             <td>@Model.Event.Price</td>
                         </tr>
 
-                    </table>
+    </table>
+@if (ViewContext.Controller.IsSysAdmin())
+{
 
-                    <h4>Reservas</h4>
-                    @if (Model.Reservations.Count() != 0)
-                    {
+if(Model.Reservations.Count() != 0)
+ {
+     <h3>Reservas:</h3>
+     <table style="width:100%">
+         <tr>
+             <th>ID Reservacion</th>
+             <th>Pagado</th>
+         </tr>
 
-                        <table style="width:100%">
-                            <tr>
-                                <th>ID Reservacion</th>
-                                <th>Pagado</th>
-                            </tr>
+         @foreach (var item in Model.Reservations) { 
+             <tr>
+                 <td>@item.Id_Reservation</td>
+                 <td>@item.Paid</td>
+             </tr>
 
-                            @foreach (var item in Model.Reservations)
-                            {
-                                <tr>
-                                    <td>@item.Id_Reservation</td>
-                                    <td>@item.Paid</td>
-                                </tr>
-
-                            }
-                        </table>
-                    }
-                    else
-                    {
-                        <a class="black-text">No se realizaron reservas de este paquete.</a>
-                    }
-
+         }
         
-</div> 
+     </table>
+ }
+ else
+ {
+     <a>"No se realizaron reservas de este paquete."</a>
+ }
+
+}
+
+</div>

@@ -1,7 +1,12 @@
-﻿@model FunTour.Models.TravelPackageViewModel
+﻿@using FunTour.Models
+@using FunTourDataLayer.Reservation
+@model FunTour.Models.TravelPackageViewModel
 
 @{
-    ViewBag.Title = "Details";
+//Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    ViewBag.Title = "Detalles del Paquete";
 }
 
 <div class="container">
@@ -9,18 +14,30 @@
 
     @Html.Partial("_TravelPackageDetails", Model)
     <p>
-        @if (Model.Reservations.Count() == 0)
-        {
-            @Html.ActionLink("Editar", "Edit", new { id = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
-        }
-        else
-        {
-            <a class="black-text">No se puede editar este paquete porque ya posee reservaciones.</a>
-        }
 
-        <br />
+        @if (ViewContext.Controller.IsSysAdmin())
+    {
+        if (Model.Activate == false)
+        {
 
+
+            @Html.ActionLink("Activar", "Activate", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+
+
+
+    }
+    else
+    {
+
+        @Html.ActionLink("Desactivar", "Inactivate", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+
+}
+}
+        <div class="row">
+            @Html.ActionLink("Reservar Paquete Individual", "CreateReservation", "Reservation", new { id = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+        </div>
+        <div class="row">
+            @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
+        </div>
     </p>
-    @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
-    <br/>
 </div>

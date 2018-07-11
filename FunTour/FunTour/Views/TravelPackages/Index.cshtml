@@ -8,10 +8,14 @@
 
 <div class="container">
     <h2>Paquetes turísticos</h2>
+    @if (ViewContext.Controller.IsSysAdmin())
+    {
+            
+        <p>
+            <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='@Url.Action("Create", "TravelPackages")'">Crear nuevo</button>
+        </p>
+    }
 
-    <p>
-        <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='@Url.Action("Create", "TravelPackages")'">Crear nuevo</button>
-    </p>
     <table class="table">
         <tr>
             <th>
@@ -29,10 +33,22 @@
             <th>
                 @Html.DisplayNameFor(model => model.ToPlace)
             </th>
+            
+            @if (ViewContext.Controller.IsSysAdmin())
+            {
+            
+                <th>
+                    @Html.DisplayNameFor(model => model.Activate)
+                </th>
+            }
         </tr>
 
         @foreach (var item in Model)
         {
+       
+            if(ViewContext.Controller.IsSysAdmin())
+             {
+            
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.PackageName)
@@ -49,17 +65,76 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ToPlace.Name)
             </td>
-            @if (ViewContext.Controller.IsSysAdmin())
+            <td>
+                @Html.DisplayFor(modeltem => item.Activate)
+            </td>
+            <td>
+                <a href="@Url.Action("Details", "TravelPackages", new { TravelPackageId = item.Id_TravelPackage })">
+                    <i class="material-icons">info</i>
+
+                </a>
+            </td>
+            <td>
+                <a href="@Url.Action("Delete", "TravelPackages", new { TravelPackageId = item.Id_TravelPackage })">
+                    <i class="material-icons" type="button">
+                        delete_forever
+                    </i>
+                </a>
+            </td>
+            @if (item.Activate == false)
             {
-            
+
                 <td>
-                @Html.ActionLink("Editar", "Edit", new {id = item.Id_TravelPackage}) |
-                @Html.ActionLink("Detalles", "Details", new {id = item.Id_TravelPackage}) |
-                @Html.ActionLink("Eliminar", "Delete", new {id = item.Id_TravelPackage})
+                    @Html.ActionLink("Activar", "Activate", new { TravelPackageId = item.Id_TravelPackage }, new { id = item.Id_TravelPackage })
+
+                </td>
+
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Desactivar", "Inactivate", new { TravelPackageId = item.Id_TravelPackage }, new { id = item.Id_TravelPackage })
+
                 </td>
             }
+
+
         </tr>
+            }
+            else
+            {
+                if (item.Activate == true)
+                {
+                 <tr>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.PackageName)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.FromDay)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.ToDay)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.FromPlace.Name)
+                     </td>
+                     <td>
+                         @Html.DisplayFor(modelItem => item.ToPlace.Name)
+                     </td>
+                     <td>
+                         <a href="@Url.Action("Details", "TravelPackages", new { TravelPackageId = item.Id_TravelPackage })">
+                             <i class="material-icons">info</i>
+
+                         </a>
+                     </td>
+
+
+                 </tr>
+                }
+            }
+
         }
 
     </table>
+    
 </div>
