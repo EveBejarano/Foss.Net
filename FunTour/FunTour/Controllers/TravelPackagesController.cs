@@ -39,15 +39,14 @@ namespace PruebaUsers.Controllers
             }
 
         }
-        [UserAuthorization]
         // GET: TravelPackages/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? TravelPackageId)
         {
-            if (id == null)
+            if (TravelPackageId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id, includeProperties: "FromPLace,ToPlace,ToGoBus,ToBackBus,ToGoFlight,ToBackFlight, Event, Hotel, Reservations").FirstOrDefault();
+            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPLace,ToPlace,ToGoBus,ToBackBus,ToGoFlight,ToBackFlight, Event, Hotel, Reservations").FirstOrDefault();
             if (travelPackage != null)
             {
                 var travelPackageViewModel = new TravelPackageViewModel
@@ -83,6 +82,10 @@ namespace PruebaUsers.Controllers
             return HttpNotFound();
     }
 
+
+
+        #region Create Package
+
         [UserAuthorization]
         [HttpGet]
         // GET: TravelPackages/Create
@@ -90,22 +93,7 @@ namespace PruebaUsers.Controllers
         {
             return View();
         }
-        //[HttpPost]
-        //public ActionResult Create(int id)
-        //{
-        //    var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id).FirstOrDefault();
 
-        //    var travelPackageViewModel = new TravelPackageViewModel
-        //    {
-        //        Id_TravelPackage = travelPackage.Id_TravelPackage,
-        //        PackageName = travelPackage.PackageName,
-        //        Description = travelPackage.Description,
-        //        FromDay = travelPackage.FromDay,
-        //        ToDay = travelPackage.ToDay,
-        //        FlightOrBus = travelPackage.FlightOrBus
-        //    };
-        //    return View(travelPackageViewModel);
-        //}
 
         [UserAuthorization]
         // POST: TravelPackages/Create
@@ -113,7 +101,7 @@ namespace PruebaUsers.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PackageName,Description,FromDay,ToDay,FlightOrBus")] TravelPackageViewModel travelPackageViewModel)
+        public ActionResult Create([Bind(Include = "Id_TravelPackage,PackageName,Description,FromDay,ToDay,FlightOrBus")] TravelPackageViewModel travelPackageViewModel)
         {
             var travelPackage = new TravelPackage
             {
@@ -125,15 +113,15 @@ namespace PruebaUsers.Controllers
                 FlightOrBus = travelPackageViewModel.FlightOrBus
             };
 
-            if (ModelState.IsValid )
+            if (ModelState.IsValid)
             {   //validación de fechas
-                if(travelPackageViewModel.FromDay > System.DateTime.Now & travelPackageViewModel.ToDay > System.DateTime.Now & travelPackage.FromDay != travelPackageViewModel.ToDay)
+                if (travelPackageViewModel.FromDay > System.DateTime.Now & travelPackageViewModel.ToDay > System.DateTime.Now & travelPackage.FromDay != travelPackageViewModel.ToDay)
                 {
                     Service.UnitOfWork.TravelPackageRepository.Insert(travelPackage); //se crea y guarda el paquete. se busca el id del creado
                     Service.UnitOfWork.Save();
                     travelPackageViewModel.Id_TravelPackage =
                         Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.PackageName == travelPackage.PackageName && p.Description == travelPackage.Description).FirstOrDefault().Id_TravelPackage;
-                    return RedirectToAction(AddPlacesString, routeValues: travelPackageViewModel); //redirección a la siguiente vista
+                    return RedirectToAction(AddPlacesString, routeValues: new{ TravelPackageId = travelPackageViewModel.Id_TravelPackage}); //redirección a la siguiente vista
                 }
             }
 
@@ -144,16 +132,29 @@ namespace PruebaUsers.Controllers
         #region Places
 
         [UserAuthorization]
-        public ActionResult AddPlaces(TravelPackageViewModel travelPackageView)
+        public ActionResult AddPlaces(int TravelPackageId)
         {
+            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPlace, ToPlace").FirstOrDefault();
+            var travelPackageViewModel = new TravelPackageViewModel
+            {
+                Id_TravelPackage = travelPackage.Id_TravelPackage,
+                PackageName = travelPackage.PackageName,
+                Description = travelPackage.Description,
+                FromDay = travelPackage.FromDay,
+                ToDay = travelPackage.ToDay,
+                FlightOrBus = travelPackage.FlightOrBus,
+                FromPlace = travelPackage.FromPlace,
+                ToPlace = travelPackage.ToPlace
+            };
+
             IEnumerable<City> ListOfCityToGo = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province");
             IEnumerable<City> ListOfCityToStay = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province");
 
             //se cargan listas para elegir ciudad origen y destino
             ViewBag.FromCities = new SelectList(ListOfCityToGo, "Id_City", "Name");
             ViewBag.ToCities = new SelectList(ListOfCityToStay, "Id_City", "Name");
-            
-            return View(travelPackageView);
+
+            return View(travelPackageViewModel);
         }
         [UserAuthorization]
         public ActionResult AddPlacesReturn(int TravelPackageId, int ToCityId, int FromCityId)
@@ -169,7 +170,7 @@ namespace PruebaUsers.Controllers
             Service.UnitOfWork.TravelPackageRepository.Update(travelPackage);
             Service.UnitOfWork.Save();
 
-            return RedirectToAction(AddServicesToTravelString, routeValues: new {idTravelPackage = TravelPackageId});
+            return RedirectToAction(AddServicesToTravelString, routeValues: new { TravelPackageId = TravelPackageId });
 
         }
 
@@ -180,9 +181,9 @@ namespace PruebaUsers.Controllers
         [UserAuthorization]
         //[HttpGet]
         //[ValidateAntiForgeryToken]       //llena las listas con vuelos o viajes
-        public ActionResult AddServicesToTravel(int idTravelPackage)
+        public ActionResult AddServicesToTravel(int TravelPackageId)
         {
-            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == idTravelPackage, includeProperties: "FromPlace, ToPlace").FirstOrDefault();
+            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPlace, ToPlace").FirstOrDefault();
             var travelPackageViewModel = new TravelPackageViewModel
             {
                 Id_TravelPackage = travelPackage.Id_TravelPackage,
@@ -194,10 +195,10 @@ namespace PruebaUsers.Controllers
                 FromPlace = travelPackage.FromPlace,
                 ToPlace = travelPackage.ToPlace
             };
-            if (travelPackageViewModel.FlightOrBus) 
+            if (travelPackageViewModel.FlightOrBus)
             {
                 IEnumerable<AuxFlight> ListOfFlightsToGo = Service.GetFlights(travelPackageViewModel.FromDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
-                IEnumerable<AuxFlight> ListOfFlightsToBack = Service.GetFlights( travelPackageViewModel.ToDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
+                IEnumerable<AuxFlight> ListOfFlightsToBack = Service.GetFlights(travelPackageViewModel.ToDay, travelPackageViewModel.FromPlace, travelPackageViewModel.ToPlace);
 
 
                 ViewBag.FlightsToGo = new SelectList(ListOfFlightsToGo, "Id_Flight", "Id_Flight");
@@ -217,7 +218,7 @@ namespace PruebaUsers.Controllers
             }
 
             return View(travelPackageViewModel);
-            
+
         }
         [UserAuthorization]  //asigna vuelos o viajes al paquete
         public ActionResult AddServicesToTravelReturn(int TravelPackageId, int ToGoId, int ToBackId)
@@ -236,8 +237,8 @@ namespace PruebaUsers.Controllers
                 Service.SetAuxBusToPackage(TravelPackageId, ToGoId, ToBackId);
 
             }
-            
-            return RedirectToAction(AddServicesInPlaceString, routeValues: new { TravelPackageId});
+
+            return RedirectToAction(AddServicesInPlaceString, routeValues: new { TravelPackageId });
         }
 
 
@@ -290,7 +291,7 @@ namespace PruebaUsers.Controllers
         [UserAuthorization]
         public ActionResult AddServicesInPlaceReturn(int TravelPackageId, int EventId, int HotelId)
         {
-            
+
             Service.SetAuxHotelToPackage(TravelPackageId, HotelId);
 
             Service.SetAuxEventToPackage(TravelPackageId, EventId);
@@ -317,7 +318,8 @@ namespace PruebaUsers.Controllers
                 FromPlace = travelPackage.FromPlace,
                 ToPlace = travelPackage.ToPlace,
                 Hotel = travelPackage.Hotel,
-                Event = travelPackage.Event
+                Event = travelPackage.Event,
+                Reservations = new List<Reservation>()
             };
 
             travelPackage.SetReservationAmount();
@@ -331,8 +333,8 @@ namespace PruebaUsers.Controllers
 
             if (travelPackageViewModel.FlightOrBus)
             {
-                    travelPackageViewModel.ToGoFlight = travelPackage.ToGoFlight;
-                    travelPackageViewModel.ToBackFlight = travelPackage.ToBackFlight;
+                travelPackageViewModel.ToGoFlight = travelPackage.ToGoFlight;
+                travelPackageViewModel.ToBackFlight = travelPackage.ToBackFlight;
             }
             else
             {
@@ -347,10 +349,10 @@ namespace PruebaUsers.Controllers
             var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPLace,ToPlace,ToGoBus,ToBackBus,ToGoFlight,ToBackFlight, Event, Hotel").FirstOrDefault();
 
             travelPackage.Creator = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(ControllerContext.HttpContext.User.Identity.Name);
+            travelPackage.Activate = true;
             Service.UnitOfWork.TravelPackageRepository.Update(travelPackage);
             Service.UnitOfWork.Save();
-
-
+            
             Service.SetHotelReservationToNewTravelPackage(travelPackage);
             Service.SetEventReservationToNewTravelPackage(travelPackage);
             if (travelPackage.FlightOrBus)
@@ -364,7 +366,7 @@ namespace PruebaUsers.Controllers
                 Service.SetToGoBusReservationToNewTravelPackage(travelPackage);
                 Service.SetToBackBusReservationToNewTravelPackage(travelPackage);
             }
-            
+
             return RedirectToAction("Index");
         }
         [UserAuthorization]
@@ -375,77 +377,84 @@ namespace PruebaUsers.Controllers
             Service.UnitOfWork.Save();
             return RedirectToAction("Index");
         }
-        [UserAuthorization]
-        // GET: TravelPackages/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TravelPackage travelPackage = Service.UnitOfWork.TravelPackageRepository.GetByID(id);
-            if (travelPackage == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.Hotels = new SelectList(Service.UnitOfWork.HotelRepository.Get(), "Id_Hotel", "Name");
-            ViewBag.Flights = new SelectList(Service.UnitOfWork.FlightRepository.Get(), "Id_FlightCompany", "Name");
-            ViewBag.Events = new SelectList(Service.UnitOfWork.EventRepository.Get(), "Id_Event", "Name");
-            ViewBag.Buses = new SelectList(Service.UnitOfWork.BusRepository.Get(), "Id_Bus", "Name");
-
-
-            return View(travelPackage);
-        }
+        #endregion
 
 
         [UserAuthorization]
-        // POST: TravelPackages/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id_Package")] TravelPackage travelPackage)
+        // GET: TravelPackages/Delete/5
+        public ActionResult Activate(int? TravelPackageId)
         {
-            if (ModelState.IsValid)
-            {
-                Service.UnitOfWork.TravelPackageRepository.Update(travelPackage);
-                Service.UnitOfWork.Save();
-                return RedirectToAction("Index");
-            }
-            return View(travelPackage);
+            Service.ActivatePackage(TravelPackageId);
+            return RedirectToAction("Index");
         }
 
-
-
-
+        [UserAuthorization]
+        // GET: TravelPackages/Delete/5
+        public ActionResult Inactivate(int? TravelPackageId)
+        {
+            Service.InactivatePackage(TravelPackageId);
+            return RedirectToAction("Index");
+        }
 
 
 
         [UserAuthorization]
         // GET: TravelPackages/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? TravelPackageId)
         {
-            if (id == null)
+            if (TravelPackageId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TravelPackage travelPackage = Service.UnitOfWork.TravelPackageRepository.GetByID(id);
+            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPLace,ToPlace,ToGoBus,ToBackBus,ToGoFlight,ToBackFlight, Event, Hotel").FirstOrDefault();
             if (travelPackage == null)
             {
                 return HttpNotFound();
             }
-            return View(travelPackage);
+
+            var travelPackageViewModel = new TravelPackageViewModel
+            {
+                Id_TravelPackage = travelPackage.Id_TravelPackage,
+                PackageName = travelPackage.PackageName,
+                Description = travelPackage.Description,
+                FromDay = travelPackage.FromDay,
+                ToDay = travelPackage.ToDay,
+                FlightOrBus = travelPackage.FlightOrBus,
+                FromPlace = travelPackage.FromPlace,
+                ToPlace = travelPackage.ToPlace,
+                Hotel = travelPackage.Hotel,
+                Event = travelPackage.Event,
+                Reservations = travelPackage.Reservations,
+                ReservationAmount = travelPackage.ReservationAmount,
+                TotalPrice = travelPackage.TotalPrice
+        };
+            
+            if (travelPackageViewModel.FlightOrBus)
+            {
+                travelPackageViewModel.ToGoFlight = travelPackage.ToGoFlight;
+                travelPackageViewModel.ToBackFlight = travelPackage.ToBackFlight;
+            }
+            else
+            {
+                travelPackageViewModel.ToGoBus = travelPackage.ToGoBus;
+                travelPackageViewModel.ToBackBus = travelPackage.ToBackBus;
+            }
+            return View(travelPackageViewModel);
         }
 
         // POST: TravelPackages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int TravelPackageId)
         {
-            TravelPackage travelPackage = Service.UnitOfWork.TravelPackageRepository.GetByID(id);
+            TravelPackage travelPackage = Service.UnitOfWork.TravelPackageRepository.GetByID(TravelPackageId);
             Service.UnitOfWork.TravelPackageRepository.Delete(travelPackage);
             Service.UnitOfWork.Save();
             return RedirectToAction("Index");
         }
+
+
+
     }
 }
+

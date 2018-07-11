@@ -1,17 +1,73 @@
-@model FunTourDataLayer.AccountManagement.Reservation
-
+@model FunTourDataLayer.Reservation.Reservation
 @{
-	ViewBag.Title = "Details";
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    ViewBag.Title = "Detalles de la reserva";
 }
 
-<h2> Details </h2>
+<div class="container">
 
-<div>
-	<h4>Reservation</h4>
-	<hr />
-	<dl class="dl-horizontal">
-</div>
+    @Html.Partial("_ReservationDetails", Model)
+    <table style='width: 100%'>
+        <tr>
+            <td style='width: 120px;font-weight: bold' class='userTable'>
+                @Html.LabelFor(model => model.TravelPackage)
+            </td>
+            <td class='userTable'>
+                @Html.DisplayFor(model => model.TravelPackage.PackageName, new { style = "width:350px" })
+                @Html.ValidationMessageFor(model => model.TravelPackage.PackageName)
+            </td>
+        </tr>
+        <tr>
+            <td style='font-weight: bold' class='userTable'>
+                @Html.LabelFor(model => model.ReservedRoom)
+            </td>
+            <td class='userTable'>
+                @Html.DisplayFor(model => model.ReservedRoom.Hotel.Name, new { style = "width:90%" })
+                @Html.ValidationMessageFor(model => model.ReservedRoom.Hotel.Name)
+            </td>
+        </tr>
 
-<p>
-	@Html.ActionLink("Volver al Menu", "Index")
-</p>
+        <tr>
+            <td style='width: 100px; font-weight: bold' class='userTable'>
+                @Html.LabelFor(model => model.ReservedRoom, "System Role")
+            </td>
+            <td class='userTable'>
+                @Html.DisplayFor(model => model.ReservedRoom.Id_ReservedRoom)
+                @Html.ValidationMessageFor(model => model.ReservedRoom.Id_ReservedRoom)
+            </td>
+        </tr>
+        <tr>
+            <td style='font-weight: bold' class='userTable'>
+                @Html.LabelFor(model => model.ReservedSeat)
+            </td>
+            <td class='userTable'>
+                @Html.DisplayFor(model => model.ReservedSeat.Id_ReservedSeat, new { style = "width:90%" })
+                @Html.ValidationMessageFor(model => model.ReservedSeat.Id_ReservedSeat)
+            </td>
+        </tr>
+        <tr>
+            <td style='font-weight: bold' class='userTable'>
+                @Html.LabelFor(model => model.ReservedTicket)
+            </td>
+            <td class='userTable'>
+                @Html.DisplayFor(model => model.ReservedTicket.Event.Name, new { style = "width:90%" })
+                @Html.ValidationMessageFor(model => model.ReservedTicket.Event.Name)
+            </td>
+        </tr>
+        <tr>
+            <td style='font-weight: bold' class='userTable'>
+                @Html.LabelFor(model => model.ReservedTicket)
+            </td>
+            <td class='userTable'>
+                @Html.DisplayFor(model => model.ReservedTicket.Id_ReservedTicket, new { style = "width:90%" })
+                @Html.ValidationMessageFor(model => model.ReservedTicket.Id_ReservedTicket)
+            </td>
+        </tr>
+    </table>
+
+    @Html.ActionLink("Eliminar Reserva", "Delete", "Reservation", new { id = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn red lighten-1" })
+    @Html.ActionLink("Pagar", "payment", "Reservation", new { id =  })
+    @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
+    </p>

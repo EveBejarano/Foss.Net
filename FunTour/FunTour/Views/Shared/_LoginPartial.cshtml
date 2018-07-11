@@ -17,100 +17,92 @@
     <ul class="right hide-on-med-and-down">
 
         @if (ViewContext.Controller.IsSysAdmin())
-        {
+    {
 
-            <li>
-                <a class="dropdown-trigger" href="~/Admin/Index" data-target="Usuarios">
-                    Usuarios
-                    @*<i class="material-icons right">arrow_drop_down</i>*@
-                </a>
-                @*<ul id="Usuarios" class="dropdown-content">
-                    <li><a class="nav-item nav-link text-white" href="~/Admin/Index" > Ver Usuarios</a></li>
-                    <li><a class="nav-item nav-link text-white" href="~/Admin/UserCreate">Crear Usuarios</a></li>
-                </ul>*@
-            </li>
+        <li>
+            <a class="dropdown-trigger" href="~/Admin/Index" data-target="Usuarios">
+                Usuarios
+                @*<i class="material-icons right">arrow_drop_down</i>*@
+            </a>
+            @*<ul id="Usuarios" class="dropdown-content">
+                <li><a class="nav-item nav-link text-white" href="~/Admin/Index" > Ver Usuarios</a></li>
+                <li><a class="nav-item nav-link text-white" href="~/Admin/UserCreate">Crear Usuarios</a></li>
+            </ul>*@
+        </li>
 
-            <li>
-                <a class="dropdown-trigger" href="~/Admin/RoleIndex"" data-target="Roles">
-                    Roles
-                    @*<i class="material-icons right">arrow_drop_down</i>*@
-                </a>
-                @*<ul id="Roles" class="dropdown-content">
+        @* <li>
+        <a class="dropdown-trigger" href="~/Admin/RoleIndex" " data-target="Roles">
+            Roles
+           <i class="material-icons right">arrow_drop_down</i>
+        </a>
+        <ul id="Roles" class="dropdown-content">
+                <li>
+                    <a class="nav-item nav-link text-white" href="~/Admin/RoleIndex"> Ver Roles</a>
+                </li>
+                <li><a class="nav-item nav-link text-white" href="~/Admin/RoleCreate">Crear Roles</a></li>
+            </ul>
+        </li>*@
+
+        @* <li>
+        <a class="dropdown-trigger" href="/Admin/PermissionIndex" data-target="Permisos">
+            Permisos
+            <i class="material-icons right">arrow_drop_down</i>
+        </a>
+        <ul id="Permisos" class="dropdown-content">
+            <li><a class="nav-item nav-link text-white" href="~/Admin/PermissionIndex"> Ver Permisos</a></li>
+            <li><a class="nav-item nav-link text-white" href="~/Admin/PermissionCreate">Crear Permisos</a></li>
+        </ul>
+        </li>*@
+        <li>
+            <a class="dropdown-trigger" href="~/TravelPackages/Index" data-target="Paquetes">
+                Paquetes
+                @*<i class="material-icons right">arrow_drop_down</i>*@
+            </a>
+            @*<ul id="Paquetes" class="dropdown-content">
+                <li><a class="nav-item nav-link text-white" href="~/TravelPackages/Index"> Ver Paquetes</a></li>
+                <li><a class="nav-item nav-link text-white" href="~/TravelPackages/Create" asp-action="Create">Crear Paquetes</a></li>
+            </ul>*@
+        </li>
+        <li>
+            <a class="nav-item nav-link text-white" href="">Newsletters</a>
+        </li>
+
+}
+else
+{
+
+    <li>
+        <a class="dropdown-trigger" href="~/TravelPackages/Index" data-target="Paquetes">
+            Paquetes
+        </a>
+    </li>
+    <li>
+        <a class="dropdown-trigger" href="~/Reservation/index">
+            Mis reservas
+        </a>
+    </li>
+
+}
+
+        <li><a class="nav-item nav-link text-white" href="javascript:document.getElementById('logoutForm').submit()">CERRAR SESIÓN</a></li>
+        <li>@Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-item nav-link text-white" })</li>
+
+    </ul>
+                }
+            }
+            else
+            {
+                <ul class="right hide-on-med-and-down">
+
                     <li>
-                        <a class="nav-item nav-link text-white" href="~/Admin/RoleIndex"> Ver Roles</a>
+                        <a class="dropdown-trigger"href="~/TravelPackages/Index" data-target="Paquetes">
+                            Paquetes
+                        </a>
                     </li>
-                    <li><a class="nav-item nav-link text-white" href="~/Admin/RoleCreate">Crear Roles</a></li>
-                </ul>*@
-            </li>
-
-            <li>
-                <a class="dropdown-trigger" href="/Admin/PermissionIndex" data-target="Permisos">
-                    Permisos
-                    @*<i class="material-icons right">arrow_drop_down</i>*@
-                </a>
-                @*<ul id="Permisos" class="dropdown-content">
-                    <li><a class="nav-item nav-link text-white" href="~/Admin/PermissionIndex"> Ver Permisos</a></li>
-                    <li><a class="nav-item nav-link text-white" href="~/Admin/PermissionCreate">Crear Permisos</a></li>
-                </ul>*@
-            </li>
-            <li>
-                <a class="dropdown-trigger"href="~/TravelPackages/Index" data-target="Paquetes">
-                    Paquetes
-                    @*<i class="material-icons right">arrow_drop_down</i>*@
-                </a>
-                @*<ul id="Paquetes" class="dropdown-content">
-                    <li><a class="nav-item nav-link text-white" href="~/TravelPackages/Index"> Ver Paquetes</a></li>
-                    <li><a class="nav-item nav-link text-white" href="~/TravelPackages/Create" asp-action="Create">Crear Paquetes</a></li>
-                </ul>*@
-            </li>
-            <li>
-                <a class="nav-item nav-link text-white" href="">Newsletters</a>
-            </li>
-
-                    }
-                    else
-                    {
-
-                        <li>
-                            <a class="dropdown-trigger"href="~/TravelPackages/Index" data-target="Paquetes">
-                                Paquetes
-                            </a>
-                        </li>
-                        <li>
-                            <a class="nav-item nav-link text-white" href="#vacaciones">Vacaciones</a>
-                        </li>
-                        <li>
-                            <a class="nav-item nav-link text-white" href="#Egresados">Egresados</a>
-                        </li>
-                        <li>
-                            <a class="nav-item nav-link text-white" href="#contactanos">Contactanos</a>
-                        </li>
-                        <li>
-                            <a class="nav-item nav-link text-white" href="~/Account/Login">Ingresar</a>
-                        </li>
-
-                    }
-
-
-                    <li><a class="nav-item nav-link text-white" href="javascript:document.getElementById('logoutForm').submit()">CERRAR SESIÓN</a></li>
-                    <li>@Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage", @class = "nav-item nav-link text-white"})</li>
-
+                    <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink"})</li>
+                    <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink"})</li>
                 </ul>
             }
-        }
-        else
-        {
-            <ul class="right hide-on-med-and-down">
 
-                <li>
-                    <a class="dropdown-trigger"href="~/TravelPackages/Index" data-target="Paquetes">
-                        Paquetes
-                    </a>
-                </li>
-                <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new {id = "registerLink"})</li>
-                <li>@Html.ActionLink("Iniciar sesión", "Login", "Account", routeValues: null, htmlAttributes: new {id = "loginLink"})</li>
-            </ul>
         }
-
-    }
-</div>
+    </div>

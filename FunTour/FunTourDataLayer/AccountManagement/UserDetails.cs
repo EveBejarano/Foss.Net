@@ -24,7 +24,7 @@ namespace FunTourDataLayer.AccountManagement
 
         public DateTime? LastModified { get; set; }
         
-        public bool? Inactive { get; set; }
+        public bool Inactive { get; set; }
 
         [StringLength(30)]
         public string FirstName { get; set; }

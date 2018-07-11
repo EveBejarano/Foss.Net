@@ -1,7 +1,5 @@
 ﻿@model FunTourDataLayer.AccountManagement.RoleDetails
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "Role: " + Html.DisplayFor(model => model.RoleDescription);
 }
@@ -69,5 +67,5 @@
 </div>
 <br />
 <div>
-    @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+    @Html.ActionLink("Volver al Listado  de Roles", "RoleIndex", "Admin", new { @class = "waves-effect waves-light btn blue lighten-1" })
 </div>

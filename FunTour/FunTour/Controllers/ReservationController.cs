@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -8,7 +8,9 @@ using System.Web.Mvc;
 using FunTourDataLayer;
 using FunTourBusinessLayer.Service;
 using FunTourDataLayer.Reservation;
-using FunTour.Models; 
+using FunTour.Models;
+using FunTourDataLayer.AccountManagement;
+using Microsoft.AspNet.Identity;
 
 namespace PruebaUsers.Controllers 
 {
@@ -19,87 +21,96 @@ namespace PruebaUsers.Controllers
 		//GET: Reservations
 		public ActionResult Index()
 		{
-			return View(Service.UnitOfWork.ReservationRepository.Get());
-		}
+		    IEnumerable<Reservation> listOfReservations = new List<Reservation>();
+		    if (this.HasRole("Administrator") | this.IsSysAdmin())
+		    {
+		        listOfReservations = Service.UnitOfWork.ReservationRepository.Get();
 
-		public ActionResult Index(int userId)
-		{
-			IEnumerable<Reservation> ListOfReservations = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Client.Id_UserDetails == userId);
-			return View(ListOfReservations);
+		    }
+		    else
+		    {
+		        var userId = this.HttpContext.User.Identity.GetUserId();
+		        string username = Service.UnitOfWork.UserRepository.GetUserByID(userId).UserName;
+		        UserDetails userdetails = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(username);
+		        listOfReservations = Service.UnitOfWork.ReservationRepository.Get(filter: p => p.Client.Id_UserDetails == userdetails.Id_UserDetails, includeProperties: "TravelPackage"); // mil consultas despues -> pum suicidio 
 
+		    }
+            return View(listOfReservations);
 		}
+        
 
 		//GET: Reservation/Details
 		public ActionResult Details(int? id) 
 		{
-			if (id == null) { return new HttpStatusCodeResult(HttpStatusCode.BadRequest); }
+		    if (id == null)
+		    {
+		        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+		    }
 	
 			Reservation reservation = Service.UnitOfWork.ReservationRepository.GetByID(id);
-			if (reservation == null) { return HttpNotFound(); }
+		    if (reservation == null)
+		    {
+		        return HttpNotFound();
+		    }
 			return View(reservation);
 		}
-
+        [HttpGet]
 		//GET: Reservation/Create
-	    public ActionResult Create()
+	    public ActionResult CreateReservation(int TravelPackageId)
 	    {
 	        return View();
 	    }
 
-		// POST: Reservation/Create
-		
-		[HttpPost]
-        [ValidateAntiForgeryToken]
+        // POST: Reservation/Create
 
-        public ActionResult Create(int id)
+	    [HttpPost, ActionName("Create")]
+	    [ValidateAntiForgeryToken]
+
+        public ActionResult CreateConfirmed(int id)
 			//Creo que lo ideal seria enrealidad que se le pase el package
 		{
-    	var travelpackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id).FirstOrDefault();
-		var room = Service.UnitOfWork.ReservedRoomRepository.Get(filter: p => p.TravelPackage.Id_TravelPackage == id && p.Available == true).FirstOrDefault();
-			ReservedSeat seat;
-			if (travelpackage.FlightOrBus) 
-			{
-				seat = Service.UnitOfWork.ReservedSeatRepository.Get(filter: p => p.TravelPackage.Id_TravelPackage == id && p.Available == true).FirstOrDefault();
-			} else {
-				seat = Service.UnitOfWork.BusReservedSeatRepository.Get(filter: p => p.TravelPackage.Id_TravelPackage == id && p.Available == true).FirstOrDefault();
-			};
-			var ticket = Service.UnitOfWork.ReservedTicketRepository.Get(filter: p => p.TravelPackage.Id_TravelPackage == id && p.Available == true).FirstOrDefault();
+    	    var travelpackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == id).FirstOrDefault();
+		    var room = Service.UnitOfWork.ReservedRoomRepository.Get(filter: p => p.TravelPackage.Id_TravelPackage == id && p.Available == true).FirstOrDefault();
 
-			Reservation reservation = new Reservation
-			{
-					Id_TravelPackage = travelpackage.Id_TravelPackage,
-					//UserDetails = 
-					TravelPackage = travelpackage,
-					ReservedRoom = room,
-					ReservedSeat = seat,
-					ReservedTicket = ticket,
-					Paid = false
-			};
-			// If model state is valid, update the available field to set it false
-			if (ModelState.IsValid) 
-			{
-				Service.UnitOfWork.ReservationRepository.Insert(reservation);
-				room.Available = false;
-				Service.UnitOfWork.ReservedRoomRepository.Update(room);
-				ticket.Available = false;
-				Service.UnitOfWork.ReservedTicketRepository.Update(ticket);
+		    ReservedSeat seat;
 
-				if (travelpackage.FlightOrBus) 
-				{
-					FlightReservedSeat flightSeat = Service.UnitOfWork.ReservedSeatRepository.Get(filter: p => p.Id_ReservedSeat == seat.Id_ReservedSeat).FirstOrDefault();
-					flightSeat.Available = false;
-					Service.UnitOfWork.ReservedSeatRepository.Update(flightSeat);
-				} else {
-					BusReservedSeat busSeat = Service.UnitOfWork.BusReservedSeatRepository.Get(filter: p => p.Id_ReservedSeat == seat.Id_ReservedSeat).FirstOrDefault();
-					busSeat.Available = false;
-					Service.UnitOfWork.BusReservedSeatRepository.Update(busSeat);
-				};
+		    if (travelpackage.FlightOrBus)
+		    {
+		        FlightReservedSeat flightSeat = Service.UnitOfWork.ReservedSeatRepository.Get(filter: p => p.TravelPackage.Id_TravelPackage == id && p.Available == true).FirstOrDefault();
+		        flightSeat.Available = false;
+		        seat = flightSeat;
+		        Service.UnitOfWork.ReservedSeatRepository.Update(flightSeat);
+		    }
+		    else
+		    {
+		        BusReservedSeat busSeat = Service.UnitOfWork.BusReservedSeatRepository.Get(filter: p => p.TravelPackage.Id_TravelPackage == id && p.Available == true).FirstOrDefault();
+		        busSeat.Available = false;
+		        seat = busSeat;
+		        Service.UnitOfWork.BusReservedSeatRepository.Update(busSeat);
+		    };
 
-				Service.UnitOfWork.Save();
-              
+            var ticket = Service.UnitOfWork.ReservedTicketRepository.Get(filter: p => p.TravelPackage.Id_TravelPackage == id && p.Available == true).FirstOrDefault();
 
-			}
-            return View(reservation);
-        }
+		    Reservation reservation = new Reservation
+		    {
+		        Id_TravelPackage = travelpackage.Id_TravelPackage,
+		        Client = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(ControllerContext.HttpContext.User.Identity.Name),
+                TravelPackage = travelpackage,
+		        ReservedRoom = room,
+		        ReservedSeat = seat,
+		        ReservedTicket = ticket,
+		        Paid = false
+		    };
+		    room.Available = false;
+            ticket.Available = false;
+            
+		    Service.UnitOfWork.ReservationRepository.Insert(reservation);
+		    Service.UnitOfWork.ReservedRoomRepository.Update(room);
+		    Service.UnitOfWork.ReservedTicketRepository.Update(ticket);
+            Service.UnitOfWork.Save();
+
+		    return RedirectToAction("Index");
+		}
 		public ActionResult createPayment(int ReservationId, PaymentModel pay)
 		{
 			var reservation = Service.UnitOfWork.ReservationRepository.GetByID(ReservationId);
@@ -133,12 +144,12 @@ namespace PruebaUsers.Controllers
             }
             Service.UnitOfWork.ReservationRepository.Delete(reservation);
             Service.UnitOfWork.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); 
         }
     	
     		
     	
 
 	}
-}
+} 
 		

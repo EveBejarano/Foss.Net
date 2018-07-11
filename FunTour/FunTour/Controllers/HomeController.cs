@@ -1,22 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using FunTour.Models;
+﻿using FunTour.Models;
 using FunTourBusinessLayer.Service;
-using FunTourBusinessLayer.UnitOfWorks;
+using FunTourDataLayer.Locality;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace FunTour.Controllers
 {
     public class HomeController : Controller
     {
-        
+        private readonly DataService Service = new DataService();
 
         public ActionResult Index()
         {
+            IEnumerable<City> ListOfCityToGo = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province");
+            IEnumerable<City> ListOfCityToStay = Service.UnitOfWork.CityRepository.Get(includeProperties: "Province"); 
+            //se cargan listas para elegir ciudad origen y destino
+            ViewBag.SelectOrigen = ListOfCityToGo;
+
+            ViewBag.SelectDestino = ListOfCityToStay;
+
             return View();
         }
+
+
 
         [UserAuthorization]
         public ActionResult About()

@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<FunTourDataLayer.AccountManagement.RoleDetails>
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "Roles";
 }
@@ -12,6 +10,14 @@
 </script>
 
 <div class="container">
+    <nav>
+        <div class="nav-wrapper red-darken-2">
+            <div class="col s12">
+                <a href="~/Admin/Index" class="breadcrumb">Usuarios</a>
+                <a href="~/Admin/RoleIndex" class="breadcrumb">Roles</a>
+            </div>
+        </div>
+    </nav>
 
     <h3>
         Roles
@@ -47,10 +53,12 @@
                 <td>
                     <center>
                         <a href="@Url.Action("RoleEdit", "Admin", new { id = item.Id_Role })">
-                            <img src="@Url.Content("~/Content/Images/pen.png")" alt="Edit Role" />
+                            <i class="material-icons">create</i>
                         </a>
                         <a href="@Url.Action("RoleDelete", "Admin", new { id = item.Id_Role })">
-                            <img src="@Url.Content("~/Content/Images/bin.png")" alt="Delete Role" />
+                            <i class="material-icons" type="button" id=".deleteUser">
+                                delete_forever
+                            </i>
                         </a>
                     </center>
                 </td>

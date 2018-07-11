@@ -38,8 +38,7 @@
                     @Html.LabelFor(model => model.Inactive)
                 </td>
                 <td style='width: 28%' class='userTable'>
-                    @Html.TextBoxFor(model => model.Inactive, new { @class = "singlelinetextinput" })
-                    @Html.ValidationMessageFor(model => model.Inactive)
+                    @Html.CheckBoxFor(model => model.Inactive, new { @class = "singlelinetextinput", style = "opacity:5; pointer-events:visiblepainted" })
                 </td>            
             </tr>
             <tr>
@@ -49,8 +48,14 @@
                 <td style='width: 28%' class='userTable'>
                     @Html.TextBoxFor(model => model.UserModelName, new { @class = "singlelinetextinput" })
                     @Html.ValidationMessageFor(model => model.UserModelName)
-                </td>                        
-               <td></td>
+                </td> 
+                <td style='width: 10%; font-weight: bold' class='userTable'>
+                    @Html.LabelFor(model => model.IsSysAdmin)
+                </td>
+                <td style='width: 28%' class='userTable'>
+                    @Html.CheckBoxFor(model => model.IsSysAdmin, new { @class = "singlelinetextinput", style = "opacity:5; pointer-events:visiblepainted" })
+                </td>   
+                <td></td>
             </tr>
         </table>
     </div>

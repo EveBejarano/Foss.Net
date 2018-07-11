@@ -2,11 +2,11 @@
 
 
 @Html.HiddenFor(model => model.Id_TravelPackage)
+<h4>Eventos Disponibles</h4>
+
 <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
     border-width: thin; border-color: Silver; width: 740px">
 
-
-    <h1>Eventes Disponibles</h1>>
     <table style="width:100%">
         <tr>
             <th>ID Evento</th>
@@ -15,16 +15,16 @@
             <th>Cantidad de Tickets Disponibles</th>
             <th>Precio</th>
         </tr>
-        @foreach (var  item in ViewBag.EventsToShow)
+        @foreach (var item in ViewBag.EventsToShow)
         {
 
-        <tr>
-            <td>@item.Id_Event</td>
-            <td>@item.Name</td>
-            <td>@item.Description</td>
-            <td>@item.AvailableTickets</td>
-            <td>@item.Price</td>
-        </tr>
+            <tr>
+                <td>@item.Id_Event</td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.AvailableTickets</td>
+                <td>@item.Price</td>
+            </tr>
         }
     </table>
 
@@ -44,5 +44,5 @@
 
     @Html.DropDownList("Events", null, string.Empty, new { style = "display:initial" })
 
-    
+
 </fieldset>

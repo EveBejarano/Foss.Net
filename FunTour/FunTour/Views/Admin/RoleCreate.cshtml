@@ -1,7 +1,5 @@
 ﻿@model FunTourDataLayer.AccountManagement.RoleDetails
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "Create Role";
 }
@@ -11,14 +9,24 @@
         $(":input[type='button']").button();
     })
 </script>
-<div class="panel">
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary(true)
+<div class="container">
+    <nav>
+        <div class="nav-wrapper red-darken-2">
+            <div class="col s12">
+                <a href="~/Admin/Index" class="breadcrumb">Usuarios</a>
+                <a href="~/Admin/RoleIndex" class="breadcrumb">Roles</a>
+                <a href="~/Admin/RoleCreate" class="breadcrumb">Crear</a>
+            </div>
+        </div>
+    </nav>
+    <div class="panel">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary(true)
         <fieldset>
             <legend>
                 <h3>
-                    Create Role
+                    Crear Rol
                 </h3>
             </legend>
             <table style='width: 100%'>
@@ -31,9 +39,9 @@
                         @Html.ValidationMessageFor(model => model.RoleName)
                     </td>
                     <td style='width: 8%; font-weight: bold' class='userTable'>
-                        @Html.LabelFor(model => model.IsSysAdmin, "System Role")
+                        @Html.LabelFor(model => model.IsSysAdmin, "¿Es SysAdmin?")
                     <td style='width: 20%' class='userTable'>
-                        @Html.EditorFor(model => model.IsSysAdmin)
+                        @Html.CheckBoxFor(model => model.IsSysAdmin, new { style = "opacity:5; pointer-events:visiblepainted" })
                         @Html.ValidationMessageFor(model => model.IsSysAdmin)
                     </td>
                 </tr>
@@ -48,10 +56,10 @@
                 </tr>
             </table>
             <br />
-            <input type="submit" value="Create Role" />
+            <button type="submit" class="waves-effect waves-light btn blue lighten-1">Crear</button>
+            @Html.ActionLink("Cancelar", "RoleIndex", new { @class = "waves-effect waves-light btn blue lighten-1" })
         </fieldset>
-    }
-</div>
-<div>
-    @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+        }
+    </div>
+    <br/>
 </div>

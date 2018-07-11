@@ -1,7 +1,5 @@
 ﻿@model FunTourDataLayer.AccountManagement.Permission
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 <script type="text/javascript">
     $(document).ready(function () {
         $(":input[type='submit']").button();
@@ -53,13 +51,12 @@
             @Html.Partial("_AddRole4Permission", Model)
         </div>
         <br />
-        <div>
-            @Html.ActionLink("Go to Permissions", "PermissionIndex", "Admin")
-        </div>
     </fieldset>
 
 </div>
 <br />
 <div>
-    @Html.ActionLink("Go to Permissions", "PermissionIndex", "Admin")
+    <div>
+        @Html.ActionLink("Volver al Listado  de Permisos", "PermissionIndex", "Admin", new { @class = "waves-effect waves-light btn blue lighten-1" })
+    </div>
 </div>

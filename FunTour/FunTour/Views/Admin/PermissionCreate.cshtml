@@ -1,7 +1,5 @@
 ﻿@model FunTourDataLayer.AccountManagement.Permission
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "Create";
 }
@@ -11,28 +9,38 @@
         $(":input[type='text']").text();
     });
 </script>
-<div class="panel">
-    <fieldset>
-        <legend>
-            <h3>
-                Create Permission
-            </h3>
-        </legend>
-        @using (Html.BeginForm())
-        {
-            @Html.ValidationSummary(true)
-            <div class="editor-label">
-                @Html.LabelFor(model => model.PermissionDescription, "Permission Description")
+<div class="container">
+    <nav>
+        <div class="nav-wrapper red-darken-2">
+            <div class="col s12">
+                <a href="~/Admin/Index" class="breadcrumb">Usuarios</a>
+                <a href="~/Admin/PermissionIndex" class="breadcrumb">Permisos</a>
+                <a href="~/Admin/PermissionCreate" class="breadcrumb">Crear</a>
             </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(model => model.PermissionDescription, new { style = "width:450px" })
-                @Html.ValidationMessageFor(model => model.PermissionDescription)
-            </div>
-            <br />
-            <input type="submit" value="Create" />
-        }
-    </fieldset>
-</div>
-<div>
-    @Html.ActionLink("Go to Permissions", "PermissionIndex", "Admin")
+        </div>
+    </nav>
+    <div class="panel">
+        <fieldset>
+            <legend>
+                <h3>
+                    Crear Permiso
+                </h3>
+            </legend>
+            @using (Html.BeginForm())
+            {
+                @Html.ValidationSummary(true)
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.PermissionDescription, "Permission Description")
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.PermissionDescription, new { style = "width:450px" })
+                    @Html.ValidationMessageFor(model => model.PermissionDescription)
+                </div>
+                <br />
+                <button type="submit" class="waves-effect waves-light btn blue lighten-1">Crear</button>
+            }
+        </fieldset>
+    </div>
+    <br />
+    @Html.ActionLink("Cancelar", "PermissionIndex", "Admin", new { @class = "waves-effect waves-light btn blue lighten-1" })
 </div>

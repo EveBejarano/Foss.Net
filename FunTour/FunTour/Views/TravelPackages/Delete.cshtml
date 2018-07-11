@@ -1,30 +1,29 @@
-﻿@model FunTourDataLayer.Reservation.TravelPackage
+﻿@model FunTour.Models.TravelPackageViewModel
 @{
 //Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Eliminar Paquete";
 }
 
 <div class="container">
-    <h3>Delete</h3>
+    <h3>Eliminar Paquete</h3>
 
-    <h5>¿Está seguro de que desea eliminar esto?</h5>
+    <h5>¿Está seguro de que desea eliminar este paquete definitivamente?</h5>
     <div>
-        <h4>TravelPackage</h4>
-        <hr />
         <dl class="dl-horizontal"></dl>
 
         @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
+        @Html.Partial("_TravelPackageDetails")
         <div class="form-actions no-color">
-            <button class="waves-effect waves-light btn blue lighten-1" type="submit">Eliminar</button> |
-            @Html.ActionLink("Volver a la lista", "Index")
+            <button class="waves-effect waves-light btn blue lighten-1" type="submit">Eliminar</button> 
+            @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
         </div>
 
 } 
-        </br>
+        <br>
     </div>
 </div>

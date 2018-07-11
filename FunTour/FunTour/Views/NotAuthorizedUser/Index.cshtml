@@ -7,16 +7,22 @@
     <div class="container ">
         <div class="row login">
             <div class="col s8 offset-s2">
-                <div class="card center login">
-                    <div class="card-action grey lighten-3 white-text redonded">
-                        <h3 class="purple-text text-darken-3" style="font-family:'Pacifico',cursive;">Oops!</h3>
+                <div class="card center login red lighten-1 white-text redonded">
+                    <div class="card-action red darken-1 white-text redonded">
+                        <h3 class="white-text text-darken-3" style="font-family:'Pacifico',cursive;">¡Alto ahí!</h3>
                     </div>
-                            <h5>Regístrate para acceder a esta área</h5>
-                            <p>
-                                @Html.ActionLink("Registrar como nuevo usuario", "Register")
-                            </p>
-                        </div>
-                <br/>
+                    <h5>No tienes permiso para acceder a esta área</h5>
+                <br />
+                </div>
+                <div class="row" align="center">
+                    <div class="col s6"><button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='@Url.Action("Register", "Account")'">Registrarse</button>
+                    </div>
+                    <div class="col s6">
+                        <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='javascript:history.back()'">Volver</button>
+                    </div>
+                 
+                    <br />
+                </div>
                 </div>
             </div>
         </div>
