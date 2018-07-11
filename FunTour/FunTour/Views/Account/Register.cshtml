@@ -1,4 +1,5 @@
-﻿@model FunTour.Models.RegisterViewModel
+﻿
+@model FunTour.Models.RegisterViewModel
 @{
 
     ViewBag.Title = "Registrarse";
@@ -20,7 +21,7 @@
                     {
                         @Html.AntiForgeryToken()
 
-                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        @Html.ValidationSummary("", new { @class = "text-danger white-text" })
 
                         <div class="card-content">
                             <div class="form-field ">

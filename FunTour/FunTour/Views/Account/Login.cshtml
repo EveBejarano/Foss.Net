@@ -21,18 +21,18 @@
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger white-text" })
                         <div class="card-content">
                             <div class="form-field ">
                                 <label for="username">Usuario</label>
 
                                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger white-text" })
                             </div><br>
                             <div class="form-field white-text">
                                 <label for="password">Contraseña</label>
                                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger white-text" })
                             </div><br>
                             <div class="form-field left-aling">
                                 <label>
@@ -52,16 +52,18 @@
                             <p>
                                 @Html.ActionLink("Registrar como nuevo usuario", "Register")
                             </p>
-                        </div>
+                        </div> 
                     }
                 </div>
-                <div class="col-md-4">
-                    @* <section id="socialLoginForm">
-                            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-                        </section>*@
+                <!--
+                    <div class="col-md-4">
+                        @* <section id="socialLoginForm">
+                                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                            </section>*@
+                    </div> --> 
+                    */
                 </div>
             </div>
         </div>
-    </div>
-    <br /><br /><br />
-</body>
+        <br /><br /><br />
+    </body>

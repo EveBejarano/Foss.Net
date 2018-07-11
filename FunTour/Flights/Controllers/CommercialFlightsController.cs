@@ -48,34 +48,11 @@ namespace Flights.Controllers
             public DateTime date { get; set; }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/GetFlightsToChoose")]
         [ResponseType(typeof(CommercialFlight))]
 
-        /* var query =
-            from data in context.Hotel.Include(h => h.RoomTypes)
-                                    .Include(h => h.City).Include(h => h.City.Region).Include(h => h.City.Region.Country)
-            where ((data.City.CityName == parameters.City)
-                    && (data.City.Region.RegionName == parameters.Region)
-                    && (data.City.Region.Country.CountryName == parameters.Country))
-            select data
-               if (query == null)
-            { return null; }
-            var list = query.ToList();
-            var hotelList = new List<Hotel>();
-            var i = 0;
-            if ((list.Count) > 0)
-            {
-                while (i < list.Count())
-                {
-                    if ((CountRooms((list.ElementAt(i).RoomTypes.ElementAt(0)).RoomTypeID, parameters)) > 0)
-                    {
-                        hotelList.Add(list.ElementAt(i));
-                    }
-                    i++;
-                }
-            }
-            return hotelList;*/
+   
 
         public IHttpActionResult GetFlightsToChoose(FlyingFlight flight)
         {
