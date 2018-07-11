@@ -1,6 +1,6 @@
 ﻿@using System.Web.Optimization
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +32,7 @@
     <link href="@Url.Content("~/Content/themes/ui-lightness/jquery-ui-1.10.3.min.css")" rel="stylesheet" type="text/css" />
 
 </head>
-<body style="min-height:100%; position:relative;">
+<body style="min-height:100%; position:relative; margin: 0; padding-bottom: 6rem; min-height: 100%;">
     <!--S Navbar -->
     <div class="navbar-fixed general">
         <Nav class="light-blue darken-1">
@@ -53,7 +53,7 @@
     @RenderBody()
 
     <!-- Section: FollowUs -->
-    <section class="section section-follow red darken-1 white-text center" style="flex-shrink: 0; bottom: 50px; left: 0px; right: 0px; margin-bottom: 0px;">
+    <section class="section section-follow red darken-1 white-text center" style="position: absolute; right: 0; bottom: 30px; left: 0; padding: 1rem;">
         <div class="container">
             <div class="row">
                 <div class="col s12">
@@ -80,7 +80,7 @@
         </div>
     </section>
     <!--Footer  -->
-    <footer class="section light-blue darken-4 white-text center" style="flex-shrink: 0;">
+    <footer class="section light-blue darken-4 white-text center" style="position: absolute; right: 0; bottom: 0; left: 0; padding: 1rem;">
        FantasticTour &copy; 2018
     </footer>
 </body>
