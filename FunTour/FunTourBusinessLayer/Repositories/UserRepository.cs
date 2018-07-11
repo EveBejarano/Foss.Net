@@ -171,7 +171,7 @@ namespace FunTourBusinessLayer.Repositories
             return false;
         }
 
-        public virtual bool DeleteUserDetail(string userId)
+        public virtual bool DeleteUserDetail(int userId)
         {
 
             var User = _context.UserDetails.Find(userId);

@@ -63,7 +63,7 @@ namespace FunTour.Controllers
         {
 
 
-            IEnumerable<UserDetails> UserList = Service.UnitOfWork.UserRepository.GetUserDetails(filter : p=> p.Inactive == false);
+            IEnumerable<UserDetails> UserList = Service.UnitOfWork.UserRepository.GetUserDetails();
 
             List < UserModel > UserModelList = new List<UserModel>();
 
@@ -91,15 +91,93 @@ namespace FunTour.Controllers
         }
 
 
-        //Busca un usuario y muestra los datos
-        public ViewResult UserDetails(string  IdUser)
+        public ActionResult UserCreate()
         {
-            var user = Service.UnitOfWork.UserRepository.GetUserDetails(filter: p=> p.Id_UserDetails.ToString() == IdUser).FirstOrDefault();
-                //_context.Users.FirstOrDefault(p => p.Id == IdUser);
+            return View();
+        }
 
-            var User = UserModel.GetDataUserModel(user.UserName); //Ver
-            SetViewBagData(IdUser);
-            return View(User);
+        [HttpPost]
+        public ActionResult UserCreate(UserModel NewUser)
+        {
+            // controla que el usuario no haya ingresado un nombre NO valido
+            if (NewUser.UserModelName == "" || NewUser.UserModelName == null)
+            {
+                ModelState.AddModelError(string.Empty, "El nombre de usuario es obligatorio.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                List<string> results = Service.UnitOfWork.UserRepository.GetStringUserNames(NewUser.UserModelName, NewUser.Email);
+
+                bool _UserExistsInTable = (results.Count > 0);
+
+                UserDetails _User = null;
+
+                // si hay usuarios con el mismo nombre, busca el primero y si esta activo devuelve error
+                // Si el usuario no esta activo, lo activa
+                if (_UserExistsInTable)
+                {
+
+                    var Users = Service.UnitOfWork.UserRepository.GetUserDetailsByNameEmail(NewUser.UserModelName, NewUser.Email);
+
+
+                    var band = false;
+                    foreach (var item in Users)
+                    {
+                        if (item.Inactive == false)
+                        {
+                            ModelState.AddModelError(string.Empty, "El usuario ya existe!"); band = true;
+                            break;
+                        }
+                    }
+                    if (!band)
+                    {
+                        _User = Users.First(p => p.Inactive == true);
+                        Service.UnitOfWork.UserRepository.ActivateUserDetails(_User);
+                        Service.UnitOfWork.Save();
+                        return RedirectToAction("Index");
+                    }
+
+                }
+
+
+                // Si no hay usuarios con el mismo nombre, crea el usuario y lo almacena
+                else
+                {
+
+                    var user = new ApplicationUser
+                    {
+                        UserName = NewUser.UserModelName,
+                        Email = NewUser.Email,
+                        PhoneNumber = NewUser.PhoneNumber,
+
+                    };
+
+
+                    var result = UserManager.CreateAsync(user, NewUser.Password).Result;
+                    if (result.Succeeded)
+                    {
+
+                        var userDetails = new UserDetails
+                        {
+                            UserName = user.UserName,
+                            FirstName = NewUser.FirstName,
+                            LastName = NewUser.LastName,
+                            isSysAdmin = NewUser.IsSysAdmin
+                        };
+
+                        Service.UnitOfWork.UserRepository.CreateUserDetails(userDetails);
+
+                        Service.UnitOfWork.Save();
+                        return RedirectToAction("Index");
+                    }
+
+                }
+
+            }
+
+
+            return View(NewUser);
         }
 
         public List<SelectListItem> List_boolNullYesNo()
@@ -119,8 +197,33 @@ namespace FunTour.Controllers
         {
             ViewBag.UserId = _UserId;
             ViewBag.List_boolNullYesNo = this.List_boolNullYesNo();
-            ViewBag.RoleId = new SelectList(Service.UnitOfWork.RolesRepository.GetRoles(orderBy: q => q.OrderBy(p => p.Name) ), "Id_Role", "RoleName");
+            ViewBag.RoleId = new SelectList(Service.UnitOfWork.RolesRepository.GetRoles(orderBy: q => q.OrderBy(p => p.Name)), "Id_Role", "RoleName");
         }
+
+
+        //Busca un usuario y muestra los datos
+        public ViewResult UserDetails(string  IdUser)
+        {
+            string user;
+            string _idUser;
+            try
+            {
+                var aux = Service.UnitOfWork.UserRepository.GetUserByID(IdUser);
+                user = aux.UserName;
+                _idUser = aux.Id;
+            }
+            catch (Exception e)
+            {
+                user = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Id_UserDetails.ToString() == IdUser).FirstOrDefault().UserName;
+                var aux = Service.UnitOfWork.UserRepository.GetUserByUserName(user);
+                _idUser = aux.Id;
+            }
+
+            var User = UserModel.GetDataUserModel(user); //Ver
+            SetViewBagData(_idUser);
+            return View(User);
+        }
+
 
         // Toma un Model de Usuario
         [HttpPost]
@@ -138,101 +241,23 @@ namespace FunTour.Controllers
             return View(User);
         }
 
-        public ActionResult UserCreate()
+        [HttpGet]
+        public ActionResult UserEdit(string IdUser)
         {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult UserCreate(UserModel NewUser)
-        {
-            // controla que el usuario no haya ingresado un nombre NO valido
-            if (NewUser.UserModelName == "" || NewUser.UserModelName == null)
+            string user;
+            try
             {
-                ModelState.AddModelError(string.Empty, "El nombre de usuario es obligatorio.");
+               user = Service.UnitOfWork.UserRepository.GetUserByID(IdUser).UserName;
+            }
+            catch (Exception e)
+            {
+                user = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Id_UserDetails.ToString() == IdUser).FirstOrDefault().UserName;
             }
             
-                if (ModelState.IsValid)
-                {
-                    List<string> results = Service.UnitOfWork.UserRepository.GetStringUserNames(NewUser.UserModelName, NewUser.Email);
-
-                    bool _UserExistsInTable = (results.Count > 0);
-
-                    UserDetails _User = null;
-
-                    // si hay usuarios con el mismo nombre, busca el primero y si esta activo devuelve error
-                    // Si el usuario no esta activo, lo activa
-                    if (_UserExistsInTable)
-                    {
-
-                        var Users = Service.UnitOfWork.UserRepository.GetUserDetailsByNameEmail(NewUser.UserModelName, NewUser.Email);
 
 
-                        var band = false;
-                        foreach (var item in Users)
-                        {
-                            if (item.Inactive == false)
-                            {
-                                ModelState.AddModelError(string.Empty, "El usuario ya existe!");                                band = true;
-                                break;
-                            }
-                        }
-                        if (!band)
-                        {
-                            _User = Users.First(p => p.Inactive == true);
-                            Service.UnitOfWork.UserRepository.ActivateUserDetails(_User);
-                            Service.UnitOfWork.Save();
-                            return RedirectToAction("Index");
-                        }
-
-                    }
-
-
-                // Si no hay usuarios con el mismo nombre, crea el usuario y lo almacena
-                else
-                    {
-
-                        var user = new ApplicationUser
-                        {
-                            UserName = NewUser.UserModelName,                            
-                            Email = NewUser.Email,
-                            PhoneNumber = NewUser.PhoneNumber,
-                            
-                        };
-
-
-                        var result = UserManager.CreateAsync(user, NewUser.Password).Result;
-                        if (result.Succeeded)
-                        {
-
-                            var userDetails = new UserDetails
-                            {
-                                UserName = user.UserName,
-                                FirstName = NewUser.FirstName,
-                                LastName = NewUser.LastName,
-                                isSysAdmin = NewUser.IsSysAdmin
-                            };
-
-                            Service.UnitOfWork.UserRepository.CreateUserDetails(userDetails);
-
-                            Service.UnitOfWork.Save();
-                        return RedirectToAction("Index");
-                        }
-                        
-                    }
-                    
-                }
-
-
-            return View(NewUser);
-        }
-
-        [HttpGet]
-        public ActionResult UserEdit(string UserName)
-        {
-            
-            var User = UserModel.GetDataUserModel(UserName);
-            SetViewBagData(UserName);
+            var User = UserModel.GetDataUserModel(user);
+            SetViewBagData(IdUser);
 
             return View(User);
         }
@@ -253,7 +278,7 @@ namespace FunTour.Controllers
 
                 }
             }
-            return RedirectToAction("UserDetails", new RouteValueDictionary(new { IdUser = _User.Id }));
+            return RedirectToAction("UserDetails", new RouteValueDictionary(new { IdUser = User.Id_UserModel}));
         }
 
         [HttpGet]
@@ -271,7 +296,7 @@ namespace FunTour.Controllers
             };
                
             
-            return RedirectToAction("Details", "User", new { id = UserId });
+            return RedirectToAction("UserDetails", new { id = UserId });
         }
 
         [HttpGet]
@@ -306,7 +331,10 @@ namespace FunTour.Controllers
         [HttpGet]
         public PartialViewResult DeleteUserReturnPartialView(string UserId)
         {
-                if (Service.UnitOfWork.UserRepository.DeleteUserDetail(UserId))
+            var aux = Service.UnitOfWork.UserRepository.GetUserByID(UserId);
+            var user = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.UserName == aux.UserName).FirstOrDefault().Id_UserDetails;
+
+            if (Service.UnitOfWork.UserRepository.DeleteUserDetail(user))
                 {
                     Service.UnitOfWork.Save();
                 };
@@ -450,16 +478,20 @@ namespace FunTour.Controllers
                    .FirstOrDefault();
 
             var role = Service.UnitOfWork.RolesRepository.GetRoles(filter: p => p.Id == roleDetails.Id_Role.ToString(), includeProperties: "Users").FirstOrDefault();
-            foreach (var item in role.Users)
+            if (role.Users != null)
             {
-                var user = Service.UnitOfWork.UserRepository.GetUserByID(item.UserId);
-                var auxuser = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
-
-                if (user!= null && (auxuser.Inactive == false || auxuser.Inactive == null))
+                foreach (var item in role.Users)
                 {
-                    roleDetails.Users.Add(user);
+                    var user = Service.UnitOfWork.UserRepository.GetUserByID(item.UserId);
+                    var auxuser = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserName);
+
+                    if (user != null && (auxuser.Inactive == false || auxuser.Inactive == null))
+                    {
+                        roleDetails.Users.Add(user);
+                    }
                 }
             }
+
 
 
             var auxuserlist = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.Inactive == false || r.Inactive == null);
@@ -838,10 +870,14 @@ namespace FunTour.Controllers
         }
 
         
-        [HttpPost, ActionName("UserDelete")]
+        [HttpGet]
         public ActionResult UserDeleteConfirmed(string UserId)
         {
-            if (Service.UnitOfWork.UserRepository.DeleteUserDetail(UserId))
+            
+            var aux = Service.UnitOfWork.UserRepository.GetUserByID(UserId);
+            var user = Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.UserName == aux.UserName).FirstOrDefault().Id_UserDetails;
+            
+            if (Service.UnitOfWork.UserRepository.DeleteUserDetail(user))
             {
                 Service.UnitOfWork.Save();
             };

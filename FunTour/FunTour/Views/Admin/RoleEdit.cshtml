@@ -41,10 +41,9 @@
                 </tr>
                 <tr>
                     <td style='font-weight: bold'>
-                        @Html.LabelFor(model => model.IsSysAdmin, "System Role")
-                    </td>
+                    @Html.LabelFor(model => model.IsSysAdmin, "¿Es SysAdmin?")
                     <td>
-                        @Html.CheckBoxFor(model => model.IsSysAdmin)
+                        @Html.CheckBoxFor(model => model.IsSysAdmin, new { style = "opacity:5; pointer-events:visiblepainted" })
                         @Html.ValidationMessageFor(model => model.IsSysAdmin)
                     </td>
                 </tr>
@@ -68,10 +67,11 @@
         </div>
         <br />
         <div>
-            @Html.ActionLink("Go to Users", "Index", "Admin")
+            @Html.ActionLink("Ver Listado  de Usuarios", "Index", "Admin", new { @class = "waves-effect waves-light btn blue lighten-1" })
+
         </div>
     </fieldset>
-    <br />-->
+    <br />
     <fieldset>
         <legend>
             <h3>
@@ -88,12 +88,12 @@
         </div>
         <br />
         <div>
-            @Html.ActionLink("Go to Permissions", "PermissionIndex", "Admin")
+            @Html.ActionLink("Ver Listado  de Permisos", "PermissionIndex", "Admin", new { @class = "waves-effect waves-light btn blue lighten-1" })
         </div>
     </fieldset>
 
 </div>
 <br />
 <div>
-    @Html.ActionLink("Go to Roles", "RoleIndex", "Admin")
+    @Html.ActionLink("Volver Al Listado de Roles", "RoleIndex", "Admin", new { @class = "waves-effect waves-light btn blue lighten-1" })
 </div>

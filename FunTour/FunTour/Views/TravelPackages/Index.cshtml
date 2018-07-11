@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<FunTourDataLayer.Reservation.TravelPackage>
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "Index";
 }
@@ -66,7 +64,16 @@
                 @Html.DisplayFor(modelItem => item.ToPlace.Name)
             </td>
             <td>
-                @Html.DisplayFor(modeltem => item.Activate)
+                @if (ViewContext.Controller.IsSysAdmin())
+                {
+            
+                    if(item.Activate)
+                     { <p>True</p>}
+                     else
+                     {
+                         <p>False</p>
+                     }
+                }
             </td>
             <td>
                 <a href="@Url.Action("Details", "TravelPackages", new { TravelPackageId = item.Id_TravelPackage })">

@@ -83,6 +83,10 @@
     <Compile Include="Migrations\201807102107575_Funtour.Designer.cs">
       <DependentUpon>201807102107575_Funtour.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807111542148_Migratin3.cs" />
+    <Compile Include="Migrations\201807111542148_Migratin3.Designer.cs">
+      <DependentUpon>201807111542148_Migratin3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807102107575_Funtour.resx">
       <DependentUpon>201807102107575_Funtour.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807111542148_Migratin3.resx">
+      <DependentUpon>201807111542148_Migratin3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

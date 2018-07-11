@@ -59,6 +59,7 @@
     <div>
         <button class="waves-effect waves-light btn blue lighten-1" onclick="location.href='@Url.Action("PermissionCreate", "Admin")'">Crear</button>
         <button class="waves-effect waves-light btn blue lighten-1" id="importPermissions2" name="importPermissions2" onclick="location.href='@Url.Action("PermissionsImport", "Admin")'">Importar permisos</button>
+        @Html.ActionLink("Volver Al Menu de Usuarios", "Index", "Admin", new { @class = "waves-effect waves-light btn blue lighten-1" })
         <br />
     </div>
 

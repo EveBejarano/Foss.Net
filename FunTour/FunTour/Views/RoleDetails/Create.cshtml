@@ -37,8 +37,8 @@
             @Html.LabelFor(model => model.IsSysAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.IsSysAdmin)
-                    @Html.ValidationMessageFor(model => model.IsSysAdmin, "", new { @class = "text-danger" })
+                    @Html.CheckBoxFor(model => model.IsSysAdmin, new { style = "opacity:5; pointer-events:visiblepainted" })
+                    @Html.ValidationMessageFor(model => model.IsSysAdmin, "", new { @class = "text-danger"})
                 </div>
             </div>
         </div>

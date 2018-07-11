@@ -55,44 +55,56 @@
         <th>
             First Name
         </th>
+        <th>
+            Inactivo
+        </th>
         <th></th>
         </thead>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @if (item.FirstName != null && item.LastName != null)
-                    {
-                        @Html.ActionLink(item.UserModelName, "UserDetails", new { IdUser = item.Id_UserModel })
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.UserModelName)
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    <center>
-                        <a href="@Url.Action("UserEdit", "Admin", new { UserName = item.Id_UserModel })" id=@item.UserModelName>
-                            <i class="material-icons">create</i>
+        <tr>
+            <td>
+                @if (item.FirstName != null && item.LastName != null)
+                {
+                    @Html.ActionLink(item.UserModelName, "UserDetails", new { IdUser = item.Id_UserModel })
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.UserModelName)
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @if(item.Inactive)
+                { <p>True</p>}
+                else
+                {
+                    <p>False</p>
+                }
 
-                        </a>
-                        
-                        <a href="@Url.Action("UserDelete", "Admin", new { IdUser = item.Id_UserModel })" id=@item.UserModelName>
-                            <i class="material-icons" type="button" id=".deleteUser">
-                                delete_forever
-                            </i>
-                        </a>
+            </td>
+            <td>
+                <center>
+                    <a href="@Url.Action("UserEdit", "Admin", new { IdUser = item.Id_UserModel })" id=@item.UserModelName>
+                        <i class="material-icons">create</i>
+
+                    </a>
+
+                    <a href="@Url.Action("UserDelete", "Admin", new { IdUser = item.Id_UserModel })" id=@item.UserModelName>
+                        <i class="material-icons" type="button" id=".deleteUser">
+                            delete_forever
+                        </i>
+                    </a>
 
 
-                    </center>
-                </td>
-            </tr>
+                </center>
+            </td>
+        </tr>
         }
     </table>
 </div>
