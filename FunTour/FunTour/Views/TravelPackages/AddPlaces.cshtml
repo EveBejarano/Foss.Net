@@ -1,8 +1,6 @@
 ﻿
 @model FunTour.Models.TravelPackageViewModel
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "AddPlaces";
 }
@@ -10,7 +8,7 @@
 
 
 <div class="container">
-    <h3>Lugares:</h3>
+    <h3>Lugares</h3>
 
     <fieldset>
         <div id="FromCity">
@@ -51,13 +49,14 @@
 
     </fieldset>
 
-
     <br/>
-    <button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddCities()">Guardar y Continuar</button>
-    <br/>
-    @Html.ActionLink("Volver Atrás", "Create", new { @class = "waves-effect waves-light btn blue lighten-1" })
-    <br/>
-    <div>
+    <div class="row">
+        <button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddCities()">Guardar y Continuar</button>
+    </div>
+    <div class="row">
+        @Html.ActionLink("Volver Atrás", "Create", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+    </div>
+    <div class="row">
         @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
     </div>
 </div>

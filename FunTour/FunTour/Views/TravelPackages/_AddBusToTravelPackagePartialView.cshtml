@@ -1,7 +1,9 @@
 ﻿@model FunTour.Models.TravelPackageViewModel
 
-<h1>Colectivo de Ida</h1>>
+<h4>Colectivo de Ida</h4>
+
 @Html.HiddenFor(model => model.Id_TravelPackage)
+
 <fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
     border-width: thin; border-color: Silver; width: 740px">
     <table style="width:100%">
@@ -15,19 +17,19 @@
         @foreach (var item in ViewBag.BusesToGoToShow)
         {
 
-        <tr>
-            <td>@item.IdAPI_Bus</td>
-            <td>@item.DateTimeArrival</td>
-            <td>@item.DateTimeDeparture</td>
-            <td>@item.NotReservedSeats</td>
-            <td>@item.Price</td>
-        </tr>
+            <tr>
+                <td>@item.IdAPI_Bus</td>
+                <td>@item.DateTimeArrival</td>
+                <td>@item.DateTimeDeparture</td>
+                <td>@item.NotReservedSeats</td>
+                <td>@item.Price</td>
+            </tr>
         }
     </table>
 
     @if (Model.ToGoBus == null)
     {
-        <legend><strong>Agregar Colectivo al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace:</strong></legend>
+        <legend><strong>Agregar Colectivo al Paquete para ir desde @Model.FromPlace.Name hasta @Model.ToPlace.Name</strong></legend>
 
     }
     else
@@ -41,8 +43,10 @@
     }
 
     @Html.DropDownList("BusesToGo", null, string.Empty, new { style = "display:initial" })
-
-    <h1>Colectivo de Vuelta</h1>>
+</fieldset>
+<h4>Colectivo de Vuelta</h4>
+<fieldset style="padding: 1em; font: 100%; color: Black; border-color: Black; border-style: solid;
+    border-width: thin; border-color: Silver; width: 740px">
     <table style="width:100%">
         <tr>
             <th>ID Colectivo</th>
@@ -54,19 +58,19 @@
         @foreach (var item in ViewBag.BusesToBackToShow)
         {
 
-        <tr>
-            <td>@item.IdAPI_Bus</td>
-            <td>@item.DateTimeArrival</td>
-            <td>@item.DateTimeDeparture</td>
-            <td>@item.NotReservedSeats</td>
-            <td>@item.Price</td>
-        </tr>
+            <tr>
+                <td>@item.IdAPI_Bus</td>
+                <td>@item.DateTimeArrival</td>
+                <td>@item.DateTimeDeparture</td>
+                <td>@item.NotReservedSeats</td>
+                <td>@item.Price</td>
+            </tr>
         }
     </table>
 
     @if (Model.ToBackBus == null)
     {
-        <legend><strong>Agregar Colectivo al Paquete para volver desde @Model.FromPlace.Name a @Model.ToPlace:</strong></legend>
+        <legend><strong>Agregar Colectivo al Paquete para volver desde @Model.ToPlace.Name a @Model.FromPlace.Name</strong></legend>
 
     }
     else
@@ -82,5 +86,8 @@
     @Html.DropDownList("BusesToBack", null, string.Empty, new { style = "display:initial" })
 
 
-        <button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddBus()">Guardar y Continuar</button>
+    
 </fieldset>
+<br/>
+<button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddBus()">Guardar y Continuar</button>
+<br/>

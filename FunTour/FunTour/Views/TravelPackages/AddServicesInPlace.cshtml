@@ -1,31 +1,30 @@
 ﻿@model FunTour.Models.TravelPackageViewModel
-@{
-//Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
+
 @{
     ViewBag.Title = "AddServicesInPlace";
 }
 
+<div class="container">
+    <h3>Agregar Servicios en @Model.ToPlace.Name</h3>
 
-<h2>Agregar Servicios en @Model.ToPlace.Name:</h2>
-
-<fieldset>
-    <div>
-        @Html.Partial("_AddHotelToTravelPackagePartialView", Model)
-    </div>
-    <br />
-
-    <div>
-        @Html.Partial("_AddEventToTravelPackagePartialView", Model)
-    </div>
-
-</fieldset>
+        <div>
+            @Html.Partial("_AddHotelToTravelPackagePartialView", Model)
+        </div>
+        <br />
+        <div>
+            @Html.Partial("_AddEventToTravelPackagePartialView", Model)
+        </div>
 
 
-@*<input type="button" id="AddServicesInPlaceReturn" value="Guardar y Continuar..." />*@
-<button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddServicesInPlace()">Guardar y Continuar</button>
-@Html.ActionLink("Volver Atrás", "AddServicesToTravel", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
-
-<div>
-    @Html.ActionLink("Volver al Menú", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
-</div>
+    @*<input type="button" id="AddServicesInPlaceReturn" value="Guardar y Continuar..." />*@
+    <br/>
+        <div class="row">
+            <button class="waves-effect waves-light btn blue lighten-1" type="submit" onclick="AddServicesInPlace()">Guardar y Continuar</button>
+        </div>
+        <div class="row">
+            @Html.ActionLink("Volver Atrás", "AddServicesToTravel", new { TravelPackageId = Model.Id_TravelPackage }, new { @class = "waves-effect waves-light btn blue lighten-1" })
+        </div>
+            <div class="row">
+                @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
+            </div>
+        </div>
