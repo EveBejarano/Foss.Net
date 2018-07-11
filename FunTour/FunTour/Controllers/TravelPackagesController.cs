@@ -406,12 +406,40 @@ namespace PruebaUsers.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TravelPackage travelPackage = Service.UnitOfWork.TravelPackageRepository.GetByID(TravelPackageId);
+            var travelPackage = Service.UnitOfWork.TravelPackageRepository.Get(filter: p => p.Id_TravelPackage == TravelPackageId, includeProperties: "FromPLace,ToPlace,ToGoBus,ToBackBus,ToGoFlight,ToBackFlight, Event, Hotel").FirstOrDefault();
             if (travelPackage == null)
             {
                 return HttpNotFound();
             }
-            return View(travelPackage);
+
+            var travelPackageViewModel = new TravelPackageViewModel
+            {
+                Id_TravelPackage = travelPackage.Id_TravelPackage,
+                PackageName = travelPackage.PackageName,
+                Description = travelPackage.Description,
+                FromDay = travelPackage.FromDay,
+                ToDay = travelPackage.ToDay,
+                FlightOrBus = travelPackage.FlightOrBus,
+                FromPlace = travelPackage.FromPlace,
+                ToPlace = travelPackage.ToPlace,
+                Hotel = travelPackage.Hotel,
+                Event = travelPackage.Event,
+                Reservations = travelPackage.Reservations,
+                ReservationAmount = travelPackage.ReservationAmount,
+                TotalPrice = travelPackage.TotalPrice
+        };
+            
+            if (travelPackageViewModel.FlightOrBus)
+            {
+                travelPackageViewModel.ToGoFlight = travelPackage.ToGoFlight;
+                travelPackageViewModel.ToBackFlight = travelPackage.ToBackFlight;
+            }
+            else
+            {
+                travelPackageViewModel.ToGoBus = travelPackage.ToGoBus;
+                travelPackageViewModel.ToBackBus = travelPackage.ToBackBus;
+            }
+            return View(travelPackageViewModel);
         }
 
         // POST: TravelPackages/Delete/5

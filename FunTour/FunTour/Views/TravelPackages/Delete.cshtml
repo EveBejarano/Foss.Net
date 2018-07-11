@@ -1,4 +1,4 @@
-﻿@model FunTourDataLayer.Reservation.TravelPackage
+﻿@model FunTour.Models.TravelPackageViewModel
 @{
 //Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -19,11 +19,11 @@
 
         @Html.Partial("_TravelPackageDetails")
         <div class="form-actions no-color">
-            <button class="waves-effect waves-light btn blue lighten-1" type="submit">Eliminar</button> |
-            @Html.ActionLink("Volver a la lista", "Index")
+            <button class="waves-effect waves-light btn blue lighten-1" type="submit">Eliminar</button> 
+            @Html.ActionLink("Volver a la lista", "Index", new { @class = "waves-effect waves-light btn blue lighten-1" })
         </div>
 
 } 
-        </br>
+        <br>
     </div>
 </div>

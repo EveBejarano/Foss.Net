@@ -12,12 +12,12 @@
     <fieldset>
         <legend>
             <h3>
-                Detalles Del Usuario: @Model.UserModelName:
+                Detalles Del Usuario @Model.UserModelName:
             </h3>
         </legend>
         @Html.Partial("_userDetails", Model)
         <br />
-        <input type="button" value="Edit" onclick="location.href='@Url.Action("UserEdit", "Admin", new { id = Model.UserModelName })'" />
+        <input type="button" value="Edit" onclick="location.href='@Url.Action("UserEdit", "Admin", new { IdUser = Model.Id_UserModel })'" />
     </fieldset>
 
     <fieldset>
@@ -31,6 +31,7 @@
         </div>
     </fieldset>
 }
-<div>
-    @Html.ActionLink("Go to FunTour", "Index", "Admin")
-</div>
+    <div>
+        @Html.ActionLink("Volver a la lista", "Index", "Admin", new { @class = "waves-effect waves-light btn blue lighten-1" })
+        
+    </div>

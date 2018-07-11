@@ -16,7 +16,7 @@ namespace FunTour.Models
 
         public string Id_UserModel { get; set; }
 
-        public bool? Inactive { get; set; }
+        public bool Inactive { get; set; }
         public ICollection<UserRole> UserModelRoles { get; set; }
 
 
@@ -70,14 +70,14 @@ namespace FunTour.Models
             SelectedRoles = new List<UserModelRolElement>();
         }
 
-        public static UserModel GetDataUserModel(string UserName)
+        public static UserModel GetDataUserModel(string IdUser)
         {
                 
                 try
                 {
                     UserModel userModel = new UserModel();
 
-                    var user = Service.UnitOfWork.UserRepository.GetUserByUserName(UserName);
+                    var user = Service.UnitOfWork.UserRepository.GetUserByUserName(IdUser);
                     userModel.Id_UserModel = user.Id;
                     userModel.Email = user.Email;
                     userModel.PhoneNumber = user.PhoneNumber;
@@ -137,17 +137,12 @@ namespace FunTour.Models
                 userDetails.FirstName = user.FirstName;
                 userDetails.LastName = user.LastName;
                 userDetails.Inactive = user.Inactive;
-
-                var store = new UserStore<ApplicationUser>(new ApplicationDbContext());
-                var manager = new ApplicationUserManager(store);
-
-
-                var userModel1 = Service.UnitOfWork.UserRepository.GetUserByID(user.Id_UserModel);
+                userDetails.isSysAdmin = user.IsSysAdmin;
+                
                 Service.UnitOfWork.UserRepository.UpdateUser(userModel);
                 Service.UnitOfWork.Save();
 
-
-                var userDetails1 = Service.UnitOfWork.UserRepository.GetUserDetailByUserName(user.UserModelName);
+                
                 Service.UnitOfWork.UserRepository.UpdateUserDetails(userDetails);
                 Service.UnitOfWork.Save();
 

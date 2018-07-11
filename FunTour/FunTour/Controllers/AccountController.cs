@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using FunTour.Models;
+using FunTourBusinessLayer.Service;
 using FunTourDataLayer;
 using FunTourDataLayer.AccountManagement;
 using Microsoft.AspNet.Identity;
@@ -21,7 +22,7 @@ namespace FunTour.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private readonly DataService Service = new DataService();
         public AccountController()
         {
         }
@@ -77,6 +78,33 @@ namespace FunTour.Controllers
                 return View(model);
             }
 
+
+            try
+            {
+                if (Service.UnitOfWork.UserRepository.GetUserDetails(filter: r => r.UserName == model.UserName).FirstOrDefault().Inactive)
+                {
+                    ModelState.AddModelError("", "Su Cuenta Ha Sido Dada De Baja. Por Favor, comuniquese con el administrador o pruebe con otra cuenta.");
+                    return View(model);
+
+                }
+            }
+            catch (Exception e)
+            {
+                var result2 = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                switch (result2)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
+                        return View(model);
+                }
+            }
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
