@@ -386,6 +386,7 @@
     <Content Include="Views\index.cshtlm" />
     <Content Include="Views\Reservation\Details.cshtml" />
     <Content Include="Views\Admin\UserDelete.cshtml" />
+    <Content Include="Views\Reservation\CreateReservation.cshtml" />
     <None Include="Views\Reservation\index.cshtml" />
     <Content Include="Views\TravelPackages\_TravelPackageDetails.cshtml" />
     <None Include="Web.Debug.config">

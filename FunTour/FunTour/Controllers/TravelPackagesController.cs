@@ -352,8 +352,7 @@ namespace PruebaUsers.Controllers
             travelPackage.Activate = true;
             Service.UnitOfWork.TravelPackageRepository.Update(travelPackage);
             Service.UnitOfWork.Save();
-
-
+            
             Service.SetHotelReservationToNewTravelPackage(travelPackage);
             Service.SetEventReservationToNewTravelPackage(travelPackage);
             if (travelPackage.FlightOrBus)
@@ -430,3 +429,4 @@ namespace PruebaUsers.Controllers
 
     }
 }
+
