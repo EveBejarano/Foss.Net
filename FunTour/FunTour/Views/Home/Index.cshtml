@@ -2,7 +2,9 @@
     ViewBag.Title = "Home Page";
 }
 <!--Section: Slider -->
+
 <body id="home" class="scrollspy">
+
     <section class="slider">
         <ul class="slides">
             <li>
@@ -60,55 +62,184 @@
     </section>
 
 
+
     <!--Section: Search-->
-    <div class="container center-align">
-        <div class="row">
-            <div class="col s12 m6 offset-6">
-                <section id="search" class="section card light-blue darken-4
-            white-text center-align scrollspy">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col s12">
-                                <h4>Ingresá un destino y elegí tu paquete</h4>
-                                <div class="input-field">
-                                    <input type="text" class="white grey-text autocomplete"
-                                           id="autocomplete-input" placeholder="Rusia, Disney, Orlando, Praga, Australia, Bariloche, etc...">
-                                </div>
-                            </div>
+    <section id="search" class="section section-search  white
+     white-text center scrollspy">
+
+        <div class="container">
+
+            <div class="row form1">
+                <h4 class="grey-text text-lighten-3">Ingresá un destino y eligí tu Paquete!</h4>
+
+                <form class="col s12 offset-s3">
+
+                    <div class="row">
+
+                        <div class="input-field col s6">
+                            <select id="SelectOrigen">
+                                <option value="" disabled selected>Selecciona un Origen</option>
+                                @foreach (var item in ViewBag.SelectOrigen)
+                                {
+                                    <option id="destino" value="">@item.Name</option>
+                                }
+                            </select>
+                            <label>Origen</label>
                         </div>
+
+                        <div class="input-field col s6">
+                            <select id="SelectDestino">
+                                <option value="" disabled selected>Selecciona un Destino</option>
+
+                                 @foreach (var item in ViewBag.SelectOrigen)
+                                {
+                                    <option id="Origen" value="">@item.Name</option>
+                                } 
+
+                            </select>
+
+                            <label>Destino</label>
+                        </div>
+
+                        <div class="input-field col s6">
+                            
+                        </div>
+
+                        <div class="input-field col s6">
+                            <select class="">
+                                <option id="cant" value="" disabled selected>Cant</option>
+                                <option id="cant" value="1">1</option>
+                                <option id="cant" value="2">2</option>
+                                <option id="cant" value="3">3</option>
+                                <option id="cant" value="4">4</option>
+                            </select>
+                            <label>Habitaciones</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <select class="">
+                                <option id="Adult" value="" disabled selected>Cant</option>
+                                <option id="Adult" value="1">1</option>
+                                <option id="Adult" value="2">2</option>
+                                <option id="Adult" value="3">3</option>
+                            </select>
+                            <label>Adultos</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <select class="">
+                                <option value="" disabled selected>Cant</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                            <label>Niños</label>
+                        </div>
+                        
+                        
                     </div>
-                </section>
+
+                </form>
             </div>
         </div>
-    </div>
 
+    </section>
     <!-- Section: Icon Boxes -->
-    <section class="section section-icons white center">
+    <section class="section section-icons  light-blue darken-1 center">
         <div class="container">
             <div class="row">
                 <div class="col s12 m4">
                     <div class="card-panel">
-                        <i class="material-icons large cyan-text text-darken-1">room</i>
+                        <i class="material-icons large light-blue-text text-darken-4">room</i>
                         <h5>Temporada Baja</h5>
                         <p>Descubrí los mejores 10 destinos para visitar en temporada baja.</p>
                     </div>
                 </div>
                 <div class="col s12 m4">
                     <div class="card-panel">
-                        <i class="material-icons large cyan-text text-darken-1">airport_shuttle</i>
+                        <i class="material-icons large light-blue-text text-darken-4">airport_shuttle</i>
                         <h5>Experiencia completa</h5>
                         <p>Traslados incluidos a eventos populares en los diferentes destinos.</p>
                     </div>
                 </div>
                 <div class="col s12 m4 ">
                     <div class="card-panel">
-                        <i class="material-icons large cyan-text text-darken-1">find_replace</i>
+                        <i class="material-icons large light-blue-text text-darken-4">find_replace</i>
                         <h5>Destino al azar</h5>
                         <p>Obtené opciones para elegir tu próxima aventura.</p>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+    <!-- Section: Rusia -->
+    <section id="rusia" class="section section-rusia scrollspy white">
+        <div class="container">
+            <div class="row">
+                <h4 class="center "> <span class="light-blue-text text-darken-4">Rusia</span> 2018!</h4>
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Content/images/Lobito lindo.jpg" alt="">
+                            <span class="card-title ">Moscú 7 días y 6 noches desde $80.000</span>
+                        </div>
+                        <div class="card-content">
+                            Disfrutá un viaje all-inclusive, para vos y alguien más!! 7 días y 6 noches en la ciudad de Moscú. Incluye entradas a partidos de Argentina.
+                        </div>
+                        <div class="card-action light-blue darken-3">
+                            <a href="#" class="white-text">Ver más>></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Content/images/Lobito lindo.jpg" alt="">
+                            <span class="card-title ">Volvogrado 7 días y 6 noches desde $80.000</span>
+                        </div>
+                        <div class="card-content">
+                            Disfrutá un viaje all-inclusive, para vos y alguien más!! 7 días y 6 noches en Volvogrado. Incluye entradas a partidos de Argentina.
+                        </div>
+                        <div class="card-action light-blue darken-3">
+                            <a href="#" class="white-text">Ver más>></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Content/images/Lobito lindo.jpg" alt="">
+                            <span class="card-title ">San Petersburgo 7 días y 6 noches desde $80.000</span>
+                        </div>
+                        <div class="card-content">
+                            Disfrutá un viaje all-inclusive, para vos y alguien más!! 7 días y 6 noches en San Petersburgo. Incluye entradas a partidos de Argentina.
+                        </div>
+                        <div class="card-action light-blue darken-3">
+                            <a href="#" class="white-text">Ver más>></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+    <!--Section Egresados-->
+
+    <div class="carousel carousel-slider">
+        <a class="carousel-item" href="#one!"><img src="~/Content/images/egresados.jpg"></a>
+        <a class="carousel-item" href="#two!"><img src="~/Content/images/Praga.jpg"></a>
+        <a class="carousel-item" href="#three!"><img src="~/Content/images/egresados.jpg"></a>
+        <a class="carousel-item" href="#four!"><img src="~/Content/images/egresados.jpg"></a>
+    </div>
+
+
+    <!--Section Vacaciones-->
+    <section id="vacaciones" class="section section-vacaciones scrollspy grey-text text-darken-4">
+
+      
+
     </section>
     <!--JavaScript at end of body for optimized loading-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
@@ -137,57 +268,20 @@
                 "Rusia": null,
             }
         })
+        //Serach
 
+        const elems = document.querySelectorAll('select');
+        M.FormSelect.init(elems, {});
+
+        const el = document.querySelectorAll('.datepicker');
+        M.Datepicker.init(el, {});
+
+        //Egresados
+
+        var instance = M.Carousel.init({
+            fullWidth: true
+        });
     </script>
 
 </body>
-<!--
-@*<div class="page">
 
-        <div id="menucontainer">
-            <ul class="menuTemplate3 decor3_1">
-                @{
-
-                    if (ViewContext.Controller.IsSysAdmin())
-                    {
-                        <li>
-                            <a href="#" class="arrow">System Administration</a>
-                            <div class="drop decor3_2 dropToLeft" style="width: 160px;">
-                                <div class='right'>
-                                    <a href="/Admin">PruebaUsers</a><br />
-                                    <a href="/Admin/RoleIndex">Roles</a><br />
-                                    <a href="/Admin/PermissionIndex">Permissions</a><br />
-                                </div>
-                            </div>
-                        </li>
-                    }}
-            </ul>
-            @Html.Partial("_LoginPartial")
-        </div>
-    </div>*@
-
-            <div class="container">
-            <div class="row">
-
-<div class="col-2 bg-white shad-inf p-0">
-    <div class="row p-0 m-3">
-        <ul class="list-unstyled col-12 p-0">
-            <font style="font-size: 12px">Current </font>
-            <li class="h6"> User: @this.User.Identity.Name</li>
-            @*<li><small>@ViewBag.user.Dni</small></li>
-                <li><small>@ViewBag.user.Email</small></li>*@
-            @*<li><h6><a class="col-12 btn btn-sm btn-inf mb-3" href="http://192.168.42.27:8000/Usuarios/editardatos/@ViewBag.user.id">Editar Datos</a></h6></li>*@
-        </ul>
-
-        <ul class="list-unstyled col-12 p-0">
-
-            <li class="h6"> ADMINISTRADOR</li>
-            <li><small><a href="/Admin">Usuarios</a></small></li>
-            <li><small><a href="/Admin/RoleIndex">Roles</a></small></li>
-            <li><small><a href="/Admin/PermissionIndex">Permissions</a></small></li>
-
-
-        </ul>
-    </div>
-</div>
-    -->

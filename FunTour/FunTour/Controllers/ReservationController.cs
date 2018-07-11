@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -133,12 +133,12 @@ namespace PruebaUsers.Controllers
             }
             Service.UnitOfWork.ReservationRepository.Delete(reservation);
             Service.UnitOfWork.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); 
         }
     	
     		
     	
 
 	}
-}
+} 
 		

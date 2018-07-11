@@ -75,11 +75,6 @@
     <Compile Include="Locality\City.cs" />
     <Compile Include="Locality\Country.cs" />
     <Compile Include="Locality\Province.cs" />
-    <Compile Include="Migrations\201807092107149_Migration1.cs" />
-    <Compile Include="Migrations\201807092107149_Migration1.Designer.cs">
-      <DependentUpon>201807092107149_Migration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Payment\PaymentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reservation\BusReservedSeat.cs" />
@@ -94,11 +89,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201807092107149_Migration1.resx">
-      <DependentUpon>201807092107149_Migration1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
